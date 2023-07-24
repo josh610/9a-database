@@ -1,0 +1,36 @@
+type Ascent {
+  _id: ID!
+  climber: Climber!
+  climb: Climb!
+  gradeProposal: String
+  fa: Boolean
+  flash: Boolean
+  onsight: Boolean
+  date: Date
+  links: [String]
+  description: String
+  addedAt: Date!
+  updatedAt: Date!
+}
+
+input AscentInput {
+  climber: ID!
+  climb: ID!
+  gradeProposal: String
+  fa: Boolean
+  flash: Boolean
+  onsight: Boolean
+  date: String
+  links: [String]
+  description: String
+}
+
+type Query {
+  ascent(ID: ID!): Ascent
+  ascents: [Ascent!]
+}
+
+type Mutation {
+  createAscent(ascentInput: AscentInput): Ascent
+  deleteAscent(ID: ID!): Boolean!
+}

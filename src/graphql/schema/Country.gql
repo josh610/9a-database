@@ -1,0 +1,12 @@
+type Country {
+  _id: ID!
+  name: String!
+  crags: [Crag!]
+  climbers: [Climber!]
+  description: String
+}
+
+type Query {
+  country(ID: ID): Country
+  countries: [Country!]
+}

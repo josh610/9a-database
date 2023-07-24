@@ -1,0 +1,26 @@
+type Climber {
+  _id: ID!
+  name: String!
+  dob: Date
+  country: Country
+  ascents: [Ascent!]
+  description: String
+  addedAt: Date!
+  updatedAt: Date!
+}
+
+input ClimberInput {
+  name: String!
+  dob: String
+  country: ID
+  description: String
+}
+
+type Query {
+  climber(ID: ID): Climber
+  climbers: [Climber!]
+}
+
+type Mutation {
+  createClimber(climberInput: ClimberInput): Climber
+}

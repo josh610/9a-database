@@ -1,0 +1,24 @@
+type Crag {
+  _id: ID!
+  name: String!
+  country: Country
+  climbs: [Climb!]
+  description: String
+  addedAt: Date!
+  updatedAt: Date!
+}
+
+input CragInput {
+  name: String!
+  countryId: ID!
+  description: String
+}
+
+type Query {
+  crag(ID: ID!): Crag
+  crags: [Crag!]
+}
+
+type Mutation {
+  createCrag(cragInput: CragInput): Crag!
+}

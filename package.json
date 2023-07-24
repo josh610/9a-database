@@ -1,0 +1,24 @@
+{
+  "name": "database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index",
+    "prod": "NODE_ENV=production nodemon src/index"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.12.0",
+    "country-list-js": "^3.1.7",
+    "graphql": "^16.6.0",
+    "graphql-tools": "^9.0.0",
+    "mongoose": "^7.3.0"
+  },
+  "devDependencies": {
+    "@types/country-list-js": "^3.1.2"
+  }
+}

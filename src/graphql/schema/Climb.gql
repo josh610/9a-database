@@ -1,0 +1,28 @@
+type Climb {
+  _id: ID!
+  name: String!
+  grade: String!
+  ascents: [Ascent!]
+  crag: Crag
+  fa: String
+  description: String
+  addedAt: Date!
+  updatedAt: Date!
+}
+
+input ClimbInput {
+  name: String!
+  grade: String!
+  crag: ID
+  fa: String
+  description: String
+}
+
+type Query {
+  climb(ID: ID!): Climb
+  climbs: [Climb!]
+}
+
+type Mutation {
+  createClimb(climbInput: ClimbInput): Climb!
+}
