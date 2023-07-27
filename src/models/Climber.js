@@ -5,8 +5,16 @@ const climberSchema = new Schema({
         type: String,
         required: true
     },
+    nickname: {
+        type: String,
+        required: false
+    },
     dob: {
         type: Date,
+        required: false
+    },
+    sex: {
+        type: String,
         required: false
     },
     country: {

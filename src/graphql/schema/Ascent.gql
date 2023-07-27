@@ -26,11 +26,12 @@ input AscentInput {
 }
 
 type Query {
-  ascent(ID: ID!): Ascent
+  ascentById(ID: ID!): Ascent
   ascents: [Ascent!]
 }
 
 type Mutation {
-  createAscent(ascentInput: AscentInput): Ascent
+  createAscent(ascentInput: AscentInput!): Ascent
+  updateAscent(ID: ID!, ascentInput: AscentInput): Boolean!
   deleteAscent(ID: ID!): Boolean!
 }

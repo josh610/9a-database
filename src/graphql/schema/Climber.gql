@@ -1,7 +1,9 @@
 type Climber {
   _id: ID!
   name: String!
+  nickname: String
   dob: Date
+  sex: String
   country: Country
   ascents: [Ascent!]
   description: String
@@ -9,18 +11,27 @@ type Climber {
   updatedAt: Date!
 }
 
-input ClimberInput {
+input ClimbersFilter {
+  name: String
+  nickname: String
+  country: String
+}
+
+input CreateClimberInput {
   name: String!
+  nickname: String
   dob: String
+  sex: String
   country: ID
   description: String
 }
 
 type Query {
-  climber(ID: ID): Climber
-  climbers: [Climber!]
+  climbers(filter: ClimbersFilter): [Climber!]
+  climberByID(ID: ID!): Climber
 }
 
 type Mutation {
-  createClimber(climberInput: ClimberInput): Climber
+  createClimber(input: CreateClimberInput!): Climber
+  deleteClimber(ID: ID!): Boolean!
 }

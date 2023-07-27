@@ -10,15 +10,17 @@ type Crag {
 
 input CragInput {
   name: String!
-  countryId: ID!
+  country: ID
   description: String
 }
 
 type Query {
-  crag(ID: ID!): Crag
+  cragById(ID: ID!): Crag
+  cragByName(name: String!): [Crag!]
   crags: [Crag!]
 }
 
 type Mutation {
-  createCrag(cragInput: CragInput): Crag!
+  createCrag(cragInput: CragInput!): Crag!
+  deleteCrag(ID: ID!): Boolean!
 }

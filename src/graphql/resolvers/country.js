@@ -12,7 +12,8 @@ module.exports = {
         }
     },
     Query: {
-        country: async (_, {id}) => await Country.findById(id),
+        country: async (_, { ID }) => await Country.findById(ID),
+        countryByName: async (_, { name }) => await Country.findOne({ name: name }),
         countries: async () => await Country.find()
     }
 }

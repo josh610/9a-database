@@ -1,5 +1,6 @@
 const Climb = require('../../models/Climb')
 const Crag = require('../../models/Crag')
+const Country = require('../../models/Country')
 const Ascent = require('../../models/Ascent')
 
 module.exports = {
@@ -12,12 +13,25 @@ module.exports = {
         }
     },
     Query: {
-        climb: async (_, {id}) => await Climb.findById(id),
-        climbs: async () => await Climb.find()
+        climbs: async (_, { filter }) => {
+            if(!filter) {
+                return await Climb.find()
+            }
+            let filters = {}
+            if (filter.name !== undefined) filters.name = filter.name
+            if (filter.crag !== undefined) {
+                const crag = await Crag.findOne({ name: filter.crag })
+                filters.crag = crag
+            }
+            /** @todo country filter **/
+
+            return await Climb.find(filters)
+        },
+        climbById: async (_, { ID }) => await Climb.findById(ID)
     },
 
     Mutation: {
-        async createClimb(_, { climbInput: {name, grade, crag, fa, description} }){
+        async createClimb(_, { input: {name, grade, crag, description} }){
             try{
                 const foundCrag = await Crag.findById(crag)
                 if(!foundCrag) {
@@ -32,7 +46,7 @@ module.exports = {
                     name: name,
                     grade: grade,
                     crag: crag,
-                    fa: fa,
+                    //fa: fa,
                     description: description,
                     addedAt: Date.now(),
                     updatedAt: Date.now()

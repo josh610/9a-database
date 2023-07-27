@@ -10,19 +10,24 @@ type Climb {
   updatedAt: Date!
 }
 
-input ClimbInput {
+input ClimbsFilter {
+  name: String
+  crag: String
+}
+
+input CreateClimbInput {
   name: String!
   grade: String!
   crag: ID
-  fa: String
+  #fa: String
   description: String
 }
 
 type Query {
-  climb(ID: ID!): Climb
-  climbs: [Climb!]
+  climbs(filter: ClimbsFilter): [Climb!]
+  climbById(ID: ID!): Climb
 }
 
 type Mutation {
-  createClimb(climbInput: ClimbInput): Climb!
+  createClimb(input: CreateClimbInput!): Climb!
 }

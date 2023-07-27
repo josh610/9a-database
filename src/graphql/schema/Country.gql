@@ -7,6 +7,7 @@ type Country {
 }
 
 type Query {
-  country(ID: ID): Country
+  country(ID: ID!): Country
+  countryByName(name: String!): Country
   countries: [Country!]
 }
