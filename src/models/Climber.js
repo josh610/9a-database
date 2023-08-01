@@ -27,6 +27,11 @@ const climberSchema = new Schema({
         ref: 'Ascent',
         required: true
     }],
+    fas: [{
+        type: Schema.Types.ObjectId,
+        ref: 'FA',
+        required: false
+    }],
     description: {
         type: String,
         required: false

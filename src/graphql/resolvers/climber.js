@@ -12,13 +12,14 @@ module.exports = {
         }
     },
     Query: {
+        climber: async (_, { ID }) => await Climber.findById(ID),
         /**
          * @todo Issue: if this function recieves a null value for any of the filter's elements,
          * it will simply not be included in the query. What the query should do is include it
          * as a null value for proper search results. The issue is that the function can't
          * distinguish between an actual null value and an improper input value.
          * ie. for filter.name, input of null (ok) and input of 5 (invalid, should be a string)
-         * will both produce filter.name = null
+         * will both produce filter.name = null and output climbers whose names are null
          */
         climbers: async (_, { filter }) => {
             if(!filter) {
@@ -32,8 +33,7 @@ module.exports = {
                 filters.country = country
             }
             return await Climber.find(filters)
-        },
-        climberByID: async (_, { ID }) => await Climber.findById(ID)
+        }
     },
 
     Mutation: {
@@ -58,7 +58,7 @@ module.exports = {
 
             const foundClimber = await Climber.findOne({ name: name })
             if (foundClimber) {
-                throw new Error("A climber with this name already exists")
+                throw new Error("A climber with this name already exists (" + foundClimber._id + ")")
             }
 
             if(dob) {
@@ -69,8 +69,6 @@ module.exports = {
 
             foundCountry?.climbers.push(climber)
             await foundCountry?.save()
-
-            console.log("Added climber")
             
             return await climber.save()
         },
@@ -88,15 +86,15 @@ module.exports = {
                 if (index > -1) { // only splice array when item is found
                     country.climbers.splice(index, 1); // 2nd parameter means remove one item only
                     await country.save()
-                    console.log("Deleted climber from country")
+                    //console.log("Deleted climber from country")
                 }
                 else {
                     throw new Error("Error removing climber from Country")
                 }
             }
-            const test = await Climber.deleteOne({ _id: ID })
-            console.log(test)
-            return test.acknowledged
+            const res = await Climber.deleteOne({ _id: ID })
+            //console.log(res)
+            return res.acknowledged
         }
     }
 }

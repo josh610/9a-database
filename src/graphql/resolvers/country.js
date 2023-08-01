@@ -13,7 +13,14 @@ module.exports = {
     },
     Query: {
         country: async (_, { ID }) => await Country.findById(ID),
-        countryByName: async (_, { name }) => await Country.findOne({ name: name }),
-        countries: async () => await Country.find()
+        countries: async (_, { filter }) => {
+            if(!filter) {
+                return await Country.find()
+            }
+            let filters = {}
+            if (filter.name !== undefined) filters.name = filter.name
+
+            return await Country.find(filters)
+        }
     }
 }

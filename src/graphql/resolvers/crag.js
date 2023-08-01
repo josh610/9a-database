@@ -12,20 +12,31 @@ module.exports = {
         }
     },
     Query: {
-        cragById: async (_, { ID }) => await Crag.findById(ID),
-        cragByName: async (_, { name }) => await Crag.find({name: name}),
-        crags: async () => await Crag.find()
+        crag: async (_, { ID }) => await Crag.findById(ID),
+        crags: async (_, { filter }) => {
+            if(!filter) {
+                return await Crag.find()
+            }
+            let filters = {}
+            if (filter.name !== undefined) filters.name = filter.name
+
+            return await Crag.find(filters)
+        }
     },
 
     Mutation: {
-        async createCrag(_, { cragInput: {name, country, description} }){
-            const foundCountry = await Country.findById(country)
-            if (!foundCountry){
-                throw new Error("Country not found")
+        createCrag: async (_, { input: {name, country, description} }) => {
+            let foundCountry = null
+            if (country) {
+                foundCountry = await Country.findById(country)
+                if(!foundCountry) {
+                    throw new Error('Country not found')
+                }
             }
+
             const foundCrag = await Crag.findOne({ name: name })
             if (foundCrag) {
-                throw new Error("A crag with this name already exists")
+                throw new Error("A crag with this name already exists (" + foundCrag._id + ")")
             }
 
             const crag = new Crag({
@@ -58,11 +69,12 @@ module.exports = {
                     throw new Error("Error removing crag from Country")
                 }
             }
-
             /** @todo make sure this works lol */
             await Climb.updateMany({ crag: ID }, { $unset: { crag: "" } })
 
-            return await Crag.deleteOne({ _id: ID }).acknowledged
+            res = await Crag.deleteOne({ _id: ID })
+            //console.log(test)
+            return res.acknowledged
         }
     }
 }

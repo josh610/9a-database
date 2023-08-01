@@ -13,7 +13,12 @@ type Ascent {
   updatedAt: Date!
 }
 
-input AscentInput {
+input AscentsFilter {
+  climber: String
+  climb: String
+}
+
+input CreateAscentInput {
   climber: ID!
   climb: ID!
   gradeProposal: String
@@ -26,12 +31,12 @@ input AscentInput {
 }
 
 type Query {
-  ascentById(ID: ID!): Ascent
-  ascents: [Ascent!]
+  ascentByID(ID: ID!): Ascent
+  ascents(filter: AscentsFilter): [Ascent!]
 }
 
 type Mutation {
-  createAscent(ascentInput: AscentInput!): Ascent
-  updateAscent(ID: ID!, ascentInput: AscentInput): Boolean!
+  createAscent(input: CreateAscentInput!): Ascent!
+  updateAscent(ID: ID!, input: CreateAscentInput): Boolean!
   deleteAscent(ID: ID!): Boolean!
 }

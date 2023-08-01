@@ -8,19 +8,22 @@ type Crag {
   updatedAt: Date!
 }
 
-input CragInput {
+input CragsFilter {
+  name: String
+}
+
+input CreateCragInput {
   name: String!
   country: ID
   description: String
 }
 
 type Query {
-  cragById(ID: ID!): Crag
-  cragByName(name: String!): [Crag!]
-  crags: [Crag!]
+  crag(ID: ID!): Crag
+  crags(filter: CragsFilter): [Crag!]
 }
 
 type Mutation {
-  createCrag(cragInput: CragInput!): Crag!
+  createCrag(input: CreateCragInput!): Crag!
   deleteCrag(ID: ID!): Boolean!
 }

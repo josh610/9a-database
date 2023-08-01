@@ -4,7 +4,7 @@ type Climb {
   grade: String!
   ascents: [Ascent!]
   crag: Crag
-  fa: String
+  fa: ID
   description: String
   addedAt: Date!
   updatedAt: Date!
@@ -19,15 +19,15 @@ input CreateClimbInput {
   name: String!
   grade: String!
   crag: ID
-  #fa: String
   description: String
 }
 
 type Query {
+  climb(ID: ID!): Climb
   climbs(filter: ClimbsFilter): [Climb!]
-  climbById(ID: ID!): Climb
 }
 
 type Mutation {
   createClimb(input: CreateClimbInput!): Climb!
+  deleteClimb(ID: ID!): Boolean!
 }

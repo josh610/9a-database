@@ -20,7 +20,8 @@ const climbSchema = new Schema({
         required: false
     },
     fa: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'FA',
         required: false
     },
     description: {

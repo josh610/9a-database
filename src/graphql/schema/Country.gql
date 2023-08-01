@@ -6,8 +6,11 @@ type Country {
   description: String
 }
 
+input CountriesFilter {
+  name: String
+}
+
 type Query {
   country(ID: ID!): Country
-  countryByName(name: String!): Country
-  countries: [Country!]
+  countries(filter: CountriesFilter): [Country!]
 }

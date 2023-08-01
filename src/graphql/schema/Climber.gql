@@ -6,6 +6,7 @@ type Climber {
   sex: String
   country: Country
   ascents: [Ascent!]
+  fas: [Ascent]
   description: String
   addedAt: Date!
   updatedAt: Date!
@@ -27,11 +28,11 @@ input CreateClimberInput {
 }
 
 type Query {
+  climber(ID: ID!): Climber
   climbers(filter: ClimbersFilter): [Climber!]
-  climberByID(ID: ID!): Climber
 }
 
 type Mutation {
-  createClimber(input: CreateClimberInput!): Climber
+  createClimber(input: CreateClimberInput!): Climber!
   deleteClimber(ID: ID!): Boolean!
 }
