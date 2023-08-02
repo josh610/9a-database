@@ -8,7 +8,7 @@ module.exports = {
             return await Climb.find({_id: {$in: parent.climbs}})
         },
         country: async (parent) => {
-            return await Country.findOne({_id: {$in: parent.country}})
+            return await Country.findOne({_id: parent.country._id})
         }
     },
     Query: {

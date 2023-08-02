@@ -4,12 +4,13 @@ const Climber = require('../../models/Climber')
 
 
 module.exports = {
+    /** @todo this needs to be waaay more efficient, queries with climber and climb are taking 1 min+ */
     Ascent: {
         climb: async (parent) => {
-            return await Climb.findOne({_id: {$in: parent.climb}})
+            return await Climb.findOne({_id: parent.climb._id})
         },
         climber: async (parent) => {
-            return await Climber.findOne({_id: {$in: parent.climber}})
+            return await Climber.findOne({_id: parent.climber._id})
         }
     },
     Query: {
@@ -19,14 +20,8 @@ module.exports = {
                 return await Ascent.find()
             }
             let filters = {}
-            if (filter.climber !== undefined) {
-                const climber = await Climber.findOne({ name: filter.climber })
-                filters.climber = climber
-            }
-            if (filter.climb !== undefined) {
-                const climb = await Climb.findOne({ name: filter.climb })
-                filters.climb = climb
-            }
+            if (filter.climber !== undefined) filters.climber = filter.climber
+            if (filter.climb !== undefined) filters.climb = filter.climb
             return await Ascent.find(filters)
         }
     },

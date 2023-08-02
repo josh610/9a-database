@@ -13,6 +13,7 @@ module.exports = {
     },
     Query: {
         country: async (_, { ID }) => await Country.findById(ID),
+        
         countries: async (_, { filter }) => {
             if(!filter) {
                 return await Country.find()

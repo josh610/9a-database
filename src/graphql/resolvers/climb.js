@@ -8,7 +8,7 @@ module.exports = {
             return await Ascent.find({_id: {$in: parent.ascents}})
         },
         crag: async (parent) => {
-            return await Crag.findOne({_id: {$in: parent.crag}})
+            return await Crag.findOne({_id: parent.crag._id})
         }
     },
     Query: {
@@ -18,10 +18,7 @@ module.exports = {
             }
             let filters = {}
             if (filter.name !== undefined) filters.name = filter.name
-            if (filter.crag !== undefined) {
-                const crag = await Crag.findOne({ name: filter.crag })
-                filters.crag = crag
-            }
+            if (filter.crag !== undefined) filters.crag = filter.crag
             /** @todo country filter **/
 
             return await Climb.find(filters)

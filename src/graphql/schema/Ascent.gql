@@ -14,8 +14,8 @@ type Ascent {
 }
 
 input AscentsFilter {
-  climber: String
-  climb: String
+  climber: ID
+  climb: ID
 }
 
 input CreateAscentInput {

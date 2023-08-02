@@ -8,7 +8,7 @@ module.exports = {
             return await Ascent.find({_id: {$in: parent.ascents}})
         },
         country: async (parent) => {
-            return await Country.findOne({_id: {$in: parent.country}})
+            return await Country.findOne({_id: parent.country._id})
         }
     },
     Query: {
@@ -28,10 +28,7 @@ module.exports = {
             let filters = {}
             if (filter.name !== undefined) filters.name = filter.name
             if (filter.nickname !== undefined) filters.nickname = filter.nickname
-            if (filter.country !== undefined) {
-                const country = await Country.findOne({ name: filter.country })
-                filters.country = country
-            }
+            if (filter.country !== undefined) filters.country = filter.country
             return await Climber.find(filters)
         }
     },
