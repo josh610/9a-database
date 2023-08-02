@@ -21,15 +21,15 @@ module.exports = {
          * ie. for filter.name, input of null (ok) and input of 5 (invalid, should be a string)
          * will both produce filter.name = null and output climbers whose names are null
          */
-        climbers: async (_, { filter }) => {
+        climbers: async (_, { filter, limit }) => {
             if(!filter) {
-                return await Climber.find()
+                return await Climber.find().limit(limit)
             }
             let filters = {}
             if (filter.name !== undefined) filters.name = filter.name
             if (filter.nickname !== undefined) filters.nickname = filter.nickname
             if (filter.country !== undefined) filters.country = filter.country
-            return await Climber.find(filters)
+            return await Climber.find(filters).limit(limit)
         }
     },
 

@@ -24,7 +24,7 @@ input CreateClimbInput {
 
 type Query {
   climb(ID: ID!): Climb
-  climbs(filter: ClimbsFilter): [Climb!]
+  climbs(filter: ClimbsFilter, limit: Int): [Climb!]
 }
 
 type Mutation {

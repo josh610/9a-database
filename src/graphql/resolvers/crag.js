@@ -13,14 +13,14 @@ module.exports = {
     },
     Query: {
         crag: async (_, { ID }) => await Crag.findById(ID),
-        crags: async (_, { filter }) => {
+        crags: async (_, { filter, limit }) => {
             if(!filter) {
-                return await Crag.find()
+                return await Crag.find().limit(limit)
             }
             let filters = {}
             if (filter.name !== undefined) filters.name = filter.name
 
-            return await Crag.find(filters)
+            return await Crag.find(filters).limit(limit)
         }
     },
 

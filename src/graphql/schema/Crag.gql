@@ -20,7 +20,7 @@ input CreateCragInput {
 
 type Query {
   crag(ID: ID!): Crag
-  crags(filter: CragsFilter): [Crag!]
+  crags(filter: CragsFilter, limit: Int): [Crag!]
 }
 
 type Mutation {

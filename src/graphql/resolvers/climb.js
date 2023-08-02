@@ -12,16 +12,16 @@ module.exports = {
         }
     },
     Query: {
-        climbs: async (_, { filter }) => {
+        climbs: async (_, { filter, limit }) => {
             if(!filter) {
-                return await Climb.find()
+                return await Climb.find().limit(limit)
             }
             let filters = {}
             if (filter.name !== undefined) filters.name = filter.name
             if (filter.crag !== undefined) filters.crag = filter.crag
             /** @todo country filter **/
 
-            return await Climb.find(filters)
+            return await Climb.find(filters).limit(limit)
         },
         climb: async (_, { ID }) => await Climb.findById(ID)
     },

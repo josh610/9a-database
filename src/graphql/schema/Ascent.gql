@@ -32,7 +32,7 @@ input CreateAscentInput {
 
 type Query {
   ascentByID(ID: ID!): Ascent
-  ascents(filter: AscentsFilter): [Ascent!]
+  ascents(filter: AscentsFilter, limit: Int): [Ascent!]
 }
 
 type Mutation {

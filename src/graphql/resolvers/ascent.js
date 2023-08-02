@@ -4,7 +4,7 @@ const Climber = require('../../models/Climber')
 
 
 module.exports = {
-    /** @todo this needs to be waaay more efficient, queries with climber and climb are taking 1 min+ */
+    /** @todo efficiency issue, querying all ascents with climb and climber names takes upwards of 30s. Not sure if there's a way around this */
     Ascent: {
         climb: async (parent) => {
             return await Climb.findOne({_id: parent.climb._id})
@@ -15,14 +15,14 @@ module.exports = {
     },
     Query: {
         ascentByID: async (_, { ID }) => await Ascent.findById(ID),
-        ascents: async (_, { filter }) => {
+        ascents: async (_, { filter, limit }) => {
             if(!filter) {
-                return await Ascent.find()
+                return await Ascent.find().limit(limit)
             }
             let filters = {}
             if (filter.climber !== undefined) filters.climber = filter.climber
             if (filter.climb !== undefined) filters.climb = filter.climb
-            return await Ascent.find(filters)
+            return await Ascent.find(filters).limit(limit)
         }
     },
 
