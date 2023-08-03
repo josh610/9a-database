@@ -2,14 +2,48 @@ const { model, Schema } = require('mongoose')
 
 const ascentSchema = new Schema({
     climber: {
-        type: Schema.Types.ObjectId,
-        ref: 'Climber',
-        required: true
+        name: {
+            type: String,
+            required: true
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Climber',
+            required: true
+        }
     },
     climb: {
-        type: Schema.Types.ObjectId,
-        ref: 'Climb',
-        required: true
+        name: {
+            type: String,
+            required: true
+        },
+        crag: {
+            name: {
+                type: String,
+                required: true
+            },
+            country: {
+                name: {
+                    type: String,
+                    required: true
+                },
+                data: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Country',
+                    required: true
+                }
+            },
+            data: {
+                type: Schema.Types.ObjectId,
+                ref: 'Crag',
+                required: true
+            }
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Climb',
+            required: true
+        }
     },
     gradeProposal: {
         type: String,

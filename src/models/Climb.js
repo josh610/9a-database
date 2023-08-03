@@ -10,14 +10,55 @@ const climbSchema = new Schema({
         required: true
     },
     ascents: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Ascent',
-        required: false
+        climber: {
+            name: {
+                type: String,
+                required: true
+            },
+            country: {
+                name: {
+                    type: String,
+                    required: true
+                },
+                data: {
+                    type: Schema.Types.ObjectId,
+                    ref: 'Country',
+                    required: true
+                }
+            },
+            data: {
+                type: Schema.Types.ObjectId,
+                ref: 'Climber',
+                required: true
+            }
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Ascent',
+            required: false
+        }
     }],
     crag: {
-        type: Schema.Types.ObjectId,
-        ref: 'Crag',
-        required: false
+        name: {
+            type: String,
+            required: true
+        },
+        country: {
+            name: {
+                type: String,
+                required: true
+            },
+            data: {
+                type: Schema.Types.ObjectId,
+                ref: 'Country',
+                required: true
+            }
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Crag',
+            required: false
+        }
     },
     fa: {
         type: Schema.Types.ObjectId,

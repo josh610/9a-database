@@ -18,9 +18,15 @@ const climberSchema = new Schema({
         required: false
     },
     country: {
-        type: Schema.Types.ObjectId,
-        ref: 'Country',
-        required: false
+        name: {
+            type: String,
+            required: true
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Country',
+            required: true
+        }
     },
     ascents: [{
         type: Schema.Types.ObjectId,

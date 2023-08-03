@@ -11,9 +11,15 @@ const cragSchema = new Schema({
         required: false
     },
     climbs: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Climb',
-        required: false
+        name: {
+            type: String,
+            required: true
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Climb',
+            required: true
+        }
     }],
     description: {
         type: String,

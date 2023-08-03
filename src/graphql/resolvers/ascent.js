@@ -2,6 +2,8 @@ const Ascent = require('../../models/Ascent')
 const Climb = require('../../models/Climb')
 const Climber = require('../../models/Climber')
 
+const mongoose = require('mongoose')
+
 
 module.exports = {
     /** @todo efficiency issue, querying all ascents with climb and climber names takes upwards of 30s. Not sure if there's a way around this */
@@ -16,13 +18,13 @@ module.exports = {
     Query: {
         ascentByID: async (_, { ID }) => await Ascent.findById(ID),
         ascents: async (_, { filter, limit }) => {
-            if(!filter) {
-                return await Ascent.find().limit(limit)
-            }
+            if(!filter) return await Ascent.find().sort({'climber.name': -1}).limit(limit)
+
             let filters = {}
             if (filter.climber !== undefined) filters.climber = filter.climber
             if (filter.climb !== undefined) filters.climb = filter.climb
-            return await Ascent.find(filters).limit(limit)
+
+            return await Ascent.find(filters).sort({'climber.name': -1}).limit(limit)
         }
     },
 

@@ -5,15 +5,33 @@ const countrySchema = new Schema({
         type: String,
         required: true
     },
+    ISOcode: {
+        type: String,
+        required: true
+    },
     crags: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Crag',
-        required: false
+        crag: {
+            name: {
+                type: String,
+                required: true
+            },
+            data: {
+                type: Schema.Types.ObjectId,
+                ref: 'Crag',
+                required: false
+            }
+        },
     }],
     climbers: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Climber',
-        required: false
+        name: {
+            type: String,
+            required: true
+        },
+        data: {
+            type: Schema.Types.ObjectId,
+            ref: 'Climber',
+            required: true
+        }
     }],
     description: {
         type: String,

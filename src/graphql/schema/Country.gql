@@ -1,6 +1,7 @@
 type Country {
   _id: ID!
   name: String!
+  ISOcode: String!
   crags: [Crag!]
   climbers: [Climber!]
   description: String
@@ -8,9 +9,19 @@ type Country {
 
 input CountriesFilter {
   name: String
+  ISOcode: String
+}
+
+input CreateCountryInput {
+  name: String!
+  ISOcode: String!
 }
 
 type Query {
   country(ID: ID!): Country
   countries(filter: CountriesFilter): [Country!]
+}
+
+type Mutation {
+  createCountry(input: CreateCountryInput!): Country!
 }

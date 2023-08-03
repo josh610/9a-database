@@ -7,6 +7,11 @@ module.exports = {
         crags: async (parent) => {
             return await Crag.find({_id: {$in: parent.crags}})
         },
+        /*
+        crags: async (parent) => {
+            return await mongoose.Model.find({_id: {$in: parent.crags}})
+        },
+        */
         climbers: async (parent) => {
             return await Climber.find({_id: {$in: parent.climbers}})
         }
@@ -23,5 +28,15 @@ module.exports = {
 
             return await Country.find(filters)
         }
+    },
+    Mutation: {
+        createCountry: async (_, { input: {name, ISOcode} }) => {
+            const country = new Country({
+                name: name,
+                ISOcode: ISOcode
+            })
+
+            return await country.save()
+        },
     }
 }

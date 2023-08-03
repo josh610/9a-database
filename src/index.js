@@ -5,7 +5,7 @@ const mongoose = require("mongoose")
 const typeDefs = require('./graphql/schema')
 const resolvers = require('./graphql/resolvers')
 
-const MONGODB = "mongodb+srv://joshz610657:e4FXAhhawwGBMFih@cluster0.r8vaaa1.mongodb.net/?retryWrites=true&w=majority"
+const MONGODB = "mongodb+srv://joshz610657:e4FXAhhawwGBMFih@cluster0.r8vaaa1.mongodb.net/9a-branch-sort?retryWrites=true&w=majority"
 
 const server = new ApolloServer({
     typeDefs,
@@ -19,5 +19,4 @@ mongoose.connect(MONGODB, {useNewUrlParser: true})
     })
     .then((res) => {
         console.log(`Server running at ${res.url}`)
-        //populate() // Populate db with countries
     })
