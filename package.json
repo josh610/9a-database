@@ -16,7 +16,8 @@
     "country-list-js": "^3.1.7",
     "graphql": "^16.6.0",
     "graphql-tools": "^9.0.0",
-    "mongoose": "^7.3.0"
+    "mongoose": "^7.3.0",
+    "pg": "^8.11.2"
   },
   "devDependencies": {
     "@types/country-list-js": "^3.1.2"

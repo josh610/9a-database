@@ -1,6 +1,7 @@
 type Country {
   _id: ID!
   name: String!
+  ISOcode: String!
   crags: [Crag!]
   climbers: [Climber!]
   description: String
