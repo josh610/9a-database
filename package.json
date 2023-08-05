@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index",
+    "restartdb": "node src/restartDb",
     "prod": "NODE_ENV=production nodemon src/index"
   },
   "keywords": [],
