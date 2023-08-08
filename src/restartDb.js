@@ -60,7 +60,7 @@ CREATE UNIQUE INDEX climber_climb_unique ON ascent(climber_id int4_ops,climb_id 
 `
 
 const client = new Client({
-    database: '_9a_backup',
+    database: '_9a',
     port: 5432,
 })
 client.connect().then(() => {
