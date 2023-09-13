@@ -1,0 +1,5672 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 15.3
+-- Dumped by pg_dump version 15.3
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: ascent; Type: TABLE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE TABLE public.ascent (
+    id integer NOT NULL,
+    climber_id integer NOT NULL,
+    climb_id integer NOT NULL,
+    grade_proposal character varying(10),
+    fa boolean,
+    flash boolean,
+    onsight boolean,
+    _date date,
+    description text,
+    added_at date DEFAULT CURRENT_DATE
+);
+
+
+ALTER TABLE public.ascent OWNER TO joshzimmerman;
+
+--
+-- Name: ascent_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE SEQUENCE public.ascent_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ascent_id_seq OWNER TO joshzimmerman;
+
+--
+-- Name: ascent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+--
+
+ALTER SEQUENCE public.ascent_id_seq OWNED BY public.ascent.id;
+
+
+--
+-- Name: ascent_media; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.ascent_media (
+    id integer NOT NULL,
+    ascent_id integer,
+    media_id integer
+);
+
+
+ALTER TABLE public.ascent_media OWNER TO postgres;
+
+--
+-- Name: ascent_media_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.ascent_media_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ascent_media_id_seq OWNER TO postgres;
+
+--
+-- Name: ascent_media_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.ascent_media_id_seq OWNED BY public.ascent_media.id;
+
+
+--
+-- Name: climb; Type: TABLE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE TABLE public.climb (
+    id integer NOT NULL,
+    name character varying(255) DEFAULT 'NOT NULL'::character varying,
+    grade character varying(10),
+    crag_id integer,
+    description text,
+    added_at date DEFAULT CURRENT_DATE
+);
+
+
+ALTER TABLE public.climb OWNER TO joshzimmerman;
+
+--
+-- Name: climb_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE SEQUENCE public.climb_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.climb_id_seq OWNER TO joshzimmerman;
+
+--
+-- Name: climb_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+--
+
+ALTER SEQUENCE public.climb_id_seq OWNED BY public.climb.id;
+
+
+--
+-- Name: climb_media; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.climb_media (
+    id integer NOT NULL,
+    climb_id integer,
+    media_id integer
+);
+
+
+ALTER TABLE public.climb_media OWNER TO postgres;
+
+--
+-- Name: climb_media_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.climb_media_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.climb_media_id_seq OWNER TO postgres;
+
+--
+-- Name: climb_media_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.climb_media_id_seq OWNED BY public.climb_media.id;
+
+
+--
+-- Name: climber; Type: TABLE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE TABLE public.climber (
+    id integer NOT NULL,
+    name character varying(255) DEFAULT 'NOT NULL'::character varying,
+    nickname character varying(255),
+    country_id integer,
+    dob date,
+    sex character varying(10),
+    description text,
+    added_at date DEFAULT CURRENT_DATE
+);
+
+
+ALTER TABLE public.climber OWNER TO joshzimmerman;
+
+--
+-- Name: climber_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE SEQUENCE public.climber_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.climber_id_seq OWNER TO joshzimmerman;
+
+--
+-- Name: climber_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+--
+
+ALTER SEQUENCE public.climber_id_seq OWNED BY public.climber.id;
+
+
+--
+-- Name: climber_media; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.climber_media (
+    id integer NOT NULL,
+    climber_id integer,
+    media_id integer
+);
+
+
+ALTER TABLE public.climber_media OWNER TO postgres;
+
+--
+-- Name: climber_media_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.climber_media_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.climber_media_id_seq OWNER TO postgres;
+
+--
+-- Name: climber_media_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.climber_media_id_seq OWNED BY public.climber_media.id;
+
+
+--
+-- Name: country; Type: TABLE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE TABLE public.country (
+    id integer NOT NULL,
+    name character varying(255) DEFAULT 'NOT NULL'::character varying,
+    iso_code character varying(3) DEFAULT 'NOT NULL'::character varying,
+    description text
+);
+
+
+ALTER TABLE public.country OWNER TO joshzimmerman;
+
+--
+-- Name: country_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE SEQUENCE public.country_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.country_id_seq OWNER TO joshzimmerman;
+
+--
+-- Name: country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+--
+
+ALTER SEQUENCE public.country_id_seq OWNED BY public.country.id;
+
+
+--
+-- Name: crag; Type: TABLE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE TABLE public.crag (
+    id integer NOT NULL,
+    name character varying(255) DEFAULT 'NOT NULL'::character varying,
+    country_id integer,
+    description text,
+    added_at date DEFAULT CURRENT_DATE
+);
+
+
+ALTER TABLE public.crag OWNER TO joshzimmerman;
+
+--
+-- Name: crag_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+--
+
+CREATE SEQUENCE public.crag_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.crag_id_seq OWNER TO joshzimmerman;
+
+--
+-- Name: crag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+--
+
+ALTER SEQUENCE public.crag_id_seq OWNED BY public.crag.id;
+
+
+--
+-- Name: media; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.media (
+    id integer NOT NULL,
+    type text,
+    url text NOT NULL,
+    label text
+);
+
+
+ALTER TABLE public.media OWNER TO postgres;
+
+--
+-- Name: media_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.media_id_seq
+    START WITH 3169
+    INCREMENT BY 1
+    MINVALUE 3169
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.media_id_seq OWNER TO postgres;
+
+--
+-- Name: media_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.media_id_seq OWNED BY public.media.id;
+
+
+--
+-- Name: ascent id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.ascent ALTER COLUMN id SET DEFAULT nextval('public.ascent_id_seq'::regclass);
+
+
+--
+-- Name: ascent_media id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ascent_media ALTER COLUMN id SET DEFAULT nextval('public.ascent_media_id_seq'::regclass);
+
+
+--
+-- Name: climb id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climb ALTER COLUMN id SET DEFAULT nextval('public.climb_id_seq'::regclass);
+
+
+--
+-- Name: climb_media id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climb_media ALTER COLUMN id SET DEFAULT nextval('public.climb_media_id_seq'::regclass);
+
+
+--
+-- Name: climber id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climber ALTER COLUMN id SET DEFAULT nextval('public.climber_id_seq'::regclass);
+
+
+--
+-- Name: climber_media id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climber_media ALTER COLUMN id SET DEFAULT nextval('public.climber_media_id_seq'::regclass);
+
+
+--
+-- Name: country id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.country ALTER COLUMN id SET DEFAULT nextval('public.country_id_seq'::regclass);
+
+
+--
+-- Name: crag id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.crag ALTER COLUMN id SET DEFAULT nextval('public.crag_id_seq'::regclass);
+
+
+--
+-- Name: media id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.media ALTER COLUMN id SET DEFAULT nextval('public.media_id_seq'::regclass);
+
+
+--
+-- Data for Name: ascent; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+--
+
+COPY public.ascent (id, climber_id, climb_id, grade_proposal, fa, flash, onsight, _date, description, added_at) FROM stdin;
+2	2	2	\N	\N	\N	\N	2011-08-15	\N	2023-08-08
+3	2	3	\N	\N	\N	\N	\N	\N	2023-08-08
+4	2	4	\N	\N	\N	\N	\N	\N	2023-08-08
+5	2	5	\N	\N	\N	\N	\N	\N	2023-08-08
+6	2	6	\N	\N	\N	\N	2006-04-19	\N	2023-08-08
+7	2	1	\N	\N	\N	\N	\N	\N	2023-08-08
+8	2	8	\N	\N	\N	\N	\N	\N	2023-08-08
+9	3	9	\N	\N	\N	\N	2016-09-23	\N	2023-08-08
+10	4	10	\N	\N	\N	\N	2021-09-25	\N	2023-08-08
+11	4	11	\N	\N	\N	\N	2016-08-03	\N	2023-08-08
+12	4	12	\N	\N	\N	\N	\N	\N	2023-08-08
+13	4	13	\N	\N	\N	\N	\N	\N	2023-08-08
+14	4	14	\N	\N	\N	\N	\N	\N	2023-08-08
+15	4	15	\N	\N	\N	\N	\N	\N	2023-08-08
+16	5	16	\N	\N	\N	\N	\N	\N	2023-08-08
+17	5	17	\N	\N	\N	\N	\N	\N	2023-08-08
+18	5	18	\N	\N	\N	\N	2017-11-21	\N	2023-08-08
+19	6	19	\N	\N	\N	\N	2020-09-28	\N	2023-08-08
+20	6	20	\N	\N	\N	\N	\N	\N	2023-08-08
+21	6	21	\N	\N	\N	\N	\N	\N	2023-08-08
+22	6	22	\N	\N	\N	\N	2020-08-08	\N	2023-08-08
+23	7	23	\N	t	\N	\N	2014-11-18	\N	2023-08-08
+24	7	24	\N	t	\N	\N	2014-11-18	\N	2023-08-08
+25	7	25	\N	\N	\N	\N	\N	\N	2023-08-08
+26	7	26	\N	\N	\N	\N	\N	\N	2023-08-08
+27	8	19	\N	\N	\N	\N	2012-05-20	\N	2023-08-08
+28	8	11	\N	\N	\N	\N	2016-05-25	\N	2023-08-08
+29	8	29	\N	\N	\N	\N	\N	\N	2023-08-08
+30	8	30	\N	\N	\N	\N	\N	\N	2023-08-08
+31	8	31	\N	\N	\N	\N	2016-08-09	\N	2023-08-08
+32	8	32	\N	\N	\N	\N	\N	\N	2023-08-08
+33	8	14	\N	\N	\N	\N	\N	\N	2023-08-08
+34	8	34	\N	\N	\N	\N	2008-09-18	\N	2023-08-08
+35	8	26	\N	\N	\N	\N	2015-04-12	\N	2023-08-08
+36	8	36	\N	\N	\N	\N	2018-03-04	\N	2023-08-08
+37	8	37	\N	\N	\N	\N	2009-12-05	\N	2023-08-08
+38	8	17	\N	\N	\N	\N	\N	\N	2023-08-08
+39	8	39	\N	\N	\N	\N	2017-04-12	\N	2023-08-08
+40	8	22	\N	\N	\N	\N	\N	\N	2023-08-08
+41	8	9	\N	\N	\N	\N	\N	\N	2023-08-08
+42	8	18	\N	\N	\N	\N	2012-11-02	\N	2023-08-08
+43	8	43	\N	\N	\N	\N	2017-05-07	\N	2023-08-08
+44	8	44	\N	\N	\N	\N	\N	\N	2023-08-08
+45	9	45	\N	\N	\N	\N	2018-08-31	\N	2023-08-08
+46	10	46	\N	\N	\N	\N	\N	\N	2023-08-08
+47	10	47	\N	\N	\N	\N	2021-09-02	\N	2023-08-08
+48	10	26	\N	\N	\N	\N	\N	\N	2023-08-08
+49	10	9	\N	\N	\N	\N	\N	\N	2023-08-08
+50	11	50	\N	\N	\N	\N	\N	\N	2023-08-08
+51	11	13	\N	\N	\N	\N	\N	\N	2023-08-08
+52	11	52	\N	\N	\N	\N	\N	\N	2023-08-08
+53	12	53	\N	\N	\N	\N	2012-04-26	\N	2023-08-08
+54	13	54	\N	\N	\N	\N	2012-06-20	\N	2023-08-08
+55	14	17	\N	\N	\N	\N	\N	\N	2023-08-08
+56	14	56	\N	\N	\N	\N	2021-11-21	\N	2023-08-08
+57	15	57	\N	t	\N	\N	2015-01-21	\N	2023-08-08
+58	16	58	\N	\N	\N	\N	\N	\N	2023-08-08
+59	17	31	\N	\N	\N	\N	2017-06-27	\N	2023-08-08
+60	18	60	\N	\N	\N	\N	2010-06-26	\N	2023-08-08
+61	18	47	\N	\N	\N	\N	2017-06-23	\N	2023-08-08
+62	18	45	\N	\N	\N	\N	2011-07-25	\N	2023-08-08
+63	18	63	\N	\N	\N	\N	\N	\N	2023-08-08
+64	18	64	\N	\N	\N	\N	2015-11-13	\N	2023-08-08
+65	19	65	\N	\N	\N	\N	\N	\N	2023-08-08
+66	20	66	\N	\N	\N	\N	2001-05-21	\N	2023-08-08
+67	20	67	\N	\N	\N	\N	2007-06-27	\N	2023-08-08
+68	20	68	\N	\N	\N	\N	2007-06-27	\N	2023-08-08
+69	20	69	\N	\N	\N	\N	2006-10-12	\N	2023-08-08
+70	20	19	\N	\N	\N	\N	2013-09-14	\N	2023-08-08
+71	20	71	\N	\N	\N	\N	2005-04-13	\N	2023-08-08
+72	20	11	\N	\N	\N	\N	2007-07-30	\N	2023-08-08
+73	20	73	\N	\N	\N	\N	2007-09-06	\N	2023-08-08
+74	20	74	\N	\N	\N	\N	\N	\N	2023-08-08
+75	20	12	\N	t	\N	\N	2005-11-08	\N	2023-08-08
+76	20	76	\N	\N	\N	\N	2007-03-08	\N	2023-08-08
+77	20	30	\N	\N	\N	\N	\N	\N	2023-08-08
+78	20	78	\N	\N	\N	\N	2007-06-27	\N	2023-08-08
+79	20	79	\N	\N	\N	\N	\N	\N	2023-08-08
+80	20	81	\N	\N	\N	\N	\N	\N	2023-08-08
+81	20	26	\N	\N	\N	\N	2008-09-14	\N	2023-08-08
+82	20	36	\N	\N	\N	\N	\N	\N	2023-08-08
+83	20	21	\N	\N	\N	\N	2012-09-24	\N	2023-08-08
+84	20	85	\N	\N	\N	\N	\N	\N	2023-08-08
+85	20	86	\N	t	\N	\N	2001-11-18	\N	2023-08-08
+86	20	64	\N	t	\N	\N	2000-04-01	\N	2023-08-08
+87	20	88	\N	\N	\N	\N	2015-10-05	\N	2023-08-08
+88	20	54	\N	\N	\N	\N	\N	\N	2023-08-08
+89	21	90	\N	\N	\N	\N	\N	\N	2023-08-08
+90	21	52	\N	\N	\N	\N	\N	\N	2023-08-08
+91	22	19	\N	\N	\N	\N	2016-08-12	\N	2023-08-08
+92	22	11	\N	\N	\N	\N	2017-09-24	\N	2023-08-08
+93	22	26	\N	\N	\N	\N	\N	\N	2023-08-08
+94	22	95	\N	\N	\N	\N	2017-02-26	\N	2023-08-08
+95	22	39	\N	\N	\N	\N	\N	\N	2023-08-08
+96	23	50	\N	\N	\N	\N	\N	\N	2023-08-08
+97	24	19	\N	\N	\N	\N	\N	\N	2023-08-08
+98	24	99	\N	\N	\N	\N	\N	\N	2023-08-08
+99	24	30	\N	\N	\N	\N	\N	\N	2023-08-08
+100	24	31	\N	\N	\N	\N	2016-09-20	\N	2023-08-08
+101	24	102	\N	\N	\N	\N	2018-05-02	\N	2023-08-08
+102	24	25	\N	\N	\N	\N	\N	\N	2023-08-08
+103	24	17	\N	\N	\N	\N	\N	\N	2023-08-08
+104	24	14	\N	\N	\N	\N	2017-03-17	\N	2023-08-08
+105	24	26	\N	\N	\N	\N	2016-10-02	\N	2023-08-08
+106	24	95	\N	\N	\N	\N	2017-02-25	\N	2023-08-08
+107	24	108	\N	\N	\N	\N	\N	\N	2023-08-08
+108	24	39	\N	\N	\N	\N	2016-03-23	\N	2023-08-08
+109	24	22	\N	\N	\N	\N	\N	\N	2023-08-08
+110	24	9	\N	\N	\N	\N	2016-10-01	\N	2023-08-08
+111	24	43	\N	\N	\N	\N	\N	\N	2023-08-08
+112	24	113	\N	\N	\N	\N	2017-02-28	\N	2023-08-08
+113	25	16	\N	\N	\N	\N	\N	\N	2023-08-08
+114	26	16	\N	\N	\N	\N	\N	\N	2023-08-08
+115	26	99	\N	\N	\N	\N	\N	\N	2023-08-08
+116	26	21	\N	\N	\N	\N	2019-08-29	\N	2023-08-08
+117	26	118	\N	\N	\N	\N	2021-07-26	\N	2023-08-08
+118	26	119	\N	\N	\N	\N	2020-07-02	\N	2023-08-08
+119	27	23	\N	\N	\N	\N	2015-01-01	\N	2023-08-08
+120	27	24	\N	\N	\N	\N	2015-01-01	\N	2023-08-08
+121	27	122	\N	\N	\N	\N	2015-01-01	\N	2023-08-08
+122	27	64	\N	\N	\N	\N	2008-04-09	\N	2023-08-08
+123	28	60	\N	t	\N	\N	2008-06-19	\N	2023-08-08
+124	29	19	\N	\N	\N	\N	\N	\N	2023-08-08
+125	30	64	\N	\N	\N	\N	\N	\N	2023-08-08
+126	31	127	\N	\N	\N	\N	2013-01-07	\N	2023-08-08
+127	31	19	\N	\N	\N	\N	2011-09-22	\N	2023-08-08
+128	31	99	\N	\N	\N	\N	2016-10-26	\N	2023-08-08
+129	31	73	\N	\N	\N	\N	2012-09-20	\N	2023-08-08
+130	31	29	\N	\N	\N	\N	\N	\N	2023-08-08
+131	31	31	\N	\N	\N	\N	2017-06-12	\N	2023-08-08
+132	31	133	\N	t	\N	\N	2021-09-26	\N	2023-08-08
+133	31	26	\N	\N	\N	\N	2008-09-23	\N	2023-08-08
+134	31	17	\N	t	\N	\N	2018-03-06	\N	2023-08-08
+135	31	136	\N	\N	\N	\N	\N	\N	2023-08-08
+136	31	137	\N	\N	\N	\N	2019-07-08	\N	2023-08-08
+137	31	22	\N	\N	\N	\N	2016-10-04	\N	2023-08-08
+138	31	140	\N	t	\N	\N	2009-04-30	\N	2023-08-08
+139	31	15	\N	\N	\N	\N	2012-12-15	\N	2023-08-08
+140	31	56	\N	\N	\N	\N	\N	\N	2023-08-08
+141	31	143	\N	t	\N	\N	2017-06-28	\N	2023-08-08
+142	31	144	\N	\N	\N	\N	\N	\N	2023-08-08
+143	32	145	\N	\N	\N	\N	2013-08-21	\N	2023-08-08
+144	33	46	\N	\N	\N	\N	2020-10-20	\N	2023-08-08
+145	34	53	\N	\N	\N	\N	\N	\N	2023-08-08
+146	35	148	\N	\N	\N	\N	\N	\N	2023-08-08
+147	35	149	\N	\N	\N	\N	\N	\N	2023-08-08
+148	35	150	\N	\N	\N	\N	\N	\N	2023-08-08
+149	36	17	\N	\N	\N	\N	\N	\N	2023-08-08
+150	37	64	\N	\N	\N	\N	2007-04-01	\N	2023-08-08
+151	38	46	\N	\N	\N	\N	2020-07-01	\N	2023-08-08
+152	38	19	\N	\N	\N	\N	2019-08-09	\N	2023-08-08
+153	38	47	\N	\N	\N	\N	\N	\N	2023-08-08
+154	38	21	\N	\N	\N	\N	\N	\N	2023-08-08
+155	38	157	\N	\N	\N	\N	2021-09-25	\N	2023-08-08
+156	39	19	\N	\N	\N	\N	\N	\N	2023-08-08
+157	39	138	\N	\N	\N	\N	2021-08-04	\N	2023-08-08
+158	39	22	\N	\N	\N	\N	2021-09-27	\N	2023-08-08
+159	40	60	\N	\N	\N	\N	2021-09-06	\N	2023-08-08
+160	41	45	\N	\N	\N	\N	2013-10-20	\N	2023-08-08
+161	42	64	\N	\N	\N	\N	\N	\N	2023-08-08
+162	43	19	\N	\N	\N	\N	2018-07-01	\N	2023-08-08
+163	44	16	\N	\N	\N	\N	\N	\N	2023-08-08
+164	44	11	\N	\N	\N	\N	2007-09-03	\N	2023-08-08
+165	44	50	\N	\N	\N	\N	\N	\N	2023-08-08
+166	44	53	\N	\N	\N	\N	2013-04-15	\N	2023-08-08
+167	44	169	\N	\N	\N	\N	\N	\N	2023-08-08
+168	44	26	\N	\N	\N	\N	\N	\N	2023-08-08
+169	44	171	\N	\N	\N	\N	2015-03-13	\N	2023-08-08
+170	44	108	\N	\N	\N	\N	2011-06-01	\N	2023-08-08
+171	44	52	\N	\N	\N	\N	\N	\N	2023-08-08
+172	44	174	\N	t	\N	\N	2010-12-19	\N	2023-08-08
+173	44	88	\N	\N	\N	\N	2015-09-30	\N	2023-08-08
+174	44	54	\N	\N	\N	\N	\N	\N	2023-08-08
+175	45	21	\N	\N	\N	\N	2021-09-25	\N	2023-08-08
+176	46	79	\N	\N	\N	\N	2018-04-30	\N	2023-08-08
+177	46	179	\N	\N	\N	\N	\N	\N	2023-08-08
+178	47	180	\N	\N	\N	\N	\N	\N	2023-08-08
+179	47	137	\N	\N	\N	\N	\N	\N	2023-08-08
+180	47	182	\N	\N	\N	\N	\N	\N	2023-08-08
+181	48	45	\N	\N	\N	\N	2013-10-30	\N	2023-08-08
+182	48	81	\N	\N	\N	\N	\N	\N	2023-08-08
+183	48	86	\N	\N	\N	\N	2009-03-24	\N	2023-08-08
+184	48	64	\N	\N	\N	\N	2008-04-17	\N	2023-08-08
+185	49	187	\N	\N	\N	\N	\N	\N	2023-08-08
+186	50	188	\N	\N	\N	\N	\N	\N	2023-08-08
+187	50	108	\N	\N	\N	\N	\N	\N	2023-08-08
+188	50	190	\N	t	\N	\N	2016-02-13	\N	2023-08-08
+189	51	21	\N	\N	\N	\N	\N	\N	2023-08-08
+190	51	22	\N	\N	\N	\N	\N	\N	2023-08-08
+191	51	119	\N	\N	\N	\N	\N	\N	2023-08-08
+192	52	194	\N	\N	\N	\N	\N	\N	2023-08-08
+193	52	195	\N	\N	\N	\N	2009-11-03	\N	2023-08-08
+194	52	196	\N	\N	\N	\N	\N	\N	2023-08-08
+195	52	11	\N	t	\N	\N	2001-07-18	\N	2023-08-08
+196	52	198	\N	t	\N	\N	2011-01-14	\N	2023-08-08
+197	52	199	\N	t	\N	\N	2009-02-20	\N	2023-08-08
+198	52	47	\N	t	\N	\N	2005-09-23	\N	2023-08-08
+199	52	201	\N	\N	\N	\N	\N	\N	2023-08-08
+200	52	202	\N	\N	\N	\N	2015-03-08	\N	2023-08-08
+201	52	53	\N	t	\N	\N	2010-05-19	\N	2023-08-08
+202	52	102	\N	\N	\N	\N	2011-05-07	\N	2023-08-08
+203	52	79	\N	t	\N	\N	2010-03-02	\N	2023-08-08
+204	52	206	\N	t	\N	\N	2011-04-20	\N	2023-08-08
+205	52	207	\N	\N	\N	\N	\N	\N	2023-08-08
+206	52	208	\N	t	\N	\N	2008-04-30	\N	2023-08-08
+207	52	209	\N	t	\N	\N	2008-12-18	\N	2023-08-08
+208	52	14	\N	\N	\N	\N	\N	\N	2023-08-08
+209	52	169	\N	t	\N	\N	2008-09-11	\N	2023-08-08
+210	52	212	\N	\N	\N	\N	2013-03-23	\N	2023-08-08
+211	52	213	\N	\N	\N	\N	2007-11-30	\N	2023-08-08
+212	52	95	\N	\N	\N	\N	2006-12-01	\N	2023-08-08
+213	52	215	\N	\N	\N	\N	\N	\N	2023-08-08
+214	52	216	\N	\N	\N	\N	\N	\N	2023-08-08
+215	52	217	\N	\N	\N	\N	\N	\N	2023-08-08
+216	52	218	\N	\N	\N	\N	\N	\N	2023-08-08
+217	52	219	\N	t	\N	\N	2009-12-25	\N	2023-08-08
+218	52	220	\N	\N	\N	\N	\N	\N	2023-08-08
+219	52	221	\N	\N	\N	\N	2008-12-24	\N	2023-08-08
+220	52	222	\N	t	\N	\N	2009-05-31	\N	2023-08-08
+221	52	39	\N	t	\N	\N	2008-05-31	\N	2023-08-08
+222	52	224	\N	t	\N	\N	2010-12-19	\N	2023-08-08
+223	52	225	\N	\N	\N	\N	\N	\N	2023-08-08
+224	52	15	\N	\N	\N	\N	\N	\N	2023-08-08
+225	52	227	\N	\N	\N	\N	2011-05-07	\N	2023-08-08
+226	52	228	\N	t	\N	\N	2013-02-06	\N	2023-08-08
+227	52	229	\N	\N	\N	\N	\N	\N	2023-08-08
+228	52	64	\N	\N	\N	\N	2003-10-28	\N	2023-08-08
+229	52	231	\N	t	\N	\N	2007-07-21	\N	2023-08-08
+230	52	232	\N	\N	\N	\N	\N	\N	2023-08-08
+231	52	233	\N	\N	\N	\N	\N	\N	2023-08-08
+232	53	234	\N	\N	\N	\N	2015-03-23	\N	2023-08-08
+233	53	235	\N	\N	\N	\N	2015-03-17	\N	2023-08-08
+234	54	148	\N	\N	\N	\N	\N	\N	2023-08-08
+235	54	46	\N	t	\N	\N	2012-09-03	\N	2023-08-08
+236	54	238	\N	t	\N	\N	2019-03-28	\N	2023-08-08
+237	54	16	\N	\N	\N	\N	\N	\N	2023-08-08
+238	54	240	\N	\N	\N	\N	2017-02-24	\N	2023-08-08
+239	54	241	\N	\N	\N	\N	\N	\N	2023-08-08
+240	54	11	\N	\N	\N	\N	2014-06-01	\N	2023-08-08
+241	54	243	\N	t	\N	\N	2021-06-22	\N	2023-08-08
+242	54	99	\N	\N	\N	\N	2018-03-29	\N	2023-08-08
+243	54	245	\N	\N	\N	\N	\N	\N	2023-08-08
+244	54	29	\N	\N	\N	\N	\N	\N	2023-08-08
+245	54	201	\N	\N	\N	\N	2015-12-04	\N	2023-08-08
+246	54	30	\N	\N	\N	\N	2015-04-05	\N	2023-08-08
+247	54	31	\N	\N	\N	\N	2017-06-28	\N	2023-08-08
+248	54	207	\N	\N	\N	\N	2022-04-16	\N	2023-08-08
+249	54	145	\N	\N	\N	\N	2018-10-24	\N	2023-08-08
+250	54	253	\N	\N	\N	\N	\N	\N	2023-08-08
+251	54	254	\N	t	\N	\N	2019-11-19	\N	2023-08-08
+252	54	255	\N	\N	\N	\N	2018-07-27	\N	2023-08-08
+253	54	256	\N	t	\N	\N	2016-07-14	\N	2023-08-08
+254	54	257	\N	\N	\N	\N	2018-07-01	\N	2023-08-08
+255	54	258	\N	\N	\N	\N	2015-12-10	\N	2023-08-08
+256	54	259	\N	\N	\N	\N	2022-04-09	\N	2023-08-08
+257	54	14	\N	\N	\N	\N	2017-04-20	\N	2023-08-08
+258	54	169	\N	\N	\N	\N	2018-05-17	\N	2023-08-08
+259	54	262	\N	\N	\N	\N	2016-05-19	\N	2023-08-08
+260	54	26	\N	\N	\N	\N	2010-09-04	\N	2023-08-08
+261	54	264	\N	t	\N	\N	2014-01-07	\N	2023-08-08
+262	54	213	\N	\N	\N	\N	2022-04-07	\N	2023-08-08
+263	54	266	\N	\N	\N	\N	2019-05-04	\N	2023-08-08
+264	54	267	\N	\N	\N	\N	2021-10-25	\N	2023-08-08
+265	54	36	\N	\N	\N	\N	2015-03-05	\N	2023-08-08
+266	54	108	\N	\N	\N	\N	2015-05-05	\N	2023-08-08
+267	54	270	\N	t	\N	\N	2012-01-12	\N	2023-08-08
+268	54	17	\N	\N	\N	\N	2019-03-17	\N	2023-08-08
+269	54	272	\N	\N	\N	\N	2017-06-03	\N	2023-08-08
+270	54	273	\N	\N	\N	\N	2014-06-10	\N	2023-08-08
+271	54	274	\N	t	\N	\N	2015-08-21	\N	2023-08-08
+272	54	275	\N	\N	\N	\N	\N	\N	2023-08-08
+273	54	137	\N	\N	\N	\N	2019-06-10	\N	2023-08-08
+274	54	277	\N	\N	\N	\N	2021-11-02	\N	2023-08-08
+275	54	21	\N	\N	\N	\N	2013-07-01	\N	2023-08-08
+276	54	118	\N	\N	\N	\N	2017-07-20	\N	2023-08-08
+277	54	280	\N	\N	\N	\N	\N	\N	2023-08-08
+278	54	281	\N	t	\N	\N	2020-02-08	\N	2023-08-08
+279	54	235	\N	\N	\N	\N	2022-03-29	\N	2023-08-08
+280	54	222	\N	\N	\N	\N	2017-04-12	\N	2023-08-08
+281	54	39	\N	\N	\N	\N	2015-11-18	\N	2023-08-08
+282	54	150	\N	\N	\N	\N	\N	\N	2023-08-08
+283	54	138	\N	\N	\N	\N	\N	\N	2023-08-08
+284	54	22	\N	\N	\N	\N	2017-06-30	\N	2023-08-08
+285	54	224	\N	\N	\N	\N	2015-12-02	\N	2023-08-08
+286	54	289	\N	\N	\N	\N	\N	\N	2023-08-08
+287	54	140	\N	\N	\N	\N	2018-04-01	\N	2023-08-08
+288	54	291	\N	\N	\N	\N	2022-03-22	\N	2023-08-08
+289	54	9	\N	t	\N	\N	2011-09-16	\N	2023-08-08
+290	54	227	\N	\N	\N	\N	2017-04-26	\N	2023-08-08
+291	54	294	\N	t	\N	\N	2020-02-08	\N	2023-08-08
+292	54	295	\N	t	\N	\N	2014-03-11	\N	2023-08-08
+293	54	296	\N	\N	\N	\N	2014-06-18	\N	2023-08-08
+294	54	174	\N	\N	\N	\N	2018-11-14	\N	2023-08-08
+295	54	298	\N	\N	\N	\N	\N	\N	2023-08-08
+296	54	299	\N	\N	\N	\N	\N	\N	2023-08-08
+297	54	56	\N	\N	\N	\N	2021-04-06	\N	2023-08-08
+298	54	143	\N	\N	\N	\N	2017-07-02	\N	2023-08-08
+299	54	302	\N	t	\N	\N	2022-02-26	\N	2023-08-08
+300	54	182	\N	\N	\N	\N	2019-01-19	\N	2023-08-08
+301	54	113	\N	\N	\N	\N	2017-11-15	\N	2023-08-08
+302	55	99	\N	\N	\N	\N	\N	\N	2023-08-08
+303	55	53	\N	\N	\N	\N	2011-09-28	\N	2023-08-08
+304	55	307	\N	\N	\N	\N	\N	\N	2023-08-08
+305	56	26	\N	\N	\N	\N	2003-01-31	\N	2023-08-08
+306	57	215	\N	\N	\N	\N	2009-06-09	\N	2023-08-08
+307	57	272	\N	\N	\N	\N	\N	\N	2023-08-08
+309	58	50	\N	\N	\N	\N	2021-06-03	\N	2023-08-08
+310	59	313	\N	\N	\N	\N	\N	\N	2023-08-08
+311	60	18	\N	t	\N	\N	2011-11-21	\N	2023-08-08
+312	61	315	\N	t	\N	\N	2019-06-25	\N	2023-08-08
+313	61	316	\N	t	\N	\N	2018-10-15	\N	2023-08-08
+314	61	317	\N	t	\N	\N	2022-04-16	\N	2023-08-08
+315	61	21	\N	t	\N	\N	2012-08-06	\N	2023-08-08
+316	61	118	\N	t	\N	\N	2016-08-07	\N	2023-08-08
+317	61	157	\N	t	\N	\N	2021-08-04	\N	2023-08-08
+318	61	298	\N	\N	\N	\N	\N	\N	2023-08-08
+319	61	322	\N	t	\N	\N	2020-10-14	\N	2023-08-08
+320	61	119	\N	\N	\N	\N	\N	\N	2023-08-08
+321	62	19	\N	\N	\N	\N	\N	\N	2023-08-08
+322	62	50	\N	t	\N	\N	2020-10-15	\N	2023-08-08
+323	62	25	\N	\N	\N	\N	\N	\N	2023-08-08
+324	62	26	\N	\N	\N	\N	2015-03-23	\N	2023-08-08
+325	63	1	\N	\N	\N	\N	\N	\N	2023-08-08
+326	64	64	\N	\N	\N	\N	2017-04-02	\N	2023-08-08
+327	65	60	\N	\N	\N	\N	2010-10-10	\N	2023-08-08
+328	65	45	\N	t	\N	\N	2007-10-14	\N	2023-08-08
+329	66	64	\N	\N	\N	\N	\N	\N	2023-08-08
+330	67	18	\N	\N	\N	\N	\N	\N	2023-08-08
+331	68	19	\N	\N	\N	\N	\N	\N	2023-08-08
+332	68	47	\N	\N	\N	\N	2018-09-03	\N	2023-08-08
+333	68	50	\N	\N	\N	\N	\N	\N	2023-08-08
+334	69	16	\N	\N	\N	\N	\N	\N	2023-08-08
+335	70	64	\N	\N	\N	\N	2009-05-19	\N	2023-08-08
+336	71	149	\N	\N	\N	\N	2013-09-11	\N	2023-08-08
+337	72	148	\N	\N	\N	\N	\N	\N	2023-08-08
+338	72	19	\N	\N	\N	\N	2013-09-14	\N	2023-08-08
+339	72	50	\N	\N	\N	\N	\N	\N	2023-08-08
+340	72	31	\N	\N	\N	\N	\N	\N	2023-08-08
+341	72	79	\N	\N	\N	\N	2018-03-12	\N	2023-08-08
+342	72	45	\N	\N	\N	\N	2010-10-05	\N	2023-08-08
+343	72	34	\N	\N	\N	\N	2009-09-25	\N	2023-08-08
+344	72	26	\N	\N	\N	\N	\N	\N	2023-08-08
+345	72	348	\N	\N	\N	\N	2018-02-25	\N	2023-08-08
+346	72	272	\N	\N	\N	\N	\N	\N	2023-08-08
+347	72	137	\N	\N	\N	\N	\N	\N	2023-08-08
+348	72	21	\N	\N	\N	\N	2012-09-19	\N	2023-08-08
+349	72	235	\N	\N	\N	\N	2016-04-02	\N	2023-08-08
+350	72	39	\N	\N	\N	\N	2016-03-03	\N	2023-08-08
+351	72	354	\N	\N	\N	\N	\N	\N	2023-08-08
+352	72	18	\N	\N	\N	\N	2012-10-21	\N	2023-08-08
+353	72	43	\N	\N	\N	\N	\N	\N	2023-08-08
+354	72	64	\N	\N	\N	\N	2008-10-27	\N	2023-08-08
+355	72	88	\N	\N	\N	\N	2015-09-29	\N	2023-08-08
+356	72	359	\N	\N	\N	\N	\N	\N	2023-08-08
+357	72	360	\N	\N	\N	\N	2016-03-02	\N	2023-08-08
+358	72	54	\N	\N	\N	\N	\N	\N	2023-08-08
+359	72	362	\N	\N	\N	\N	\N	\N	2023-08-08
+360	73	80	\N	\N	\N	\N	\N	\N	2023-08-08
+361	74	127	\N	\N	\N	\N	2016-02-20	\N	2023-08-08
+362	74	365	\N	t	\N	\N	2012-09-07	\N	2023-08-08
+363	75	366	\N	\N	\N	\N	2009-04-09	\N	2023-08-08
+364	75	69	\N	\N	\N	\N	2009-02-09	\N	2023-08-08
+365	75	368	\N	\N	\N	\N	2011-09-20	\N	2023-08-08
+366	76	369	\N	\N	\N	\N	\N	\N	2023-08-08
+367	76	1	\N	\N	\N	\N	\N	\N	2023-08-08
+368	77	54	\N	\N	\N	\N	\N	\N	2023-08-08
+369	78	54	\N	\N	\N	\N	2011-09-07	\N	2023-08-08
+370	78	8	\N	\N	\N	\N	2011-09-07	\N	2023-08-08
+371	79	374	\N	t	\N	\N	2016-06-21	\N	2023-08-08
+372	79	375	\N	t	\N	\N	2021-05-28	\N	2023-08-08
+373	79	376	\N	t	\N	\N	2016-11-10	\N	2023-08-08
+374	79	377	\N	t	\N	\N	2021-06-05	\N	2023-08-08
+375	79	378	\N	\N	\N	\N	2018-11-03	\N	2023-08-08
+376	79	54	\N	\N	\N	\N	\N	\N	2023-08-08
+377	80	380	\N	\N	\N	\N	\N	\N	2023-08-08
+378	81	54	\N	\N	\N	\N	\N	\N	2023-08-08
+379	82	382	\N	\N	\N	\N	\N	\N	2023-08-08
+380	82	383	\N	\N	\N	\N	\N	\N	2023-08-08
+381	82	384	\N	\N	\N	\N	\N	\N	2023-08-08
+382	82	1	\N	\N	\N	\N	\N	\N	2023-08-08
+383	83	386	\N	\N	\N	\N	\N	\N	2023-08-08
+384	84	387	\N	t	\N	\N	2018-10-25	\N	2023-08-08
+385	84	388	\N	t	\N	\N	2018-10-25	\N	2023-08-08
+386	84	389	\N	t	\N	\N	2021-12-26	\N	2023-08-08
+387	84	253	\N	\N	\N	\N	\N	\N	2023-08-08
+388	84	171	\N	\N	\N	\N	2018-03-13	\N	2023-08-08
+389	84	392	\N	\N	\N	\N	2021-07-18	\N	2023-08-08
+390	84	393	\N	t	\N	\N	2022-04-13	\N	2023-08-08
+391	84	394	\N	\N	\N	\N	2022-03-26	\N	2023-08-08
+392	85	395	\N	\N	\N	\N	\N	\N	2023-08-08
+393	86	396	\N	\N	\N	\N	2016-04-25	\N	2023-08-08
+394	87	1	\N	\N	\N	\N	2021-10-30	\N	2023-08-08
+395	88	398	\N	\N	\N	\N	2021-10-23	\N	2023-08-08
+396	88	399	\N	\N	\N	\N	\N	\N	2023-08-08
+397	88	400	\N	\N	\N	\N	\N	\N	2023-08-08
+398	88	401	\N	\N	\N	\N	2020-10-18	\N	2023-08-08
+399	89	398	\N	\N	\N	\N	2020-10-29	\N	2023-08-08
+400	89	403	\N	\N	\N	\N	2020-06-16	\N	2023-08-08
+401	89	30	\N	\N	\N	\N	2019-01-01	\N	2023-08-08
+402	89	79	\N	\N	\N	\N	2021-12-11	\N	2023-08-08
+403	89	254	\N	\N	\N	\N	\N	\N	2023-08-08
+404	89	407	\N	\N	\N	\N	2020-02-19	\N	2023-08-08
+405	89	80	\N	\N	\N	\N	\N	\N	2023-08-08
+406	89	267	\N	\N	\N	\N	2021-05-06	\N	2023-08-08
+407	89	410	\N	\N	\N	\N	2021-11-29	\N	2023-08-08
+408	89	88	\N	\N	\N	\N	\N	\N	2023-08-08
+409	90	1	\N	\N	\N	\N	\N	\N	2023-08-08
+410	91	399	\N	\N	\N	\N	\N	\N	2023-08-08
+411	92	414	\N	t	\N	\N	2019-07-05	\N	2023-08-08
+412	93	66	\N	\N	\N	\N	2016-06-14	\N	2023-08-08
+413	93	416	\N	\N	\N	\N	\N	\N	2023-08-08
+414	93	69	\N	\N	\N	\N	2018-12-09	\N	2023-08-08
+415	93	418	\N	\N	\N	\N	2021-01-16	\N	2023-08-08
+416	93	11	\N	\N	\N	\N	2018-09-21	\N	2023-08-08
+417	93	420	\N	\N	\N	\N	\N	\N	2023-08-08
+418	93	421	\N	\N	\N	\N	2022-03-27	\N	2023-08-08
+419	93	395	\N	\N	\N	\N	2016-07-02	\N	2023-08-08
+420	93	12	\N	\N	\N	\N	2015-11-13	\N	2023-08-08
+421	93	199	\N	\N	\N	\N	2019-12-22	\N	2023-08-08
+422	93	253	\N	\N	\N	\N	2016-03-20	\N	2023-08-08
+423	93	80	\N	\N	\N	\N	2020-08-04	\N	2023-08-08
+424	93	427	\N	\N	\N	\N	2020-07-03	\N	2023-08-08
+425	93	108	\N	\N	\N	\N	2016-08-14	\N	2023-08-08
+426	93	429	\N	t	\N	\N	2020-07-07	\N	2023-08-08
+427	93	430	\N	\N	\N	\N	2019-03-08	\N	2023-08-08
+428	93	392	\N	\N	\N	\N	\N	\N	2023-08-08
+429	93	432	\N	\N	\N	\N	2017-11-26	\N	2023-08-08
+430	93	394	\N	\N	\N	\N	2021-04-24	\N	2023-08-08
+431	93	434	\N	\N	\N	\N	2020-05-26	\N	2023-08-08
+432	93	88	\N	\N	\N	\N	2019-08-06	\N	2023-08-08
+433	94	436	\N	t	\N	\N	2017-09-01	\N	2023-08-08
+434	95	253	\N	\N	\N	\N	\N	\N	2023-08-08
+435	96	438	\N	\N	\N	\N	\N	\N	2023-08-08
+436	97	439	\N	\N	\N	\N	\N	\N	2023-08-08
+437	98	34	\N	\N	\N	\N	\N	\N	2023-08-08
+438	99	441	\N	\N	\N	\N	\N	\N	2023-08-08
+439	99	442	\N	\N	\N	\N	\N	\N	2023-08-08
+440	99	1	\N	\N	\N	\N	\N	\N	2023-08-08
+441	99	444	\N	\N	\N	\N	\N	\N	2023-08-08
+442	100	445	\N	\N	\N	\N	\N	\N	2023-08-08
+444	100	447	\N	\N	\N	\N	\N	\N	2023-08-08
+445	100	448	\N	\N	\N	\N	\N	\N	2023-08-08
+446	101	449	\N	\N	\N	\N	\N	\N	2023-08-08
+447	101	450	\N	\N	\N	\N	\N	\N	2023-08-08
+448	101	76	\N	\N	\N	\N	\N	\N	2023-08-08
+449	101	452	\N	\N	\N	\N	\N	\N	2023-08-08
+450	101	432	\N	\N	\N	\N	\N	\N	2023-08-08
+451	102	454	\N	\N	\N	\N	2020-05-14	\N	2023-08-08
+452	102	10	\N	\N	\N	\N	2021-08-24	\N	2023-08-08
+453	102	11	\N	\N	\N	\N	2015-06-21	\N	2023-08-08
+454	102	457	\N	\N	\N	\N	2014-06-08	\N	2023-08-08
+455	102	458	\N	\N	\N	\N	2020-09-29	\N	2023-08-08
+456	102	398	\N	t	\N	\N	2014-10-30	\N	2023-08-08
+457	102	395	\N	\N	\N	\N	2016-07-17	\N	2023-08-08
+458	102	461	\N	\N	\N	\N	2017-01-01	\N	2023-08-08
+459	102	199	\N	\N	\N	\N	2015-03-14	\N	2023-08-08
+460	102	463	\N	t	\N	\N	2021-01-11	\N	2023-08-08
+461	102	79	\N	\N	\N	\N	2017-01-12	\N	2023-08-08
+462	102	206	\N	\N	\N	\N	2017-01-31	\N	2023-08-08
+463	102	208	\N	\N	\N	\N	2018-04-06	\N	2023-08-08
+464	102	253	\N	\N	\N	\N	2016-04-03	\N	2023-08-08
+465	102	254	\N	\N	\N	\N	2013-06-09	\N	2023-08-08
+466	102	469	\N	\N	\N	\N	2015-06-14	\N	2023-08-08
+467	102	427	\N	\N	\N	\N	2016-10-03	\N	2023-08-08
+468	102	348	\N	\N	\N	\N	2018-01-13	\N	2023-08-08
+469	102	472	\N	\N	\N	\N	2014-08-23	\N	2023-08-08
+470	102	267	\N	t	\N	\N	2015-11-02	\N	2023-08-08
+471	102	95	\N	\N	\N	\N	2017-03-21	\N	2023-08-08
+472	102	475	\N	t	\N	\N	2022-02-08	\N	2023-08-08
+473	102	396	\N	\N	\N	\N	2015-10-11	\N	2023-08-08
+474	102	108	\N	\N	\N	\N	\N	\N	2023-08-08
+475	102	478	\N	\N	\N	\N	2015-02-23	\N	2023-08-08
+476	102	479	\N	\N	\N	\N	\N	\N	2023-08-08
+477	102	480	\N	\N	\N	\N	2016-12-12	\N	2023-08-08
+478	102	481	\N	t	\N	\N	2017-05-01	\N	2023-08-08
+479	102	482	\N	t	\N	\N	2017-05-01	\N	2023-08-08
+480	102	483	\N	\N	\N	\N	2018-12-07	\N	2023-08-08
+481	102	484	\N	\N	\N	\N	2019-02-26	\N	2023-08-08
+482	102	485	\N	\N	\N	\N	2021-04-01	\N	2023-08-08
+483	102	18	\N	\N	\N	\N	2014-11-27	\N	2023-08-08
+484	102	410	\N	\N	\N	\N	2020-05-14	\N	2023-08-08
+485	102	228	\N	\N	\N	\N	2019-12-28	\N	2023-08-08
+486	102	401	\N	\N	\N	\N	2014-05-31	\N	2023-08-08
+487	102	490	\N	t	\N	\N	2021-03-21	\N	2023-08-08
+488	102	491	\N	t	\N	\N	2020-07-12	\N	2023-08-08
+489	102	492	\N	t	\N	\N	2021-01-11	\N	2023-08-08
+490	102	383	\N	\N	\N	\N	2016-12-12	\N	2023-08-08
+491	102	494	\N	\N	\N	\N	2022-03-20	\N	2023-08-08
+492	102	384	\N	\N	\N	\N	2016-12-19	\N	2023-08-08
+493	102	1	\N	\N	\N	\N	2014-07-05	\N	2023-08-08
+494	102	497	\N	\N	\N	\N	2015-03-08	\N	2023-08-08
+495	103	254	\N	t	\N	\N	2002-09-11	\N	2023-08-08
+496	103	407	\N	t	\N	\N	2007-11-18	\N	2023-08-08
+497	104	438	\N	\N	\N	\N	\N	\N	2023-08-08
+498	104	6	\N	\N	\N	\N	\N	\N	2023-08-08
+499	105	432	\N	\N	\N	\N	2022-02-06	\N	2023-08-08
+500	106	503	\N	\N	\N	\N	\N	\N	2023-08-08
+501	106	504	\N	\N	\N	\N	\N	\N	2023-08-08
+502	106	505	\N	\N	\N	\N	\N	\N	2023-08-08
+503	106	414	\N	\N	\N	\N	\N	\N	2023-08-08
+504	107	507	\N	\N	\N	\N	2009-06-04	\N	2023-08-08
+505	107	396	\N	\N	\N	\N	2012-06-30	\N	2023-08-08
+506	108	71	\N	\N	\N	\N	\N	\N	2023-08-08
+507	108	510	\N	\N	\N	\N	\N	\N	2023-08-08
+508	109	383	\N	\N	\N	\N	\N	\N	2023-08-08
+509	110	69	\N	\N	\N	\N	2017-02-24	\N	2023-08-08
+510	110	513	\N	\N	\N	\N	2015-04-14	\N	2023-08-08
+511	110	514	\N	\N	\N	\N	\N	\N	2023-08-08
+512	110	95	\N	\N	\N	\N	2017-03-21	\N	2023-08-08
+513	110	18	\N	\N	\N	\N	\N	\N	2023-08-08
+514	110	296	\N	\N	\N	\N	\N	\N	2023-08-08
+515	110	518	\N	\N	\N	\N	\N	\N	2023-08-08
+516	111	439	\N	\N	\N	\N	\N	\N	2023-08-08
+517	112	520	\N	\N	\N	\N	2022-01-04	\N	2023-08-08
+518	112	436	\N	\N	\N	\N	2017-09-05	\N	2023-08-08
+519	112	522	\N	\N	\N	\N	2016-09-06	\N	2023-08-08
+520	112	438	\N	\N	\N	\N	2016-12-10	\N	2023-08-08
+521	112	524	\N	\N	\N	\N	2017-04-24	\N	2023-08-08
+522	112	525	\N	\N	\N	\N	2018-03-28	\N	2023-08-08
+523	112	526	\N	\N	\N	\N	2015-03-18	\N	2023-08-08
+524	112	383	\N	\N	\N	\N	2019-03-30	\N	2023-08-08
+525	112	1	\N	\N	\N	\N	2019-07-17	\N	2023-08-08
+526	112	529	\N	\N	\N	\N	2019-11-01	\N	2023-08-08
+527	112	530	\N	\N	\N	\N	2016-10-06	\N	2023-08-08
+528	113	383	\N	\N	\N	\N	2018-09-28	\N	2023-08-08
+529	114	66	\N	\N	\N	\N	2010-04-21	\N	2023-08-08
+530	114	533	\N	\N	\N	\N	2014-06-14	\N	2023-08-08
+531	114	457	\N	\N	\N	\N	2013-11-02	\N	2023-08-08
+532	114	535	\N	\N	\N	\N	2017-10-15	\N	2023-08-08
+533	114	536	\N	\N	\N	\N	2013-09-25	\N	2023-08-08
+534	114	395	\N	\N	\N	\N	2010-09-06	\N	2023-08-08
+535	114	12	\N	\N	\N	\N	2011-04-28	\N	2023-08-08
+536	114	539	\N	t	\N	\N	2011-11-03	\N	2023-08-08
+537	114	199	\N	\N	\N	\N	\N	\N	2023-08-08
+538	114	541	\N	\N	\N	\N	2021-08-25	\N	2023-08-08
+539	114	403	\N	\N	\N	\N	\N	\N	2023-08-08
+540	114	253	\N	\N	\N	\N	2014-10-29	\N	2023-08-08
+541	114	399	\N	\N	\N	\N	2020-11-10	\N	2023-08-08
+542	114	545	\N	\N	\N	\N	2014-09-29	\N	2023-08-08
+543	114	546	\N	\N	\N	\N	2011-11-26	\N	2023-08-08
+544	114	429	\N	\N	\N	\N	2020-08-04	\N	2023-08-08
+545	114	392	\N	\N	\N	\N	2020-09-16	\N	2023-08-08
+546	114	400	\N	\N	\N	\N	2021-10-07	\N	2023-08-08
+547	114	220	\N	\N	\N	\N	2013-01-17	\N	2023-08-08
+548	114	551	\N	\N	\N	\N	2009-07-31	\N	2023-08-08
+549	114	552	\N	\N	\N	\N	\N	\N	2023-08-08
+550	114	553	\N	\N	\N	\N	\N	\N	2023-08-08
+551	114	410	\N	\N	\N	\N	2020-05-24	\N	2023-08-08
+552	114	394	\N	\N	\N	\N	2015-09-20	\N	2023-08-08
+553	114	556	\N	\N	\N	\N	2013-09-29	\N	2023-08-08
+554	114	557	\N	\N	\N	\N	2012-05-28	\N	2023-08-08
+555	114	558	\N	\N	\N	\N	2020-07-18	\N	2023-08-08
+556	114	434	\N	\N	\N	\N	\N	\N	2023-08-08
+557	114	494	\N	\N	\N	\N	\N	\N	2023-08-08
+558	114	1	\N	\N	\N	\N	2014-08-30	\N	2023-08-08
+559	114	562	\N	\N	\N	\N	\N	\N	2023-08-08
+560	115	254	\N	\N	\N	\N	2019-04-08	\N	2023-08-08
+561	115	407	\N	\N	\N	\N	\N	\N	2023-08-08
+562	115	429	\N	\N	\N	\N	2021-09-18	\N	2023-08-08
+563	115	401	\N	\N	\N	\N	2021-05-15	\N	2023-08-08
+564	116	567	\N	\N	\N	\N	2012-07-26	\N	2023-08-08
+565	117	568	\N	t	\N	\N	2018-09-25	\N	2023-08-08
+566	117	569	\N	\N	\N	\N	\N	\N	2023-08-08
+567	117	570	\N	\N	\N	\N	\N	\N	2023-08-08
+568	118	507	\N	\N	\N	\N	\N	\N	2023-08-08
+569	119	457	\N	\N	\N	\N	2019-07-11	\N	2023-08-08
+570	119	480	\N	\N	\N	\N	2021-03-06	\N	2023-08-08
+571	119	574	\N	\N	\N	\N	2020-07-11	\N	2023-08-08
+572	119	383	\N	\N	\N	\N	2017-10-16	\N	2023-08-08
+573	119	1	\N	\N	\N	\N	2018-05-02	\N	2023-08-08
+574	119	497	\N	\N	\N	\N	\N	\N	2023-08-08
+575	120	513	\N	t	\N	\N	2014-04-27	\N	2023-08-08
+576	121	454	\N	\N	\N	\N	\N	\N	2023-08-08
+577	121	457	\N	\N	\N	\N	\N	\N	2023-08-08
+578	121	12	\N	\N	\N	\N	2021-09-24	\N	2023-08-08
+579	121	480	\N	\N	\N	\N	\N	\N	2023-08-08
+580	121	410	\N	\N	\N	\N	\N	\N	2023-08-08
+581	121	1	\N	\N	\N	\N	2020-10-11	\N	2023-08-08
+582	122	395	\N	\N	\N	\N	2020-08-21	\N	2023-08-08
+583	123	586	\N	t	\N	\N	2017-08-16	\N	2023-08-08
+584	123	587	\N	\N	\N	\N	\N	\N	2023-08-08
+585	124	533	\N	\N	\N	\N	2015-04-09	\N	2023-08-08
+586	124	457	\N	\N	\N	\N	2014-04-17	\N	2023-08-08
+587	124	53	\N	\N	\N	\N	2013-01-23	\N	2023-08-08
+588	124	30	\N	\N	\N	\N	2012-12-29	\N	2023-08-08
+589	124	253	\N	\N	\N	\N	2016-05-15	\N	2023-08-08
+590	124	396	\N	t	\N	\N	2012-06-14	\N	2023-08-08
+591	124	594	\N	t	\N	\N	2021-11-30	\N	2023-08-08
+592	124	480	\N	\N	\N	\N	2017-04-05	\N	2023-08-08
+593	124	485	\N	t	\N	\N	2014-03-18	\N	2023-08-08
+594	124	6	\N	\N	\N	\N	2016-01-17	\N	2023-08-08
+595	124	552	\N	\N	\N	\N	2021-06-17	\N	2023-08-08
+596	124	410	\N	\N	\N	\N	2020-10-19	\N	2023-08-08
+597	124	394	\N	\N	\N	\N	\N	\N	2023-08-08
+598	124	383	\N	\N	\N	\N	2017-01-20	\N	2023-08-08
+599	124	1	\N	\N	\N	\N	2014-10-25	\N	2023-08-08
+600	124	497	\N	\N	\N	\N	2015-11-28	\N	2023-08-08
+601	125	421	\N	\N	\N	\N	\N	\N	2023-08-08
+602	125	76	\N	\N	\N	\N	\N	\N	2023-08-08
+603	125	394	\N	\N	\N	\N	\N	\N	2023-08-08
+604	126	68	\N	\N	\N	\N	2020-07-25	\N	2023-08-08
+605	126	568	\N	\N	\N	\N	\N	\N	2023-08-08
+606	126	609	\N	t	\N	\N	2020-03-08	\N	2023-08-08
+607	126	463	\N	\N	\N	\N	2021-10-03	\N	2023-08-08
+608	126	76	\N	\N	\N	\N	2019-01-02	\N	2023-08-08
+609	126	612	\N	\N	\N	\N	\N	\N	2023-08-08
+610	126	258	\N	\N	\N	\N	\N	\N	2023-08-08
+611	126	614	\N	\N	\N	\N	2020-01-05	\N	2023-08-08
+612	126	615	\N	\N	\N	\N	\N	\N	2023-08-08
+613	126	616	\N	\N	\N	\N	\N	\N	2023-08-08
+614	126	399	\N	\N	\N	\N	\N	\N	2023-08-08
+615	126	618	\N	\N	\N	\N	2019-12-30	\N	2023-08-08
+616	126	574	\N	\N	\N	\N	2020-05-29	\N	2023-08-08
+617	126	620	\N	\N	\N	\N	\N	\N	2023-08-08
+618	126	569	\N	\N	\N	\N	\N	\N	2023-08-08
+619	126	410	\N	\N	\N	\N	\N	\N	2023-08-08
+620	126	490	\N	\N	\N	\N	\N	\N	2023-08-08
+621	126	570	\N	\N	\N	\N	2020-07-15	\N	2023-08-08
+622	126	491	\N	\N	\N	\N	2020-11-22	\N	2023-08-08
+623	126	1	\N	\N	\N	\N	2020-06-06	\N	2023-08-08
+624	127	627	\N	\N	\N	\N	2015-06-02	\N	2023-08-08
+625	128	71	\N	\N	\N	\N	\N	\N	2023-08-08
+626	129	66	\N	\N	\N	\N	2018-11-02	\N	2023-08-08
+627	129	533	\N	\N	\N	\N	2018-10-20	\N	2023-08-08
+628	129	457	\N	\N	\N	\N	2014-10-28	\N	2023-08-08
+629	129	632	\N	\N	\N	\N	2021-08-30	\N	2023-08-08
+630	130	457	\N	\N	\N	\N	2020-10-31	\N	2023-08-08
+631	130	634	\N	\N	\N	\N	2021-07-24	\N	2023-08-08
+632	130	108	\N	\N	\N	\N	\N	\N	2023-08-08
+633	130	1	\N	\N	\N	\N	2020-05-29	\N	2023-08-08
+634	131	1	\N	\N	\N	\N	\N	\N	2023-08-08
+635	132	586	\N	\N	\N	\N	2017-12-23	\N	2023-08-08
+636	133	429	\N	\N	\N	\N	2022-05-01	\N	2023-08-08
+637	134	398	\N	\N	\N	\N	2020-12-03	\N	2023-08-08
+638	134	30	\N	\N	\N	\N	\N	\N	2023-08-08
+639	134	277	\N	t	\N	\N	2020-06-19	\N	2023-08-08
+640	134	643	\N	\N	\N	\N	2020-02-24	\N	2023-08-08
+641	135	1	\N	\N	\N	\N	2021-05-20	\N	2023-08-08
+642	136	401	\N	\N	\N	\N	2021-09-04	\N	2023-08-08
+643	137	646	\N	\N	\N	\N	\N	\N	2023-08-08
+644	137	383	\N	\N	\N	\N	\N	\N	2023-08-08
+645	138	71	\N	\N	\N	\N	2006-02-03	\N	2023-08-08
+646	138	649	\N	\N	\N	\N	2008-01-20	\N	2023-08-08
+647	138	650	\N	t	\N	\N	2009-08-24	\N	2023-08-08
+648	138	651	\N	t	\N	\N	2012-03-24	\N	2023-08-08
+649	139	12	\N	\N	\N	\N	2017-10-22	\N	2023-08-08
+650	139	403	\N	\N	\N	\N	\N	\N	2023-08-08
+651	140	69	\N	\N	\N	\N	2019-02-08	\N	2023-08-08
+652	140	386	\N	\N	\N	\N	\N	\N	2023-08-08
+653	140	12	\N	\N	\N	\N	2019-03-13	\N	2023-08-08
+654	140	403	\N	\N	\N	\N	2015-10-22	\N	2023-08-08
+655	140	30	\N	\N	\N	\N	\N	\N	2023-08-08
+656	140	79	\N	\N	\N	\N	2022-01-08	\N	2023-08-08
+657	140	407	\N	\N	\N	\N	\N	\N	2023-08-08
+658	140	108	\N	\N	\N	\N	2019-08-13	\N	2023-08-08
+659	140	478	\N	\N	\N	\N	\N	\N	2023-08-08
+660	140	558	\N	t	\N	\N	2020-06-09	\N	2023-08-08
+661	140	664	\N	\N	\N	\N	2022-02-02	\N	2023-08-08
+662	141	522	\N	\N	\N	\N	\N	\N	2023-08-08
+663	141	524	\N	\N	\N	\N	2009-05-31	\N	2023-08-08
+664	141	530	\N	t	\N	\N	2009-10-03	\N	2023-08-08
+665	142	71	\N	\N	\N	\N	\N	\N	2023-08-08
+666	142	649	\N	\N	\N	\N	\N	\N	2023-08-08
+667	142	520	\N	\N	\N	\N	\N	\N	2023-08-08
+668	142	671	\N	t	\N	\N	2020-01-11	\N	2023-08-08
+669	142	672	\N	\N	\N	\N	\N	\N	2023-08-08
+670	142	650	\N	\N	\N	\N	\N	\N	2023-08-08
+671	142	674	\N	\N	\N	\N	\N	\N	2023-08-08
+672	143	675	\N	\N	\N	\N	\N	\N	2023-08-08
+673	144	676	\N	\N	\N	\N	2020-04-25	\N	2023-08-08
+674	145	272	\N	\N	\N	\N	\N	\N	2023-08-08
+675	146	1	\N	\N	\N	\N	\N	\N	2023-08-08
+676	147	457	\N	\N	\N	\N	2014-09-18	\N	2023-08-08
+677	147	680	\N	\N	\N	\N	2014-06-04	\N	2023-08-08
+678	147	634	\N	\N	\N	\N	2018-06-23	\N	2023-08-08
+679	147	682	\N	\N	\N	\N	2016-10-21	\N	2023-08-08
+680	148	683	\N	\N	\N	\N	2010-11-03	\N	2023-08-08
+681	148	684	\N	\N	\N	\N	\N	\N	2023-08-08
+682	149	685	\N	\N	\N	\N	2014-11-28	\N	2023-08-08
+683	149	53	\N	\N	\N	\N	2015-04-12	\N	2023-08-08
+684	149	687	\N	\N	\N	\N	\N	\N	2023-08-08
+685	149	2	\N	\N	\N	\N	\N	\N	2023-08-08
+686	149	266	\N	\N	\N	\N	2017-10-22	\N	2023-08-08
+687	149	690	\N	\N	\N	\N	\N	\N	2023-08-08
+688	149	691	\N	\N	\N	\N	\N	\N	2023-08-08
+689	149	692	\N	\N	\N	\N	\N	\N	2023-08-08
+690	150	693	\N	\N	\N	\N	2019-04-18	\N	2023-08-08
+691	150	525	\N	\N	\N	\N	2017-10-28	\N	2023-08-08
+692	150	6	\N	\N	\N	\N	2019-02-12	\N	2023-08-08
+693	151	696	\N	\N	\N	\N	\N	\N	2023-08-08
+694	152	66	\N	\N	\N	\N	\N	\N	2023-08-08
+695	152	6	\N	\N	\N	\N	\N	\N	2023-08-08
+696	152	1	\N	\N	\N	\N	2005-05-11	\N	2023-08-08
+697	153	700	\N	\N	\N	\N	\N	\N	2023-08-08
+698	154	2	\N	\N	\N	\N	\N	\N	2023-08-08
+699	155	702	\N	\N	\N	\N	\N	\N	2023-08-08
+700	156	1	\N	\N	\N	\N	2021-05-15	\N	2023-08-08
+701	157	704	\N	\N	\N	\N	\N	\N	2023-08-08
+702	158	705	\N	\N	\N	\N	\N	\N	2023-08-08
+703	158	706	\N	\N	\N	\N	\N	\N	2023-08-08
+704	158	693	\N	\N	\N	\N	\N	\N	2023-08-08
+705	158	708	\N	\N	\N	\N	\N	\N	2023-08-08
+706	159	709	\N	\N	\N	\N	2017-03-12	\N	2023-08-08
+707	159	710	\N	\N	\N	\N	2016-09-28	\N	2023-08-08
+708	159	706	\N	\N	\N	\N	\N	\N	2023-08-08
+709	159	693	\N	\N	\N	\N	2015-06-19	\N	2023-08-08
+710	159	708	\N	\N	\N	\N	\N	\N	2023-08-08
+711	160	714	\N	\N	\N	\N	\N	\N	2023-08-08
+712	160	715	\N	\N	\N	\N	\N	\N	2023-08-08
+713	161	716	\N	\N	\N	\N	\N	\N	2023-08-08
+714	161	507	\N	t	\N	\N	2008-07-30	\N	2023-08-08
+715	161	682	\N	\N	\N	\N	\N	\N	2023-08-08
+716	161	273	\N	\N	\N	\N	\N	\N	2023-08-08
+717	161	702	\N	\N	\N	\N	\N	\N	2023-08-08
+718	162	1	\N	\N	\N	\N	\N	\N	2023-08-08
+719	163	684	\N	\N	\N	\N	\N	\N	2023-08-08
+720	163	723	\N	\N	\N	\N	1998-03-01	\N	2023-08-08
+721	163	706	\N	t	\N	\N	1996-03-01	\N	2023-08-08
+722	163	693	\N	\N	\N	\N	\N	\N	2023-08-08
+723	163	726	\N	\N	\N	\N	\N	\N	2023-08-08
+724	163	727	\N	\N	\N	\N	\N	\N	2023-08-08
+725	163	708	\N	\N	\N	\N	\N	\N	2023-08-08
+726	164	2	\N	\N	\N	\N	2012-05-20	\N	2023-08-08
+727	164	730	\N	t	\N	\N	2010-04-29	\N	2023-08-08
+728	165	682	\N	\N	\N	\N	\N	\N	2023-08-08
+729	166	732	\N	\N	\N	\N	2021-11-12	\N	2023-08-08
+730	166	733	\N	\N	\N	\N	2021-04-04	\N	2023-08-08
+731	166	693	\N	\N	\N	\N	2021-11-15	\N	2023-08-08
+732	166	682	\N	\N	\N	\N	2021-02-26	\N	2023-08-08
+733	166	736	\N	\N	\N	\N	2022-04-15	\N	2023-08-08
+734	166	737	\N	\N	\N	\N	2021-04-05	\N	2023-08-08
+735	166	65	\N	\N	\N	\N	2017-10-20	\N	2023-08-08
+736	166	739	\N	\N	\N	\N	2022-06-04	\N	2023-08-08
+737	167	634	\N	\N	\N	\N	\N	\N	2023-08-08
+738	167	682	\N	\N	\N	\N	2020-04-27	\N	2023-08-08
+739	167	39	\N	\N	\N	\N	2021-12-01	\N	2023-08-08
+740	168	457	\N	\N	\N	\N	2014-09-20	\N	2023-08-08
+741	168	680	\N	\N	\N	\N	2014-10-07	\N	2023-08-08
+742	168	733	\N	t	\N	\N	2017-09-26	\N	2023-08-08
+743	168	730	\N	\N	\N	\N	\N	\N	2023-08-08
+744	168	737	\N	t	\N	\N	2017-10-05	\N	2023-08-08
+745	168	1	\N	\N	\N	\N	2017-03-17	\N	2023-08-08
+746	169	194	\N	\N	\N	\N	\N	\N	2023-08-08
+747	169	127	\N	\N	\N	\N	2013-01-02	\N	2023-08-08
+748	169	454	\N	\N	\N	\N	2009-04-09	\N	2023-08-08
+749	169	457	\N	\N	\N	\N	\N	\N	2023-08-08
+750	169	198	\N	\N	\N	\N	2018-01-09	\N	2023-08-08
+751	169	234	\N	\N	\N	\N	2012-12-24	\N	2023-08-08
+752	169	755	\N	t	\N	\N	2015-11-18	\N	2023-08-08
+753	169	680	\N	t	\N	\N	2009-06-15	\N	2023-08-08
+754	169	202	\N	\N	\N	\N	2018-12-01	\N	2023-08-08
+755	169	463	\N	\N	\N	\N	2022-01-12	\N	2023-08-08
+756	169	102	\N	\N	\N	\N	\N	\N	2023-08-08
+757	169	207	\N	\N	\N	\N	2013-01-02	\N	2023-08-08
+758	169	761	\N	\N	\N	\N	\N	\N	2023-08-08
+759	169	762	\N	\N	\N	\N	\N	\N	2023-08-08
+760	169	208	\N	\N	\N	\N	2019-11-09	\N	2023-08-08
+761	169	2	\N	\N	\N	\N	2010-05-31	\N	2023-08-08
+762	169	14	\N	\N	\N	\N	2016-12-27	\N	2023-08-08
+763	169	3	\N	\N	\N	\N	\N	\N	2023-08-08
+764	169	767	\N	\N	\N	\N	\N	\N	2023-08-08
+765	169	634	\N	t	\N	\N	2016-10-16	\N	2023-08-08
+766	169	769	\N	\N	\N	\N	2021-12-10	\N	2023-08-08
+767	169	682	\N	\N	\N	\N	2016-10-15	\N	2023-08-08
+768	169	348	\N	\N	\N	\N	2021-12-10	\N	2023-08-08
+769	169	213	\N	\N	\N	\N	\N	\N	2023-08-08
+770	169	266	\N	\N	\N	\N	2016-01-09	\N	2023-08-08
+771	169	774	\N	\N	\N	\N	\N	\N	2023-08-08
+772	169	525	\N	\N	\N	\N	2011-11-22	\N	2023-08-08
+773	169	217	\N	\N	\N	\N	\N	\N	2023-08-08
+774	169	218	\N	\N	\N	\N	2018-01-12	\N	2023-08-08
+775	169	702	\N	\N	\N	\N	2009-06-01	\N	2023-08-08
+776	169	779	\N	\N	\N	\N	2018-12-28	\N	2023-08-08
+777	169	780	\N	\N	\N	\N	\N	\N	2023-08-08
+778	169	480	\N	\N	\N	\N	\N	\N	2023-08-08
+779	169	221	\N	\N	\N	\N	2013-01-03	\N	2023-08-08
+780	169	222	\N	\N	\N	\N	2017-01-02	\N	2023-08-08
+781	169	39	\N	\N	\N	\N	2011-04-27	\N	2023-08-08
+782	169	483	\N	\N	\N	\N	2019-11-09	\N	2023-08-08
+783	169	291	\N	\N	\N	\N	2017-01-08	\N	2023-08-08
+784	169	787	\N	\N	\N	\N	2012-12-28	\N	2023-08-08
+785	169	518	\N	\N	\N	\N	2022-03-09	\N	2023-08-08
+786	169	410	\N	\N	\N	\N	2009-04-09	\N	2023-08-08
+787	169	228	\N	\N	\N	\N	2018-01-05	\N	2023-08-08
+788	169	791	\N	\N	\N	\N	\N	\N	2023-08-08
+789	169	88	\N	\N	\N	\N	\N	\N	2023-08-08
+790	169	383	\N	\N	\N	\N	\N	\N	2023-08-08
+791	169	1	\N	\N	\N	\N	2010-03-31	\N	2023-08-08
+792	169	380	\N	\N	\N	\N	2019-11-11	\N	2023-08-08
+793	169	739	\N	t	\N	\N	2020-05-16	\N	2023-08-08
+794	169	797	\N	\N	\N	\N	2020-04-30	\N	2023-08-08
+795	170	798	\N	t	\N	\N	2021-10-29	\N	2023-08-08
+796	171	709	\N	\N	\N	\N	2021-02-28	\N	2023-08-08
+797	171	693	\N	\N	\N	\N	2015-03-16	\N	2023-08-08
+798	171	727	\N	\N	\N	\N	2021-01-11	\N	2023-08-08
+799	172	514	\N	\N	\N	\N	\N	\N	2023-08-08
+800	172	704	\N	\N	\N	\N	\N	\N	2023-08-08
+801	172	296	\N	\N	\N	\N	2018-05-20	\N	2023-08-08
+802	172	518	\N	\N	\N	\N	\N	\N	2023-08-08
+803	173	11	\N	\N	\N	\N	\N	\N	2023-08-08
+804	173	198	\N	\N	\N	\N	2015-02-15	\N	2023-08-08
+805	173	808	\N	\N	\N	\N	\N	\N	2023-08-08
+806	173	53	\N	\N	\N	\N	2013-04-15	\N	2023-08-08
+807	173	30	\N	\N	\N	\N	2012-12-02	\N	2023-08-08
+808	173	102	\N	\N	\N	\N	2015-02-01	\N	2023-08-08
+809	173	207	\N	\N	\N	\N	2015-02-05	\N	2023-08-08
+810	173	258	\N	\N	\N	\N	2015-02-01	\N	2023-08-08
+811	173	427	\N	\N	\N	\N	\N	\N	2023-08-08
+812	173	815	\N	\N	\N	\N	2012-12-02	\N	2023-08-08
+813	173	34	\N	\N	\N	\N	2009-08-26	\N	2023-08-08
+814	173	95	\N	\N	\N	\N	2012-11-29	\N	2023-08-08
+815	173	216	\N	\N	\N	\N	2013-11-27	\N	2023-08-08
+816	173	108	\N	\N	\N	\N	\N	\N	2023-08-08
+817	173	820	\N	\N	\N	\N	\N	\N	2023-08-08
+818	173	222	\N	\N	\N	\N	2011-12-18	\N	2023-08-08
+819	173	224	\N	\N	\N	\N	2015-02-16	\N	2023-08-08
+820	173	824	\N	\N	\N	\N	\N	\N	2023-08-08
+821	173	291	\N	\N	\N	\N	2015-02-19	\N	2023-08-08
+822	173	826	\N	\N	\N	\N	2015-01-29	\N	2023-08-08
+823	173	827	\N	\N	\N	\N	\N	\N	2023-08-08
+824	173	228	\N	\N	\N	\N	2019-03-26	\N	2023-08-08
+825	173	88	\N	\N	\N	\N	\N	\N	2023-08-08
+826	173	359	\N	\N	\N	\N	\N	\N	2023-08-08
+827	173	529	\N	\N	\N	\N	\N	\N	2023-08-08
+828	174	832	\N	\N	\N	\N	\N	\N	2023-08-08
+829	174	815	\N	\N	\N	\N	\N	\N	2023-08-08
+830	174	34	\N	\N	\N	\N	2006-09-11	\N	2023-08-08
+831	174	26	\N	\N	\N	\N	\N	\N	2023-08-08
+832	174	836	\N	\N	\N	\N	\N	\N	2023-08-08
+833	174	837	\N	\N	\N	\N	\N	\N	2023-08-08
+834	174	838	\N	\N	\N	\N	\N	\N	2023-08-08
+835	174	839	\N	\N	\N	\N	\N	\N	2023-08-08
+836	174	1	\N	\N	\N	\N	\N	\N	2023-08-08
+837	175	53	\N	\N	\N	\N	\N	\N	2023-08-08
+838	176	66	\N	\N	\N	\N	2005-10-15	\N	2023-08-08
+839	176	843	\N	t	\N	\N	2007-10-28	\N	2023-08-08
+840	176	844	\N	\N	\N	\N	2016-10-28	\N	2023-08-08
+841	176	845	\N	\N	\N	\N	\N	\N	2023-08-08
+842	176	510	\N	\N	\N	\N	2002-11-01	\N	2023-08-08
+843	176	32	\N	\N	\N	\N	\N	\N	2023-08-08
+844	176	848	\N	t	\N	\N	2001-11-27	\N	2023-08-08
+845	176	849	\N	\N	\N	\N	\N	\N	2023-08-08
+846	176	850	\N	\N	\N	\N	2008-10-09	\N	2023-08-08
+847	176	827	\N	\N	\N	\N	\N	\N	2023-08-08
+848	176	852	\N	\N	\N	\N	\N	\N	2023-08-08
+849	176	556	\N	\N	\N	\N	\N	\N	2023-08-08
+850	176	854	\N	\N	\N	\N	2016-10-12	\N	2023-08-08
+851	176	54	\N	t	\N	\N	2004-05-12	\N	2023-08-08
+852	176	856	\N	\N	\N	\N	\N	\N	2023-08-08
+853	177	34	\N	\N	\N	\N	2006-09-18	\N	2023-08-08
+854	177	207	\N	\N	\N	\N	\N	\N	2023-08-08
+855	177	221	\N	\N	\N	\N	\N	\N	2023-08-08
+856	178	832	\N	\N	\N	\N	\N	\N	2023-08-08
+857	179	53	\N	\N	\N	\N	2012-11-07	\N	2023-08-08
+858	180	815	\N	\N	\N	\N	2012-05-04	\N	2023-08-08
+859	180	863	\N	\N	\N	\N	2012-11-29	\N	2023-08-08
+860	181	864	\N	\N	\N	\N	\N	\N	2023-08-08
+861	182	865	\N	\N	\N	\N	2021-07-09	\N	2023-08-08
+862	182	866	\N	\N	\N	\N	2021-07-09	\N	2023-08-08
+863	183	296	\N	\N	\N	\N	\N	\N	2023-08-08
+864	183	868	\N	\N	\N	\N	\N	\N	2023-08-08
+865	184	869	\N	t	\N	\N	2013-08-09	\N	2023-08-08
+866	185	870	\N	\N	\N	\N	\N	\N	2023-08-08
+867	185	30	\N	\N	\N	\N	2004-05-06	\N	2023-08-08
+868	185	171	\N	\N	\N	\N	\N	\N	2023-08-08
+869	185	873	\N	\N	\N	\N	\N	\N	2023-08-08
+870	186	30	\N	\N	\N	\N	\N	\N	2023-08-08
+871	186	171	\N	\N	\N	\N	2016-04-11	\N	2023-08-08
+872	187	876	\N	\N	\N	\N	\N	\N	2023-08-08
+873	187	877	\N	\N	\N	\N	\N	\N	2023-08-08
+874	187	80	\N	\N	\N	\N	\N	\N	2023-08-08
+875	187	879	\N	\N	\N	\N	2015-04-15	\N	2023-08-08
+876	187	880	\N	\N	\N	\N	\N	\N	2023-08-08
+877	188	632	\N	\N	\N	\N	\N	\N	2023-08-08
+878	189	66	\N	\N	\N	\N	2017-04-15	\N	2023-08-08
+879	189	864	\N	\N	\N	\N	\N	\N	2023-08-08
+880	189	884	\N	\N	\N	\N	\N	\N	2023-08-08
+881	190	864	\N	\N	\N	\N	2021-05-23	\N	2023-08-08
+882	190	53	\N	\N	\N	\N	2019-03-30	\N	2023-08-08
+883	190	887	\N	\N	\N	\N	2021-10-02	\N	2023-08-08
+884	190	888	\N	\N	\N	\N	2020-07-07	\N	2023-08-08
+885	190	889	\N	\N	\N	\N	\N	\N	2023-08-08
+886	191	864	\N	\N	\N	\N	2021-03-29	\N	2023-08-08
+887	191	887	\N	t	\N	\N	2021-06-12	\N	2023-08-08
+888	192	53	\N	\N	\N	\N	2017-09-27	\N	2023-08-08
+889	192	889	\N	\N	\N	\N	2013-11-21	\N	2023-08-08
+890	193	879	\N	\N	\N	\N	2014-04-15	\N	2023-08-08
+891	194	895	\N	\N	\N	\N	\N	\N	2023-08-08
+892	195	234	\N	\N	\N	\N	\N	\N	2023-08-08
+893	195	897	\N	\N	\N	\N	\N	\N	2023-08-08
+894	195	53	\N	\N	\N	\N	2015-04-21	\N	2023-08-08
+895	195	76	\N	\N	\N	\N	\N	\N	2023-08-08
+896	195	258	\N	\N	\N	\N	\N	\N	2023-08-08
+897	195	14	\N	\N	\N	\N	2019-11-07	\N	2023-08-08
+898	195	616	\N	\N	\N	\N	\N	\N	2023-08-08
+899	195	171	\N	\N	\N	\N	\N	\N	2023-08-08
+900	195	904	\N	t	\N	\N	2016-03-31	\N	2023-08-08
+901	195	905	\N	\N	\N	\N	\N	\N	2023-08-08
+902	195	906	\N	t	\N	\N	2017-09-04	\N	2023-08-08
+903	195	907	\N	t	\N	\N	2017-09-04	\N	2023-08-08
+904	196	79	\N	\N	\N	\N	\N	\N	2023-08-08
+905	197	207	\N	\N	\N	\N	2016-04-03	\N	2023-08-08
+906	197	910	\N	\N	\N	\N	2021-05-29	\N	2023-08-08
+907	198	145	\N	\N	\N	\N	2011-05-03	\N	2023-08-08
+908	199	912	\N	\N	\N	\N	\N	\N	2023-08-08
+909	199	913	\N	\N	\N	\N	\N	\N	2023-08-08
+910	199	914	\N	\N	\N	\N	\N	\N	2023-08-08
+911	199	915	\N	\N	\N	\N	\N	\N	2023-08-08
+912	199	916	\N	\N	\N	\N	\N	\N	2023-08-08
+913	199	917	\N	\N	\N	\N	\N	\N	2023-08-08
+914	199	918	\N	\N	\N	\N	\N	\N	2023-08-08
+915	199	919	\N	\N	\N	\N	\N	\N	2023-08-08
+916	199	567	\N	\N	\N	\N	\N	\N	2023-08-08
+917	199	921	\N	\N	\N	\N	\N	\N	2023-08-08
+918	199	922	\N	\N	\N	\N	\N	\N	2023-08-08
+919	199	923	\N	\N	\N	\N	\N	\N	2023-08-08
+920	199	924	\N	\N	\N	\N	\N	\N	2023-08-08
+921	199	925	\N	\N	\N	\N	\N	\N	2023-08-08
+922	200	88	\N	\N	\N	\N	2018-08-15	\N	2023-08-08
+923	201	67	\N	\N	\N	\N	2011-06-02	\N	2023-08-08
+924	201	202	\N	\N	\N	\N	2019-04-19	\N	2023-08-08
+925	201	53	\N	\N	\N	\N	2015-06-22	\N	2023-08-08
+926	201	208	\N	\N	\N	\N	2018-11-30	\N	2023-08-08
+927	201	215	\N	\N	\N	\N	2009-05-30	\N	2023-08-08
+928	201	932	\N	\N	\N	\N	\N	\N	2023-08-08
+929	201	272	\N	\N	\N	\N	\N	\N	2023-08-08
+930	201	39	\N	\N	\N	\N	2017-04-22	\N	2023-08-08
+931	202	1	\N	\N	\N	\N	\N	\N	2023-08-08
+932	203	932	\N	\N	\N	\N	\N	\N	2023-08-08
+933	204	30	\N	\N	\N	\N	2018-12-21	\N	2023-08-08
+935	205	127	\N	\N	\N	\N	\N	\N	2023-08-08
+936	205	234	\N	\N	\N	\N	2013-03-16	\N	2023-08-08
+937	205	53	\N	\N	\N	\N	2015-11-16	\N	2023-08-08
+938	205	76	\N	\N	\N	\N	2015-02-20	\N	2023-08-08
+939	205	30	\N	\N	\N	\N	2007-12-25	\N	2023-08-08
+940	205	944	\N	\N	\N	\N	2014-12-23	\N	2023-08-08
+941	205	207	\N	\N	\N	\N	\N	\N	2023-08-08
+942	205	34	\N	\N	\N	\N	2008-08-19	\N	2023-08-08
+943	205	879	\N	\N	\N	\N	2015-01-10	\N	2023-08-08
+944	205	213	\N	\N	\N	\N	2008-02-10	\N	2023-08-08
+945	205	272	\N	\N	\N	\N	\N	\N	2023-08-08
+946	205	221	\N	\N	\N	\N	2011-12-30	\N	2023-08-08
+947	205	39	\N	\N	\N	\N	2015-03-22	\N	2023-08-08
+948	205	291	\N	\N	\N	\N	2016-03-05	\N	2023-08-08
+949	205	953	\N	\N	\N	\N	2013-12-31	\N	2023-08-08
+951	205	232	\N	\N	\N	\N	2008-02-06	\N	2023-08-08
+952	205	1	\N	\N	\N	\N	2017-05-09	\N	2023-08-08
+953	206	957	\N	\N	\N	\N	\N	\N	2023-08-08
+954	206	879	\N	\N	\N	\N	\N	\N	2023-08-08
+955	207	959	\N	t	\N	\N	2018-10-20	\N	2023-08-08
+956	208	960	\N	\N	\N	\N	2019-12-11	\N	2023-08-08
+957	209	19	\N	\N	\N	\N	2016-09-16	\N	2023-08-08
+958	209	962	\N	\N	\N	\N	\N	\N	2023-08-08
+959	209	53	\N	\N	\N	\N	\N	\N	2023-08-08
+960	209	964	\N	\N	\N	\N	\N	\N	2023-08-08
+961	209	965	\N	\N	\N	\N	2016-05-28	\N	2023-08-08
+962	209	54	\N	\N	\N	\N	2016-05-28	\N	2023-08-08
+963	210	967	\N	t	\N	\N	2012-05-01	\N	2023-08-08
+964	210	234	\N	\N	\N	\N	2011-01-20	\N	2023-08-08
+965	210	969	\N	t	\N	\N	2010-02-24	\N	2023-08-08
+966	210	53	\N	\N	\N	\N	\N	\N	2023-08-08
+967	210	971	\N	\N	\N	\N	\N	\N	2023-08-08
+968	210	207	\N	\N	\N	\N	2010-02-26	\N	2023-08-08
+969	210	208	\N	\N	\N	\N	\N	\N	2023-08-08
+970	210	879	\N	\N	\N	\N	2012-01-23	\N	2023-08-08
+971	210	975	\N	\N	\N	\N	\N	\N	2023-08-08
+972	210	976	\N	\N	\N	\N	\N	\N	2023-08-08
+973	210	977	\N	\N	\N	\N	\N	\N	2023-08-08
+974	210	221	\N	\N	\N	\N	2010-04-06	\N	2023-08-08
+975	210	979	\N	\N	\N	\N	\N	\N	2023-08-08
+976	210	15	\N	\N	\N	\N	2014-05-31	\N	2023-08-08
+977	210	233	\N	\N	\N	\N	\N	\N	2023-08-08
+978	210	360	\N	\N	\N	\N	\N	\N	2023-08-08
+979	210	983	\N	\N	\N	\N	\N	\N	2023-08-08
+980	210	664	\N	\N	\N	\N	\N	\N	2023-08-08
+981	210	985	\N	\N	\N	\N	\N	\N	2023-08-08
+982	211	69	\N	\N	\N	\N	2017-04-18	\N	2023-08-08
+983	211	987	\N	\N	\N	\N	2022-03-17	\N	2023-08-08
+984	211	988	\N	\N	\N	\N	\N	\N	2023-08-08
+985	211	30	\N	\N	\N	\N	2021-02-24	\N	2023-08-08
+986	211	79	\N	\N	\N	\N	2021-02-24	\N	2023-08-08
+987	211	762	\N	t	\N	\N	2021-02-04	\N	2023-08-08
+988	211	992	\N	\N	\N	\N	2016-10-25	\N	2023-08-08
+989	211	993	\N	\N	\N	\N	2018-03-31	\N	2023-08-08
+990	211	769	\N	t	\N	\N	2021-03-09	\N	2023-08-08
+991	211	348	\N	\N	\N	\N	2020-02-05	\N	2023-08-08
+992	211	774	\N	t	\N	\N	2021-02-06	\N	2023-08-08
+993	211	997	\N	\N	\N	\N	2021-03-02	\N	2023-08-08
+994	211	118	\N	\N	\N	\N	\N	\N	2023-08-08
+995	211	999	\N	\N	\N	\N	\N	\N	2023-08-08
+996	211	1000	\N	\N	\N	\N	2022-04-20	\N	2023-08-08
+997	211	1001	\N	\N	\N	\N	\N	\N	2023-08-08
+998	211	1002	\N	\N	\N	\N	2022-03-17	\N	2023-08-08
+999	211	1003	\N	\N	\N	\N	\N	\N	2023-08-08
+1000	212	1001	\N	\N	\N	\N	2013-05-03	\N	2023-08-08
+1001	213	1005	\N	\N	\N	\N	\N	\N	2023-08-08
+1002	214	1006	\N	\N	\N	\N	\N	\N	2023-08-08
+1003	215	1001	\N	\N	\N	\N	2022-04-09	\N	2023-08-08
+1004	216	992	\N	\N	\N	\N	\N	\N	2023-08-08
+950	205	88	\N	\N	\N	\N	2016-10-12	\N	2023-08-08
+1005	216	1001	\N	\N	\N	\N	2018-06-02	\N	2023-08-08
+1006	217	1010	\N	\N	\N	\N	\N	\N	2023-08-08
+1007	218	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1008	219	1012	\N	\N	\N	\N	\N	\N	2023-08-08
+1009	220	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1010	221	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1011	221	1015	\N	\N	\N	\N	\N	\N	2023-08-08
+1012	222	964	\N	\N	\N	\N	\N	\N	2023-08-08
+1013	223	1017	\N	t	\N	\N	2009-09-17	\N	2023-08-08
+1014	223	510	\N	\N	\N	\N	2010-04-27	\N	2023-08-08
+1015	224	1019	\N	\N	\N	\N	2021-09-30	\N	2023-08-08
+1016	224	53	\N	\N	\N	\N	\N	\N	2023-08-08
+1017	224	999	\N	\N	\N	\N	\N	\N	2023-08-08
+1018	224	1001	\N	\N	\N	\N	\N	\N	2023-08-08
+1019	225	1001	\N	\N	\N	\N	2015-09-08	\N	2023-08-08
+1020	226	79	\N	\N	\N	\N	\N	\N	2023-08-08
+1021	226	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1022	226	1001	\N	\N	\N	\N	\N	\N	2023-08-08
+1023	227	69	\N	\N	\N	\N	\N	\N	2023-08-08
+1024	228	1019	\N	\N	\N	\N	\N	\N	2023-08-08
+1025	228	987	\N	\N	\N	\N	\N	\N	2023-08-08
+1026	228	1030	\N	\N	\N	\N	\N	\N	2023-08-08
+1027	228	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1028	228	118	\N	\N	\N	\N	\N	\N	2023-08-08
+1029	228	1033	\N	\N	\N	\N	\N	\N	2023-08-08
+1030	228	999	\N	\N	\N	\N	\N	\N	2023-08-08
+1031	228	1035	\N	\N	\N	\N	\N	\N	2023-08-08
+1032	228	1036	\N	\N	\N	\N	\N	\N	2023-08-08
+1033	228	1001	\N	\N	\N	\N	\N	\N	2023-08-08
+1034	228	1002	\N	\N	\N	\N	\N	\N	2023-08-08
+1035	229	1005	\N	\N	\N	\N	2011-08-01	\N	2023-08-08
+1036	229	1006	\N	\N	\N	\N	2012-07-09	\N	2023-08-08
+1037	230	69	\N	\N	\N	\N	\N	\N	2023-08-08
+1038	230	1042	\N	\N	\N	\N	\N	\N	2023-08-08
+1039	230	1043	\N	\N	\N	\N	\N	\N	2023-08-08
+1040	230	993	\N	\N	\N	\N	\N	\N	2023-08-08
+1041	231	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1042	231	1001	\N	\N	\N	\N	\N	\N	2023-08-08
+1043	232	964	\N	\N	\N	\N	\N	\N	2023-08-08
+1044	232	1012	\N	\N	\N	\N	\N	\N	2023-08-08
+1045	233	71	\N	\N	\N	\N	\N	\N	2023-08-08
+1046	233	1001	\N	\N	\N	\N	2018-05-01	\N	2023-08-08
+1047	233	553	\N	\N	\N	\N	\N	\N	2023-08-08
+1048	233	1002	\N	\N	\N	\N	\N	\N	2023-08-08
+1049	233	873	\N	\N	\N	\N	\N	\N	2023-08-08
+1050	234	1054	\N	\N	\N	\N	\N	\N	2023-08-08
+1051	234	395	\N	\N	\N	\N	\N	\N	2023-08-08
+1052	234	76	\N	\N	\N	\N	2012-03-15	\N	2023-08-08
+1053	235	1019	\N	\N	\N	\N	\N	\N	2023-08-08
+1054	235	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1055	235	1001	\N	\N	\N	\N	\N	\N	2023-08-08
+1056	235	1002	\N	\N	\N	\N	\N	\N	2023-08-08
+1057	236	1012	\N	\N	\N	\N	\N	\N	2023-08-08
+1058	237	66	\N	\N	\N	\N	2005-10-13	\N	2023-08-08
+1059	237	69	\N	\N	\N	\N	\N	\N	2023-08-08
+1060	237	992	\N	\N	\N	\N	2005-04-25	\N	2023-08-08
+1061	237	852	\N	\N	\N	\N	\N	\N	2023-08-08
+1062	238	992	\N	\N	\N	\N	\N	\N	2023-08-08
+1063	238	993	\N	t	\N	\N	2010-07-07	\N	2023-08-08
+1064	238	964	\N	\N	\N	\N	\N	\N	2023-08-08
+1065	239	1005	\N	\N	\N	\N	\N	\N	2023-08-08
+1066	240	1070	\N	\N	\N	\N	\N	\N	2023-08-08
+1067	240	702	\N	\N	\N	\N	2009-09-06	\N	2023-08-08
+1068	241	992	\N	\N	\N	\N	2020-09-30	\N	2023-08-08
+1069	242	1073	\N	\N	\N	\N	2015-07-31	\N	2023-08-08
+1070	242	66	\N	\N	\N	\N	2019-05-05	\N	2023-08-08
+1071	242	1075	\N	\N	\N	\N	2013-10-10	\N	2023-08-08
+1072	243	938	\N	\N	\N	\N	2010-09-26	\N	2023-08-08
+1073	243	1077	\N	\N	\N	\N	2014-11-02	\N	2023-08-08
+1074	243	1078	\N	\N	\N	\N	2017-10-16	\N	2023-08-08
+1075	243	715	\N	\N	\N	\N	2018-10-01	\N	2023-08-08
+1076	243	696	\N	\N	\N	\N	2009-08-13	\N	2023-08-08
+1077	243	30	\N	\N	\N	\N	2013-04-16	\N	2023-08-08
+1078	243	438	\N	\N	\N	\N	2012-04-29	\N	2023-08-08
+1079	243	1083	\N	\N	\N	\N	\N	\N	2023-08-08
+1080	243	525	\N	\N	\N	\N	2009-02-26	\N	2023-08-08
+1081	243	1085	\N	\N	\N	\N	2016-09-25	\N	2023-08-08
+1082	243	1086	\N	\N	\N	\N	2014-09-30	\N	2023-08-08
+1083	243	6	\N	\N	\N	\N	2009-11-27	\N	2023-08-08
+1084	243	1075	\N	\N	\N	\N	2009-05-16	\N	2023-08-08
+1085	243	410	\N	\N	\N	\N	2017-04-30	\N	2023-08-08
+1086	243	1	\N	\N	\N	\N	2009-04-28	\N	2023-08-08
+1087	243	1091	\N	\N	\N	\N	2015-04-15	\N	2023-08-08
+1088	244	69	\N	\N	\N	\N	\N	\N	2023-08-08
+1089	244	234	\N	\N	\N	\N	\N	\N	2023-08-08
+1090	244	30	\N	\N	\N	\N	\N	\N	2023-08-08
+1091	244	207	\N	\N	\N	\N	\N	\N	2023-08-08
+1092	244	525	\N	\N	\N	\N	\N	\N	2023-08-08
+1093	244	39	\N	\N	\N	\N	\N	\N	2023-08-08
+1094	244	291	\N	\N	\N	\N	\N	\N	2023-08-08
+1095	244	15	\N	\N	\N	\N	\N	\N	2023-08-08
+1096	245	127	\N	\N	\N	\N	2014-04-02	\N	2023-08-08
+1097	245	1077	\N	\N	\N	\N	2015-07-31	\N	2023-08-08
+1098	245	967	\N	\N	\N	\N	2021-04-25	\N	2023-08-08
+1099	245	234	\N	\N	\N	\N	\N	\N	2023-08-08
+1100	245	969	\N	\N	\N	\N	2010-06-20	\N	2023-08-08
+1101	245	696	\N	\N	\N	\N	2009-10-03	\N	2023-08-08
+1102	245	79	\N	\N	\N	\N	2016-03-31	\N	2023-08-08
+1103	245	207	\N	\N	\N	\N	2013-03-03	\N	2023-08-08
+1104	245	259	\N	\N	\N	\N	2021-04-30	\N	2023-08-08
+1105	245	272	\N	\N	\N	\N	\N	\N	2023-08-08
+1106	245	525	\N	\N	\N	\N	2010-05-18	\N	2023-08-08
+1107	245	221	\N	\N	\N	\N	2013-03-30	\N	2023-08-08
+1108	245	39	\N	\N	\N	\N	2015-05-30	\N	2023-08-08
+1109	245	15	\N	\N	\N	\N	2016-12-14	\N	2023-08-08
+1110	245	1075	\N	\N	\N	\N	2012-09-07	\N	2023-08-08
+1111	245	1115	\N	\N	\N	\N	2017-09-13	\N	2023-08-08
+1112	245	1116	\N	\N	\N	\N	2018-10-08	\N	2023-08-08
+1113	246	1075	\N	\N	\N	\N	2018-10-20	\N	2023-08-08
+1114	247	1073	\N	\N	\N	\N	2016-07-19	\N	2023-08-08
+1115	247	1077	\N	\N	\N	\N	2016-07-19	\N	2023-08-08
+1116	247	1120	\N	t	\N	\N	2018-06-24	\N	2023-08-08
+1117	247	1075	\N	\N	\N	\N	2015-04-25	\N	2023-08-08
+1118	247	1115	\N	\N	\N	\N	2018-06-02	\N	2023-08-08
+1119	248	1086	\N	\N	\N	\N	\N	\N	2023-08-08
+1120	249	1075	\N	\N	\N	\N	\N	\N	2023-08-08
+1121	250	1125	\N	\N	\N	\N	\N	\N	2023-08-08
+1122	251	854	\N	\N	\N	\N	\N	\N	2023-08-08
+1123	252	1127	\N	\N	\N	\N	2019-09-21	\N	2023-08-08
+1124	253	66	\N	\N	\N	\N	2010-10-11	\N	2023-08-08
+1125	254	1129	\N	\N	\N	\N	2011-08-17	\N	2023-08-08
+1126	255	1075	\N	t	\N	\N	2008-12-14	\N	2023-08-08
+1127	256	1131	\N	\N	\N	\N	\N	\N	2023-08-08
+1128	256	195	\N	\N	\N	\N	2017-02-04	\N	2023-08-08
+1129	256	11	\N	\N	\N	\N	2018-06-09	\N	2023-08-08
+1130	256	535	\N	\N	\N	\N	\N	\N	2023-08-08
+1131	256	198	\N	\N	\N	\N	2018-04-09	\N	2023-08-08
+1132	256	234	\N	\N	\N	\N	2017-02-02	\N	2023-08-08
+1133	256	53	\N	\N	\N	\N	2012-08-04	\N	2023-08-08
+1134	256	76	\N	\N	\N	\N	2015-03-06	\N	2023-08-08
+1135	256	30	\N	\N	\N	\N	2018-04-15	\N	2023-08-08
+1136	256	102	\N	\N	\N	\N	2019-04-28	\N	2023-08-08
+1137	256	207	\N	\N	\N	\N	2017-02-10	\N	2023-08-08
+1138	256	208	\N	\N	\N	\N	2018-09-18	\N	2023-08-08
+1139	256	14	\N	\N	\N	\N	2020-02-27	\N	2023-08-08
+1140	256	1144	\N	\N	\N	\N	2014-08-17	\N	2023-08-08
+1141	256	36	\N	\N	\N	\N	2019-02-08	\N	2023-08-08
+1142	256	171	\N	\N	\N	\N	2018-04-30	\N	2023-08-08
+1143	256	880	\N	\N	\N	\N	2018-09-05	\N	2023-08-08
+1144	256	222	\N	\N	\N	\N	2019-05-05	\N	2023-08-08
+1145	256	618	\N	\N	\N	\N	2014-02-21	\N	2023-08-08
+1146	256	39	\N	\N	\N	\N	2016-04-17	\N	2023-08-08
+1147	256	291	\N	\N	\N	\N	2017-02-10	\N	2023-08-08
+1148	256	1075	\N	\N	\N	\N	2015-05-01	\N	2023-08-08
+1149	256	1115	\N	t	\N	\N	2016-05-11	\N	2023-08-08
+1150	256	88	\N	\N	\N	\N	2017-08-24	\N	2023-08-08
+1151	256	113	\N	\N	\N	\N	2019-02-14	\N	2023-08-08
+1152	256	380	\N	\N	\N	\N	2018-04-29	\N	2023-08-08
+1153	256	360	\N	\N	\N	\N	2017-05-15	\N	2023-08-08
+1154	256	985	\N	\N	\N	\N	\N	\N	2023-08-08
+1155	256	1159	\N	\N	\N	\N	2016-10-06	\N	2023-08-08
+1156	257	1160	\N	\N	\N	\N	2019-06-28	\N	2023-08-08
+1157	258	616	\N	\N	\N	\N	2014-08-25	\N	2023-08-08
+1158	259	1162	\N	\N	\N	\N	\N	\N	2023-08-08
+1159	260	1162	\N	\N	\N	\N	\N	\N	2023-08-08
+1160	260	1164	\N	\N	\N	\N	\N	\N	2023-08-08
+1161	260	1165	\N	\N	\N	\N	\N	\N	2023-08-08
+1162	261	1127	\N	\N	\N	\N	2020-08-03	\N	2023-08-08
+1163	261	1165	\N	\N	\N	\N	2020-07-11	\N	2023-08-08
+1164	262	380	\N	\N	\N	\N	2020-03-09	\N	2023-08-08
+1165	263	1169	\N	t	\N	\N	2013-03-02	\N	2023-08-08
+1166	264	30	\N	\N	\N	\N	2013-04-21	\N	2023-08-08
+1167	264	1171	\N	t	\N	\N	2019-01-21	\N	2023-08-08
+1168	264	1169	\N	\N	\N	\N	2017-09-26	\N	2023-08-08
+1169	265	255	\N	\N	\N	\N	\N	\N	2023-08-08
+1170	266	1174	\N	\N	\N	\N	\N	\N	2023-08-08
+1171	267	1175	\N	\N	\N	\N	\N	\N	2023-08-08
+1172	267	47	\N	\N	\N	\N	2012-10-16	\N	2023-08-08
+1173	267	63	\N	\N	\N	\N	\N	\N	2023-08-08
+1174	268	1178	\N	t	\N	\N	2020-08-29	\N	2023-08-08
+1175	268	73	\N	\N	\N	\N	2013-08-26	\N	2023-08-08
+1176	268	255	\N	t	\N	\N	2017-08-15	\N	2023-08-08
+1177	268	257	\N	\N	\N	\N	\N	\N	2023-08-08
+1178	268	17	\N	\N	\N	\N	\N	\N	2023-08-08
+1179	268	1183	\N	\N	\N	\N	2020-06-09	\N	2023-08-08
+1180	268	15	\N	\N	\N	\N	2017-01-03	\N	2023-08-08
+1181	268	1185	\N	\N	\N	\N	\N	\N	2023-08-08
+1182	269	47	\N	\N	\N	\N	\N	\N	2023-08-08
+1183	270	47	\N	\N	\N	\N	2009-09-23	\N	2023-08-08
+1184	270	889	\N	\N	\N	\N	2010-08-25	\N	2023-08-08
+1185	271	234	\N	\N	\N	\N	2016-12-15	\N	2023-08-08
+1186	271	1183	\N	\N	\N	\N	\N	\N	2023-08-08
+1187	271	1191	\N	\N	\N	\N	\N	\N	2023-08-08
+1188	272	73	\N	\N	\N	\N	2012-09-27	\N	2023-08-08
+1189	273	73	\N	\N	\N	\N	\N	\N	2023-08-08
+1190	274	30	\N	\N	\N	\N	\N	\N	2023-08-08
+1191	274	1195	\N	\N	\N	\N	\N	\N	2023-08-08
+1192	275	1127	\N	\N	\N	\N	\N	\N	2023-08-08
+1193	276	1197	\N	\N	\N	\N	2020-01-12	\N	2023-08-08
+1194	277	30	\N	\N	\N	\N	2017-10-10	\N	2023-08-08
+1195	277	95	\N	\N	\N	\N	2018-01-10	\N	2023-08-08
+1196	278	525	\N	\N	\N	\N	\N	\N	2023-08-08
+1197	278	953	\N	\N	\N	\N	2014-05-07	\N	2023-08-08
+1198	279	1202	\N	\N	\N	\N	\N	\N	2023-08-08
+1199	280	461	\N	\N	\N	\N	\N	\N	2023-08-08
+1200	280	1202	\N	\N	\N	\N	\N	\N	2023-08-08
+1201	281	34	\N	\N	\N	\N	2008-09-07	\N	2023-08-08
+1202	281	66	\N	\N	\N	\N	2012-03-25	\N	2023-08-08
+1203	282	30	\N	\N	\N	\N	2016-04-22	\N	2023-08-08
+1204	283	1208	\N	\N	\N	\N	\N	\N	2023-08-08
+1205	283	272	\N	\N	\N	\N	\N	\N	2023-08-08
+1206	284	368	\N	\N	\N	\N	2012-07-27	\N	2023-08-08
+1207	285	1202	\N	\N	\N	\N	\N	\N	2023-08-08
+1208	285	1212	\N	\N	\N	\N	\N	\N	2023-08-08
+1209	285	924	\N	\N	\N	\N	\N	\N	2023-08-08
+1210	286	69	\N	\N	\N	\N	2021-10-08	\N	2023-08-08
+1211	287	1215	\N	\N	\N	\N	\N	\N	2023-08-08
+1212	288	1216	\N	\N	\N	\N	\N	\N	2023-08-08
+1213	289	1216	\N	\N	\N	\N	\N	\N	2023-08-08
+1214	290	525	\N	\N	\N	\N	2015-10-23	\N	2023-08-08
+1215	290	6	\N	\N	\N	\N	2015-05-23	\N	2023-08-08
+1216	291	1220	\N	\N	\N	\N	\N	\N	2023-08-08
+1217	292	1221	\N	t	\N	\N	2004-08-03	\N	2023-08-08
+1218	293	618	\N	\N	\N	\N	\N	\N	2023-08-08
+1219	293	380	\N	\N	\N	\N	2021-04-05	\N	2023-08-08
+1220	294	69	\N	\N	\N	\N	\N	\N	2023-08-08
+1221	294	627	\N	t	\N	\N	2012-07-05	\N	2023-08-08
+1222	294	1226	\N	\N	\N	\N	\N	\N	2023-08-08
+1223	294	438	\N	\N	\N	\N	\N	\N	2023-08-08
+1224	294	14	\N	t	\N	\N	2016-03-01	\N	2023-08-08
+1225	294	616	\N	\N	\N	\N	2017-08-19	\N	2023-08-08
+1226	294	95	\N	\N	\N	\N	2017-04-15	\N	2023-08-08
+1228	294	529	\N	t	\N	\N	2014-03-04	\N	2023-08-08
+1229	295	1233	\N	\N	\N	\N	2020-05-27	\N	2023-08-08
+1230	295	1091	\N	\N	\N	\N	2021-10-29	\N	2023-08-08
+1231	296	529	\N	\N	\N	\N	2020-05-24	\N	2023-08-08
+1232	297	879	\N	\N	\N	\N	2018-01-08	\N	2023-08-08
+1233	297	15	\N	\N	\N	\N	\N	\N	2023-08-08
+1235	299	1239	\N	\N	\N	\N	2020-05-19	\N	2023-08-08
+1236	299	1240	\N	\N	\N	\N	2017-03-06	\N	2023-08-08
+1237	299	1241	\N	t	\N	\N	2018-12-31	\N	2023-08-08
+1238	299	1242	\N	\N	\N	\N	\N	\N	2023-08-08
+1239	299	438	\N	\N	\N	\N	2020-05-21	\N	2023-08-08
+1240	299	1233	\N	t	\N	\N	2014-06-15	\N	2023-08-08
+1241	299	1245	\N	t	\N	\N	2015-12-05	\N	2023-08-08
+1242	299	1246	\N	t	\N	\N	2014-06-15	\N	2023-08-08
+1243	299	1247	\N	\N	\N	\N	2020-08-24	\N	2023-08-08
+1244	299	529	\N	\N	\N	\N	2018-05-01	\N	2023-08-08
+1245	300	438	\N	\N	\N	\N	\N	\N	2023-08-08
+1246	300	879	\N	\N	\N	\N	2015-12-28	\N	2023-08-08
+1247	300	529	\N	\N	\N	\N	\N	\N	2023-08-08
+1248	301	6	\N	t	\N	\N	2003-02-12	\N	2023-08-08
+1249	302	30	\N	\N	\N	\N	\N	\N	2023-08-08
+1250	303	1239	\N	t	\N	\N	2015-05-02	\N	2023-08-08
+1251	303	68	\N	\N	\N	\N	\N	\N	2023-08-08
+1252	303	53	\N	\N	\N	\N	2014-01-06	\N	2023-08-08
+1253	303	30	\N	\N	\N	\N	2013-12-28	\N	2023-08-08
+1254	303	207	\N	\N	\N	\N	2015-12-28	\N	2023-08-08
+1255	303	208	\N	\N	\N	\N	2019-11-28	\N	2023-08-08
+1256	303	438	\N	\N	\N	\N	2012-05-01	\N	2023-08-08
+1257	303	1233	\N	\N	\N	\N	2017-04-15	\N	2023-08-08
+1258	303	259	\N	\N	\N	\N	2022-03-27	\N	2023-08-08
+1259	303	879	\N	\N	\N	\N	2015-12-16	\N	2023-08-08
+1260	303	213	\N	\N	\N	\N	2022-03-01	\N	2023-08-08
+1261	303	525	\N	\N	\N	\N	2010-04-09	\N	2023-08-08
+1262	303	39	\N	\N	\N	\N	2014-12-12	\N	2023-08-08
+1263	303	6	\N	\N	\N	\N	2013-12-14	\N	2023-08-08
+1264	303	15	\N	\N	\N	\N	2015-12-10	\N	2023-08-08
+1265	303	88	\N	\N	\N	\N	2016-05-29	\N	2023-08-08
+1266	303	1247	\N	t	\N	\N	2020-07-14	\N	2023-08-08
+1267	303	1	\N	\N	\N	\N	2014-08-28	\N	2023-08-08
+1268	303	497	\N	\N	\N	\N	2015-09-03	\N	2023-08-08
+1269	303	529	\N	\N	\N	\N	2014-04-25	\N	2023-08-08
+1270	303	1091	\N	\N	\N	\N	2015-02-03	\N	2023-08-08
+1271	304	1275	\N	\N	\N	\N	\N	\N	2023-08-08
+1272	304	438	\N	t	\N	\N	2008-09-22	\N	2023-08-08
+1273	304	525	\N	\N	\N	\N	2002-03-19	\N	2023-08-08
+1274	304	6	\N	\N	\N	\N	2008-04-17	\N	2023-08-08
+1275	305	529	\N	\N	\N	\N	2019-08-08	\N	2023-08-08
+1276	306	1239	\N	\N	\N	\N	2017-04-23	\N	2023-08-08
+1277	307	438	\N	\N	\N	\N	2022-01-02	\N	2023-08-08
+1278	308	221	\N	\N	\N	\N	\N	\N	2023-08-08
+1279	308	1283	\N	\N	\N	\N	\N	\N	2023-08-08
+1280	309	19	\N	\N	\N	\N	2018-07-31	\N	2023-08-08
+1281	310	199	\N	\N	\N	\N	\N	\N	2023-08-08
+1282	310	34	\N	\N	\N	\N	2004-08-04	\N	2023-08-08
+1283	310	95	\N	\N	\N	\N	\N	\N	2023-08-08
+1284	311	66	\N	\N	\N	\N	\N	\N	2023-08-08
+1285	311	1289	\N	\N	\N	\N	\N	\N	2023-08-08
+1286	311	1290	\N	\N	\N	\N	\N	\N	2023-08-08
+1287	311	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1288	311	258	\N	\N	\N	\N	\N	\N	2023-08-08
+1289	311	26	\N	\N	\N	\N	\N	\N	2023-08-08
+1290	311	1294	\N	\N	\N	\N	\N	\N	2023-08-08
+1291	311	1295	\N	\N	\N	\N	\N	\N	2023-08-08
+1292	311	39	\N	\N	\N	\N	\N	\N	2023-08-08
+1293	311	1297	\N	\N	\N	\N	\N	\N	2023-08-08
+1294	311	366	\N	\N	\N	\N	\N	\N	2023-08-08
+1295	311	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+1296	312	1300	\N	\N	\N	\N	2016-07-29	\N	2023-08-08
+1297	313	556	\N	\N	\N	\N	\N	\N	2023-08-08
+1298	314	258	\N	\N	\N	\N	\N	\N	2023-08-08
+1299	315	1303	\N	\N	\N	\N	\N	\N	2023-08-08
+1300	315	1304	\N	\N	\N	\N	\N	\N	2023-08-08
+1301	315	1305	\N	\N	\N	\N	\N	\N	2023-08-08
+1302	316	704	\N	\N	\N	\N	\N	\N	2023-08-08
+1303	316	553	\N	\N	\N	\N	\N	\N	2023-08-08
+1304	317	71	\N	\N	\N	\N	\N	\N	2023-08-08
+1305	318	85	\N	\N	\N	\N	\N	\N	2023-08-08
+1306	319	1310	\N	t	\N	\N	2020-11-10	\N	2023-08-08
+1307	319	1311	\N	\N	\N	\N	\N	\N	2023-08-08
+1308	320	262	\N	\N	\N	\N	\N	\N	2023-08-08
+1309	321	1303	\N	\N	\N	\N	\N	\N	2023-08-08
+1310	321	1314	\N	\N	\N	\N	\N	\N	2023-08-08
+1311	321	12	\N	\N	\N	\N	\N	\N	2023-08-08
+1312	321	262	\N	\N	\N	\N	\N	\N	2023-08-08
+1313	321	616	\N	\N	\N	\N	\N	\N	2023-08-08
+1314	321	1305	\N	\N	\N	\N	2022-05-03	\N	2023-08-08
+1315	321	1319	\N	t	\N	\N	2022-02-18	\N	2023-08-08
+1316	322	1303	\N	\N	\N	\N	2017-04-24	\N	2023-08-08
+1317	323	1321	\N	\N	\N	\N	2019-10-20	\N	2023-08-08
+1318	323	262	\N	\N	\N	\N	2017-11-04	\N	2023-08-08
+1319	324	71	\N	\N	\N	\N	\N	\N	2023-08-08
+1320	324	1324	\N	t	\N	\N	2008-09-22	\N	2023-08-08
+1321	325	71	\N	\N	\N	\N	2018-10-25	\N	2023-08-08
+1322	325	1326	\N	t	\N	\N	2018-08-25	\N	2023-08-08
+1323	326	1327	\N	\N	\N	\N	\N	\N	2023-08-08
+1324	327	1321	\N	\N	\N	\N	\N	\N	2023-08-08
+1325	327	69	\N	\N	\N	\N	2010-01-01	\N	2023-08-08
+1326	327	1330	\N	\N	\N	\N	\N	\N	2023-08-08
+1327	327	1054	\N	\N	\N	\N	\N	\N	2023-08-08
+1328	327	1332	\N	\N	\N	\N	2016-09-17	\N	2023-08-08
+1329	327	1333	\N	\N	\N	\N	2014-01-12	\N	2023-08-08
+1330	327	870	\N	\N	\N	\N	\N	\N	2023-08-08
+1331	327	53	\N	\N	\N	\N	2018-03-18	\N	2023-08-08
+1332	327	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1333	327	30	\N	\N	\N	\N	\N	\N	2023-08-08
+1334	327	1226	\N	\N	\N	\N	\N	\N	2023-08-08
+1335	327	14	\N	\N	\N	\N	2020-02-07	\N	2023-08-08
+1336	327	262	\N	\N	\N	\N	\N	\N	2023-08-08
+1337	327	1341	\N	\N	\N	\N	\N	\N	2023-08-08
+1338	327	616	\N	\N	\N	\N	\N	\N	2023-08-08
+1339	327	95	\N	\N	\N	\N	\N	\N	2023-08-08
+1340	327	171	\N	\N	\N	\N	2015-01-09	\N	2023-08-08
+1341	327	1345	\N	\N	\N	\N	\N	\N	2023-08-08
+1342	327	108	\N	\N	\N	\N	2011-06-15	\N	2023-08-08
+1343	327	1347	\N	t	\N	\N	2012-07-22	\N	2023-08-08
+1344	327	1348	\N	\N	\N	\N	\N	\N	2023-08-08
+1345	327	275	\N	\N	\N	\N	\N	\N	2023-08-08
+1346	327	1350	\N	\N	\N	\N	\N	\N	2023-08-08
+1347	327	1351	\N	\N	\N	\N	\N	\N	2023-08-08
+1348	327	1352	\N	\N	\N	\N	2014-05-15	\N	2023-08-08
+1349	327	430	\N	\N	\N	\N	\N	\N	2023-08-08
+1350	327	222	\N	\N	\N	\N	\N	\N	2023-08-08
+1351	327	39	\N	\N	\N	\N	2011-04-03	\N	2023-08-08
+1352	327	1297	\N	\N	\N	\N	\N	\N	2023-08-08
+1353	327	1357	\N	\N	\N	\N	\N	\N	2023-08-08
+1354	327	906	\N	\N	\N	\N	\N	\N	2023-08-08
+1355	327	227	\N	\N	\N	\N	2013-01-16	\N	2023-08-08
+1356	327	1360	\N	\N	\N	\N	\N	\N	2023-08-08
+1357	327	18	\N	\N	\N	\N	2012-10-31	\N	2023-08-08
+1358	327	553	\N	t	\N	\N	2011-11-09	\N	2023-08-08
+1359	327	1363	\N	\N	\N	\N	\N	\N	2023-08-08
+1360	327	868	\N	\N	\N	\N	\N	\N	2023-08-08
+1361	327	1305	\N	\N	\N	\N	\N	\N	2023-08-08
+1362	327	1366	\N	\N	\N	\N	\N	\N	2023-08-08
+1363	327	907	\N	\N	\N	\N	\N	\N	2023-08-08
+1364	327	1368	\N	\N	\N	\N	\N	\N	2023-08-08
+1365	327	1369	\N	\N	\N	\N	\N	\N	2023-08-08
+1366	327	1	\N	\N	\N	\N	\N	\N	2023-08-08
+1367	328	1321	\N	\N	\N	\N	2020-05-11	\N	2023-08-08
+1368	328	30	\N	\N	\N	\N	\N	\N	2023-08-08
+1369	328	1373	\N	\N	\N	\N	\N	\N	2023-08-08
+1370	328	262	\N	\N	\N	\N	2020-05-01	\N	2023-08-08
+1371	328	1351	\N	\N	\N	\N	2020-05-31	\N	2023-08-08
+1372	328	1376	\N	t	\N	\N	2020-05-22	\N	2023-08-08
+1373	329	1321	\N	\N	\N	\N	\N	\N	2023-08-08
+1374	329	12	\N	\N	\N	\N	2020-03-14	\N	2023-08-08
+1375	329	262	\N	\N	\N	\N	\N	\N	2023-08-08
+1376	329	616	\N	\N	\N	\N	2020-09-05	\N	2023-08-08
+1377	329	108	\N	\N	\N	\N	2020-07-26	\N	2023-08-08
+1378	329	1373	\N	\N	\N	\N	2021-09-06	\N	2023-08-08
+1379	329	1376	\N	\N	\N	\N	2021-08-27	\N	2023-08-08
+1380	330	1303	\N	\N	\N	\N	\N	\N	2023-08-08
+1381	330	71	\N	\N	\N	\N	\N	\N	2023-08-08
+1382	330	649	\N	t	\N	\N	2004-05-07	\N	2023-08-08
+1383	331	71	\N	t	\N	\N	1993-09-01	\N	2023-08-08
+1384	331	723	\N	t	\N	\N	1997-10-01	\N	2023-08-08
+1385	331	1389	\N	\N	\N	\N	\N	\N	2023-08-08
+1386	331	1311	\N	\N	\N	\N	2019-09-13	\N	2023-08-08
+1387	331	736	\N	\N	\N	\N	\N	\N	2023-08-08
+1388	332	1321	\N	\N	\N	\N	\N	\N	2023-08-08
+1389	332	1310	\N	\N	\N	\N	2021-04-06	\N	2023-08-08
+1390	332	71	\N	\N	\N	\N	2019-04-06	\N	2023-08-08
+1391	332	1304	\N	\N	\N	\N	2020-09-13	\N	2023-08-08
+1392	332	12	\N	\N	\N	\N	\N	\N	2023-08-08
+1393	332	1397	\N	t	\N	\N	2020-05-19	\N	2023-08-08
+1394	332	1398	\N	\N	\N	\N	2021-11-24	\N	2023-08-08
+1395	332	179	\N	\N	\N	\N	\N	\N	2023-08-08
+1396	332	1351	\N	\N	\N	\N	\N	\N	2023-08-08
+1397	332	1305	\N	\N	\N	\N	2019-06-14	\N	2023-08-08
+1398	333	1321	\N	\N	\N	\N	2018-05-08	\N	2023-08-08
+1399	333	1403	\N	\N	\N	\N	2018-11-18	\N	2023-08-08
+1400	333	1327	\N	\N	\N	\N	\N	\N	2023-08-08
+1401	333	80	\N	\N	\N	\N	2019-08-20	\N	2023-08-08
+1402	333	1373	\N	t	\N	\N	2020-05-29	\N	2023-08-08
+1403	333	262	\N	\N	\N	\N	2019-10-14	\N	2023-08-08
+1404	333	1408	\N	\N	\N	\N	\N	\N	2023-08-08
+1405	333	1409	\N	\N	\N	\N	2020-10-14	\N	2023-08-08
+1406	333	1357	\N	\N	\N	\N	\N	\N	2023-08-08
+1407	333	1411	\N	t	\N	\N	2020-11-24	\N	2023-08-08
+1408	333	1412	\N	\N	\N	\N	\N	\N	2023-08-08
+1409	333	1324	\N	\N	\N	\N	2016-05-05	\N	2023-08-08
+1410	334	1414	\N	t	\N	\N	2008-11-08	\N	2023-08-08
+1411	334	1415	\N	t	\N	\N	2017-06-18	\N	2023-08-08
+1412	334	71	\N	\N	\N	\N	2004-06-01	\N	2023-08-08
+1413	334	1417	\N	t	\N	\N	2004-07-07	\N	2023-08-08
+1414	334	1418	\N	t	\N	\N	2021-04-03	\N	2023-08-08
+1415	334	1419	\N	t	\N	\N	2020-04-16	\N	2023-08-08
+1416	334	1420	\N	t	\N	\N	2015-11-15	\N	2023-08-08
+1417	334	1421	\N	t	\N	\N	2005-10-27	\N	2023-08-08
+1418	334	1422	\N	t	\N	\N	2020-05-26	\N	2023-08-08
+1419	335	71	\N	\N	\N	\N	\N	\N	2023-08-08
+1420	335	380	\N	\N	\N	\N	\N	\N	2023-08-08
+1422	337	1321	\N	\N	\N	\N	\N	\N	2023-08-08
+1423	337	262	\N	\N	\N	\N	\N	\N	2023-08-08
+1424	338	1398	\N	\N	\N	\N	\N	\N	2023-08-08
+1425	339	262	\N	\N	\N	\N	2016-07-22	\N	2023-08-08
+1426	340	1430	\N	\N	\N	\N	\N	\N	2023-08-08
+1427	341	53	\N	\N	\N	\N	2014-08-21	\N	2023-08-08
+1428	341	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1429	342	1433	\N	\N	\N	\N	\N	\N	2023-08-08
+1430	342	1434	\N	t	\N	\N	2004-02-12	\N	2023-08-08
+1431	342	938	\N	t	\N	\N	2006-08-14	\N	2023-08-08
+1432	342	1436	\N	t	\N	\N	2008-12-05	\N	2023-08-08
+1433	342	127	\N	t	\N	\N	2008-12-05	\N	2023-08-08
+1434	342	1438	\N	\N	\N	\N	\N	\N	2023-08-08
+1435	342	1439	\N	\N	\N	\N	\N	\N	2023-08-08
+1436	342	1440	\N	\N	\N	\N	\N	\N	2023-08-08
+1437	342	1441	\N	\N	\N	\N	\N	\N	2023-08-08
+1438	342	1442	\N	\N	\N	\N	\N	\N	2023-08-08
+1439	342	1443	\N	\N	\N	\N	\N	\N	2023-08-08
+1440	342	957	\N	\N	\N	\N	\N	\N	2023-08-08
+1441	342	960	\N	\N	\N	\N	\N	\N	2023-08-08
+1442	342	1446	\N	\N	\N	\N	\N	\N	2023-08-08
+1443	342	234	\N	\N	\N	\N	2010-03-02	\N	2023-08-08
+1444	343	618	\N	\N	\N	\N	\N	\N	2023-08-08
+1445	344	1449	\N	\N	\N	\N	\N	\N	2023-08-08
+1446	345	869	\N	\N	\N	\N	2013-10-12	\N	2023-08-08
+1447	346	198	\N	\N	\N	\N	2018-12-31	\N	2023-08-08
+1448	346	234	\N	\N	\N	\N	2018-12-23	\N	2023-08-08
+1449	346	541	\N	\N	\N	\N	\N	\N	2023-08-08
+1450	346	2	\N	\N	\N	\N	\N	\N	2023-08-08
+1451	346	863	\N	\N	\N	\N	2018-12-24	\N	2023-08-08
+1452	346	525	\N	\N	\N	\N	2018-10-03	\N	2023-08-08
+1453	346	1457	\N	\N	\N	\N	\N	\N	2023-08-08
+1454	346	1221	\N	\N	\N	\N	2018-06-24	\N	2023-08-08
+1455	346	1459	\N	\N	\N	\N	2018-06-24	\N	2023-08-08
+1456	346	6	\N	\N	\N	\N	2018-09-30	\N	2023-08-08
+1457	346	15	\N	\N	\N	\N	2019-01-05	\N	2023-08-08
+1458	346	1	\N	\N	\N	\N	2018-07-23	\N	2023-08-08
+1459	346	497	\N	\N	\N	\N	2018-07-25	\N	2023-08-08
+1460	347	195	\N	\N	\N	\N	2009-12-01	\N	2023-08-08
+1461	347	207	\N	\N	\N	\N	2009-04-02	\N	2023-08-08
+1462	347	438	\N	\N	\N	\N	\N	\N	2023-08-08
+1463	347	525	\N	\N	\N	\N	2005-04-05	\N	2023-08-08
+1464	347	221	\N	\N	\N	\N	2009-11-20	\N	2023-08-08
+1465	347	6	\N	\N	\N	\N	2003-04-04	\N	2023-08-08
+1466	347	1470	\N	t	\N	\N	2009-12-13	\N	2023-08-08
+1467	347	1471	\N	\N	\N	\N	2009-03-10	\N	2023-08-08
+1468	347	1	\N	\N	\N	\N	\N	\N	2023-08-08
+1469	347	1091	\N	t	\N	\N	2009-11-06	\N	2023-08-08
+1470	348	1474	\N	t	\N	\N	2016-06-16	\N	2023-08-08
+1471	348	1475	\N	t	\N	\N	2021-10-31	\N	2023-08-08
+1472	348	66	\N	\N	\N	\N	2008-05-19	\N	2023-08-08
+1473	348	1477	\N	\N	\N	\N	2012-04-24	\N	2023-08-08
+1474	348	876	\N	\N	\N	\N	2009-09-27	\N	2023-08-08
+1475	348	69	\N	\N	\N	\N	2010-03-08	\N	2023-08-08
+1476	348	418	\N	t	\N	\N	2010-01-02	\N	2023-08-08
+1477	348	1481	\N	t	\N	\N	2013-09-10	\N	2023-08-08
+1478	348	1482	\N	t	\N	\N	2020-09-04	\N	2023-08-08
+1479	348	533	\N	t	\N	\N	2014-04-22	\N	2023-08-08
+1480	348	454	\N	\N	\N	\N	2008-09-07	\N	2023-08-08
+1481	348	1240	\N	\N	\N	\N	2016-02-20	\N	2023-08-08
+1482	348	11	\N	\N	\N	\N	2014-07-23	\N	2023-08-08
+1483	348	457	\N	t	\N	\N	2012-04-08	\N	2023-08-08
+1484	348	1127	\N	t	\N	\N	2018-05-13	\N	2023-08-08
+1485	348	535	\N	\N	\N	\N	2016-07-13	\N	2023-08-08
+1486	348	705	\N	\N	\N	\N	2008-07-12	\N	2023-08-08
+1487	348	1491	\N	t	\N	\N	2020-04-29	\N	2023-08-08
+1488	348	1492	\N	t	\N	\N	2022-02-28	\N	2023-08-08
+1489	348	1493	\N	t	\N	\N	2022-02-23	\N	2023-08-08
+1490	348	1442	\N	\N	\N	\N	2007-02-11	\N	2023-08-08
+1491	348	420	\N	t	\N	\N	2015-08-25	\N	2023-08-08
+1492	348	1496	\N	t	\N	\N	2008-10-20	\N	2023-08-08
+1493	348	1497	\N	t	\N	\N	2021-10-18	\N	2023-08-08
+1494	348	198	\N	\N	\N	\N	2019-02-08	\N	2023-08-08
+1495	348	957	\N	\N	\N	\N	2011-04-14	\N	2023-08-08
+1496	348	1500	\N	t	\N	\N	2017-04-18	\N	2023-08-08
+1497	348	234	\N	\N	\N	\N	2016-02-05	\N	2023-08-08
+1498	348	1502	\N	t	\N	\N	2015-12-03	\N	2023-08-08
+1499	348	369	\N	t	\N	\N	2017-11-30	\N	2023-08-08
+1500	348	1078	\N	t	\N	\N	2012-10-15	\N	2023-08-08
+1501	348	536	\N	\N	\N	\N	2015-09-28	\N	2023-08-08
+1502	348	395	\N	\N	\N	\N	2012-05-31	\N	2023-08-08
+1503	348	844	\N	\N	\N	\N	2009-06-08	\N	2023-08-08
+1504	348	1508	\N	t	\N	\N	2015-11-02	\N	2023-08-08
+1505	348	23	\N	\N	\N	\N	2016-11-18	\N	2023-08-08
+1506	348	24	\N	\N	\N	\N	2016-11-18	\N	2023-08-08
+1507	348	461	\N	\N	\N	\N	2016-02-04	\N	2023-08-08
+1508	348	541	\N	\N	\N	\N	2009-07-14	\N	2023-08-08
+1509	348	715	\N	\N	\N	\N	2013-06-29	\N	2023-08-08
+1510	348	1514	\N	t	\N	\N	2018-09-29	\N	2023-08-08
+1511	348	1515	\N	\N	\N	\N	2020-11-18	\N	2023-08-08
+1512	348	1516	\N	t	\N	\N	2018-07-20	\N	2023-08-08
+1513	348	201	\N	\N	\N	\N	2012-04-25	\N	2023-08-08
+1514	348	1518	\N	t	\N	\N	2018-02-13	\N	2023-08-08
+1515	348	1519	\N	t	\N	\N	2010-10-17	\N	2023-08-08
+1516	348	1275	\N	\N	\N	\N	2007-11-27	\N	2023-08-08
+1517	348	53	\N	\N	\N	\N	2011-07-30	\N	2023-08-08
+1518	348	463	\N	\N	\N	\N	2021-11-09	\N	2023-08-08
+1519	348	696	\N	\N	\N	\N	2007-04-22	\N	2023-08-08
+1520	348	30	\N	\N	\N	\N	2007-02-07	\N	2023-08-08
+1521	348	944	\N	\N	\N	\N	2017-03-17	\N	2023-08-08
+1522	348	102	\N	\N	\N	\N	2013-02-09	\N	2023-08-08
+1523	348	206	\N	\N	\N	\N	2014-02-03	\N	2023-08-08
+1524	348	1528	\N	t	\N	\N	2017-08-06	\N	2023-08-08
+1525	348	207	\N	\N	\N	\N	2008-02-06	\N	2023-08-08
+1526	348	761	\N	t	\N	\N	2009-09-20	\N	2023-08-08
+1527	348	208	\N	\N	\N	\N	2011-07-31	\N	2023-08-08
+1528	348	1532	\N	\N	\N	\N	2020-07-23	\N	2023-08-08
+1529	348	1533	\N	\N	\N	\N	2016-05-23	\N	2023-08-08
+1530	348	253	\N	t	\N	\N	2010-04-07	\N	2023-08-08
+1531	348	209	\N	\N	\N	\N	2010-03-14	\N	2023-08-08
+1532	348	2	\N	\N	\N	\N	2009-08-24	\N	2023-08-08
+1533	348	407	\N	\N	\N	\N	2013-04-18	\N	2023-08-08
+1534	348	438	\N	\N	\N	\N	2008-11-24	\N	2023-08-08
+1535	348	1539	\N	\N	\N	\N	2017-02-10	\N	2023-08-08
+1536	348	1540	\N	t	\N	\N	2017-09-18	\N	2023-08-08
+1537	348	1541	\N	t	\N	\N	2013-09-22	\N	2023-08-08
+1538	348	1542	\N	\N	\N	\N	\N	\N	2023-08-08
+1539	348	255	\N	\N	\N	\N	2018-07-09	\N	2023-08-08
+1540	348	1544	\N	\N	\N	\N	2021-09-18	\N	2023-08-08
+1541	348	1545	\N	\N	\N	\N	2013-10-28	\N	2023-08-08
+1542	348	256	\N	\N	\N	\N	\N	\N	2023-08-08
+1543	348	1547	\N	\N	\N	\N	2014-05-04	\N	2023-08-08
+1544	348	507	\N	\N	\N	\N	2022-03-18	\N	2023-08-08
+1545	348	80	\N	t	\N	\N	2013-05-27	\N	2023-08-08
+1546	348	313	\N	\N	\N	\N	2009-10-04	\N	2023-08-08
+1547	348	1551	\N	t	\N	\N	2017-11-30	\N	2023-08-08
+1548	348	1552	\N	\N	\N	\N	2014-05-09	\N	2023-08-08
+1549	348	1553	\N	t	\N	\N	2018-09-22	\N	2023-08-08
+1550	348	1554	\N	t	\N	\N	2014-05-10	\N	2023-08-08
+1551	348	1555	\N	t	\N	\N	2013-08-03	\N	2023-08-08
+1552	348	1556	\N	\N	\N	\N	2013-06-23	\N	2023-08-08
+1553	348	258	\N	t	\N	\N	2012-04-25	\N	2023-08-08
+1554	348	262	\N	\N	\N	\N	2016-10-04	\N	2023-08-08
+1555	348	427	\N	t	\N	\N	2012-06-07	\N	2023-08-08
+1556	348	3	\N	\N	\N	\N	2020-10-19	\N	2023-08-08
+1557	348	767	\N	t	\N	\N	2013-09-21	\N	2023-08-08
+1558	348	1562	\N	\N	\N	\N	2010-07-22	\N	2023-08-08
+1559	348	1563	\N	t	\N	\N	2009-05-06	\N	2023-08-08
+1560	348	1564	\N	t	\N	\N	2021-12-18	\N	2023-08-08
+1561	348	614	\N	\N	\N	\N	2020-11-18	\N	2023-08-08
+1562	348	348	\N	t	\N	\N	2011-02-17	\N	2023-08-08
+1563	348	1567	\N	\N	\N	\N	2018-02-03	\N	2023-08-08
+1564	348	212	\N	t	\N	\N	2013-02-07	\N	2023-08-08
+1565	348	863	\N	\N	\N	\N	2010-02-16	\N	2023-08-08
+1566	348	524	\N	t	\N	\N	2009-04-24	\N	2023-08-08
+1567	348	213	\N	\N	\N	\N	2008-02-05	\N	2023-08-08
+1568	348	266	\N	t	\N	\N	2011-04-29	\N	2023-08-08
+1569	348	616	\N	\N	\N	\N	2014-07-11	\N	2023-08-08
+1570	348	267	\N	\N	\N	\N	2017-04-20	\N	2023-08-08
+1571	348	36	\N	\N	\N	\N	2008-02-10	\N	2023-08-08
+1572	348	1576	\N	\N	\N	\N	2020-11-03	\N	2023-08-08
+1573	348	1577	\N	t	\N	\N	2017-12-21	\N	2023-08-08
+1574	348	399	\N	t	\N	\N	2017-04-21	\N	2023-08-08
+1575	348	108	\N	t	\N	\N	2010-09-06	\N	2023-08-08
+1576	348	1580	\N	t	\N	\N	2010-09-06	\N	2023-08-08
+1577	348	997	\N	\N	\N	\N	2020-11-09	\N	2023-08-08
+1578	348	1582	\N	\N	\N	\N	\N	\N	2023-08-08
+1579	348	479	\N	\N	\N	\N	\N	\N	2023-08-08
+1580	348	1083	\N	\N	\N	\N	2014-12-04	\N	2023-08-08
+1581	348	1585	\N	\N	\N	\N	2013-06-30	\N	2023-08-08
+1582	348	1586	\N	t	\N	\N	2017-02-08	\N	2023-08-08
+1583	348	1587	\N	t	\N	\N	2009-10-26	\N	2023-08-08
+1584	348	1588	\N	\N	\N	\N	2013-06-23	\N	2023-08-08
+1585	348	525	\N	\N	\N	\N	2006-11-11	\N	2023-08-08
+1586	348	546	\N	t	\N	\N	2009-04-12	\N	2023-08-08
+1587	348	1591	\N	\N	\N	\N	2008-04-06	\N	2023-08-08
+1588	348	1408	\N	\N	\N	\N	2018-01-27	\N	2023-08-08
+1589	348	1593	\N	\N	\N	\N	2020-07-25	\N	2023-08-08
+1590	348	1594	\N	\N	\N	\N	2015-10-28	\N	2023-08-08
+1591	348	1595	\N	t	\N	\N	2021-10-26	\N	2023-08-08
+1592	348	1596	\N	t	\N	\N	2013-01-03	\N	2023-08-08
+1593	348	675	\N	\N	\N	\N	2017-11-15	\N	2023-08-08
+1594	348	850	\N	\N	\N	\N	2007-09-29	\N	2023-08-08
+1595	348	1599	\N	\N	\N	\N	2016-03-26	\N	2023-08-08
+1596	348	1600	\N	t	\N	\N	2013-08-20	\N	2023-08-08
+1597	348	1601	\N	t	\N	\N	2017-07-10	\N	2023-08-08
+1598	348	1085	\N	t	\N	\N	2014-03-15	\N	2023-08-08
+1599	348	400	\N	t	\N	\N	2017-04-21	\N	2023-08-08
+1600	348	779	\N	\N	\N	\N	2019-02-12	\N	2023-08-08
+1601	348	1605	\N	\N	\N	\N	2021-09-19	\N	2023-08-08
+1602	348	1033	\N	\N	\N	\N	\N	\N	2023-08-08
+1603	348	999	\N	\N	\N	\N	\N	\N	2023-08-08
+1604	348	526	\N	t	\N	\N	2013-12-14	\N	2023-08-08
+1605	348	1609	\N	t	\N	\N	2011-03-14	\N	2023-08-08
+1606	348	1610	\N	\N	\N	\N	2009-06-16	\N	2023-08-08
+1607	348	480	\N	\N	\N	\N	2022-03-28	\N	2023-08-08
+1608	348	481	\N	\N	\N	\N	\N	\N	2023-08-08
+1609	348	482	\N	\N	\N	\N	\N	\N	2023-08-08
+1610	348	1614	\N	\N	\N	\N	2008-11-17	\N	2023-08-08
+1611	348	1615	\N	\N	\N	\N	2008-02-17	\N	2023-08-08
+1612	348	1616	\N	\N	\N	\N	2020-07-15	\N	2023-08-08
+1613	348	1035	\N	\N	\N	\N	2011-05-17	\N	2023-08-08
+1614	348	222	\N	\N	\N	\N	2017-02-03	\N	2023-08-08
+1615	348	1295	\N	\N	\N	\N	2013-02-13	\N	2023-08-08
+1616	348	39	\N	\N	\N	\N	2009-02-24	\N	2023-08-08
+1617	348	1621	\N	\N	\N	\N	2009-10-12	\N	2023-08-08
+1618	348	1197	\N	\N	\N	\N	2018-12-28	\N	2023-08-08
+1619	348	432	\N	\N	\N	\N	2017-04-20	\N	2023-08-08
+1620	348	1000	\N	t	\N	\N	2007-09-16	\N	2023-08-08
+1621	348	1625	\N	\N	\N	\N	\N	\N	2023-08-08
+1622	348	224	\N	\N	\N	\N	2013-01-25	\N	2023-08-08
+1623	348	1297	\N	t	\N	\N	2010-08-07	\N	2023-08-08
+1624	348	1628	\N	t	\N	\N	2015-11-19	\N	2023-08-08
+1625	348	1221	\N	\N	\N	\N	2016-05-04	\N	2023-08-08
+1626	348	1459	\N	\N	\N	\N	2016-05-04	\N	2023-08-08
+1627	348	1631	\N	t	\N	\N	2021-09-22	\N	2023-08-08
+1628	348	1632	\N	\N	\N	\N	2014-05-07	\N	2023-08-08
+1629	348	1633	\N	t	\N	\N	2022-03-22	\N	2023-08-08
+1630	348	889	\N	\N	\N	\N	2008-10-26	\N	2023-08-08
+1631	348	1635	\N	\N	\N	\N	2018-02-25	\N	2023-08-08
+1632	348	1636	\N	t	\N	\N	2013-07-21	\N	2023-08-08
+1633	348	484	\N	t	\N	\N	2017-04-18	\N	2023-08-08
+1634	348	700	\N	\N	\N	\N	2019-09-19	\N	2023-08-08
+1635	348	1001	\N	\N	\N	\N	2011-05-18	\N	2023-08-08
+1636	348	1357	\N	\N	\N	\N	2018-01-31	\N	2023-08-08
+1637	348	1641	\N	t	\N	\N	2016-10-05	\N	2023-08-08
+1638	348	1642	\N	\N	\N	\N	2009-01-05	\N	2023-08-08
+1639	348	1643	\N	t	\N	\N	2021-09-21	\N	2023-08-08
+1640	348	1183	\N	t	\N	\N	2018-07-23	\N	2023-08-08
+1641	348	1645	\N	t	\N	\N	2017-05-14	\N	2023-08-08
+1642	348	6	\N	\N	\N	\N	2008-03-16	\N	2023-08-08
+1643	348	1647	\N	\N	\N	\N	\N	\N	2023-08-08
+1644	348	552	\N	\N	\N	\N	2013-10-13	\N	2023-08-08
+1645	348	227	\N	t	\N	\N	2011-03-28	\N	2023-08-08
+1646	348	1650	\N	t	\N	\N	2011-03-28	\N	2023-08-08
+1647	348	1652	\N	t	\N	\N	2017-09-03	\N	2023-08-08
+1649	348	518	\N	\N	\N	\N	2022-03-09	\N	2023-08-08
+1650	348	410	\N	\N	\N	\N	2008-09-07	\N	2023-08-08
+1651	348	228	\N	\N	\N	\N	2016-02-19	\N	2023-08-08
+1652	348	1657	\N	t	\N	\N	2018-05-15	\N	2023-08-08
+1653	348	868	\N	\N	\N	\N	\N	\N	2023-08-08
+1654	348	1305	\N	\N	\N	\N	\N	\N	2023-08-08
+1655	348	1660	\N	t	\N	\N	2010-03-31	\N	2023-08-08
+1656	348	1661	\N	t	\N	\N	2021-12-23	\N	2023-08-08
+1657	348	401	\N	\N	\N	\N	2014-07-11	\N	2023-08-08
+1658	348	190	\N	\N	\N	\N	2018-11-09	\N	2023-08-08
+1659	348	1664	\N	t	\N	\N	2012-10-04	\N	2023-08-08
+1660	348	556	\N	\N	\N	\N	2013-10-28	\N	2023-08-08
+1661	348	854	\N	\N	\N	\N	\N	\N	2023-08-08
+1662	348	492	\N	\N	\N	\N	2021-11-09	\N	2023-08-08
+1663	348	1668	\N	\N	\N	\N	2011-11-03	\N	2023-08-08
+1664	348	1669	\N	t	\N	\N	2016-07-02	\N	2023-08-08
+1665	348	88	\N	t	\N	\N	2012-07-11	\N	2023-08-08
+1666	348	1671	\N	t	\N	\N	2012-07-11	\N	2023-08-08
+1668	349	80	\N	\N	\N	\N	\N	\N	2023-08-08
+1669	349	108	\N	\N	\N	\N	\N	\N	2023-08-08
+1670	350	1676	\N	\N	\N	\N	2016-10-24	\N	2023-08-08
+1671	351	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1672	352	1678	\N	t	\N	\N	2018-02-13	\N	2023-08-08
+1673	353	34	\N	\N	\N	\N	\N	\N	2023-08-08
+1674	353	1352	\N	\N	\N	\N	\N	\N	2023-08-08
+1675	353	1681	\N	\N	\N	\N	2012-09-19	\N	2023-08-08
+1676	353	1299	\N	\N	\N	\N	2012-09-10	\N	2023-08-08
+1677	353	643	\N	\N	\N	\N	\N	\N	2023-08-08
+1678	354	395	\N	\N	\N	\N	2016-07-29	\N	2023-08-08
+1679	355	76	\N	\N	\N	\N	2015-01-07	\N	2023-08-08
+1680	356	108	\N	\N	\N	\N	2021-05-08	\N	2023-08-08
+1681	356	868	\N	\N	\N	\N	\N	\N	2023-08-08
+1682	357	1333	\N	t	\N	\N	2011-01-20	\N	2023-08-08
+1683	357	1689	\N	t	\N	\N	2011-03-07	\N	2023-08-08
+1684	358	868	\N	\N	\N	\N	\N	\N	2023-08-08
+1685	359	510	\N	\N	\N	\N	2002-04-06	\N	2023-08-08
+1686	359	1692	\N	t	\N	\N	2006-04-03	\N	2023-08-08
+1687	359	1693	\N	\N	\N	\N	\N	\N	2023-08-08
+1688	360	906	\N	\N	\N	\N	2020-07-03	\N	2023-08-08
+1689	361	1695	\N	\N	\N	\N	\N	\N	2023-08-08
+1690	361	889	\N	\N	\N	\N	2009-09-04	\N	2023-08-08
+1691	361	868	\N	\N	\N	\N	2020-10-22	\N	2023-08-08
+1692	362	1698	\N	\N	\N	\N	\N	\N	2023-08-08
+1693	362	416	\N	t	\N	\N	2013-08-20	\N	2023-08-08
+1694	362	1700	\N	\N	\N	\N	\N	\N	2023-08-08
+1695	362	1701	\N	t	\N	\N	2021-05-24	\N	2023-08-08
+1696	362	1702	\N	\N	\N	\N	\N	\N	2023-08-08
+1697	362	1703	\N	t	\N	\N	2019-05-26	\N	2023-08-08
+2823	592	2848	\N	t	\N	\N	2012-06-29	\N	2023-08-12
+1699	362	1705	\N	t	\N	\N	2019-05-26	\N	2023-08-08
+1700	362	11	\N	\N	\N	\N	\N	\N	2023-08-08
+1701	362	1707	\N	t	\N	\N	2020-03-08	\N	2023-08-08
+1702	362	198	\N	\N	\N	\N	2020-02-10	\N	2023-08-08
+1703	362	957	\N	\N	\N	\N	\N	\N	2023-08-08
+1704	362	234	\N	\N	\N	\N	2017-04-02	\N	2023-08-08
+1705	362	450	\N	\N	\N	\N	\N	\N	2023-08-08
+1706	362	1712	\N	\N	\N	\N	2019-11-04	\N	2023-08-08
+1707	362	461	\N	\N	\N	\N	\N	\N	2023-08-08
+1708	362	1714	\N	\N	\N	\N	\N	\N	2023-08-08
+1709	362	53	\N	\N	\N	\N	2011-12-23	\N	2023-08-08
+1710	362	76	\N	\N	\N	\N	2012-12-28	\N	2023-08-08
+1711	362	1717	\N	\N	\N	\N	\N	\N	2023-08-08
+1712	362	1718	\N	\N	\N	\N	\N	\N	2023-08-08
+1713	362	510	\N	\N	\N	\N	\N	\N	2023-08-08
+1714	362	14	\N	\N	\N	\N	2020-02-07	\N	2023-08-08
+1715	362	1721	\N	t	\N	\N	2015-07-09	\N	2023-08-08
+1716	362	1722	\N	\N	\N	\N	\N	\N	2023-08-08
+1717	362	1723	\N	\N	\N	\N	\N	\N	2023-08-08
+1667	348	231	\N	\N	\N	\N	2015-07-21	\N	2023-08-08
+1718	362	1724	\N	\N	\N	\N	2012-05-20	\N	2023-08-08
+1719	362	472	\N	\N	\N	\N	2020-08-28	\N	2023-08-08
+1720	362	213	\N	\N	\N	\N	\N	\N	2023-08-08
+1721	362	616	\N	\N	\N	\N	2012-08-08	\N	2023-08-08
+1722	362	1728	\N	\N	\N	\N	\N	\N	2023-08-08
+1723	362	36	\N	\N	\N	\N	2017-12-06	\N	2023-08-08
+1724	362	399	\N	\N	\N	\N	2017-10-29	\N	2023-08-08
+1725	362	1731	\N	\N	\N	\N	\N	\N	2023-08-08
+1726	362	216	\N	\N	\N	\N	\N	\N	2023-08-08
+1727	362	1733	\N	\N	\N	\N	\N	\N	2023-08-08
+1728	362	1734	\N	\N	\N	\N	2011-12-18	\N	2023-08-08
+1729	362	1735	\N	t	\N	\N	2017-06-16	\N	2023-08-08
+1730	362	1736	\N	\N	\N	\N	\N	\N	2023-08-08
+1731	362	1737	\N	\N	\N	\N	\N	\N	2023-08-08
+1732	362	1738	\N	\N	\N	\N	\N	\N	2023-08-08
+1733	362	1739	\N	t	\N	\N	2018-04-03	\N	2023-08-08
+1734	362	1740	\N	\N	\N	\N	\N	\N	2023-08-08
+1735	362	1586	\N	\N	\N	\N	2019-04-15	\N	2023-08-08
+1736	362	275	\N	\N	\N	\N	2016-04-22	\N	2023-08-08
+1737	362	1350	\N	\N	\N	\N	\N	\N	2023-08-08
+1738	362	1352	\N	\N	\N	\N	2014-05-09	\N	2023-08-08
+1739	362	1596	\N	\N	\N	\N	\N	\N	2023-08-08
+1740	362	430	\N	\N	\N	\N	\N	\N	2023-08-08
+1741	362	1747	\N	\N	\N	\N	\N	\N	2023-08-08
+1742	362	1600	\N	\N	\N	\N	2019-06-17	\N	2023-08-08
+1743	362	1749	\N	\N	\N	\N	\N	\N	2023-08-08
+1744	362	880	\N	\N	\N	\N	2019-11-07	\N	2023-08-08
+1745	362	222	\N	\N	\N	\N	2019-03-05	\N	2023-08-08
+1746	362	39	\N	\N	\N	\N	\N	\N	2023-08-08
+1747	362	1753	\N	t	\N	\N	2014-08-13	\N	2023-08-08
+1748	362	1754	\N	\N	\N	\N	\N	\N	2023-08-08
+1749	362	432	\N	\N	\N	\N	2017-11-05	\N	2023-08-08
+1750	362	1297	\N	\N	\N	\N	2011-05-05	\N	2023-08-08
+1751	362	1681	\N	t	\N	\N	2011-08-30	\N	2023-08-08
+1752	362	1758	\N	\N	\N	\N	\N	\N	2023-08-08
+1753	362	1759	\N	t	\N	\N	2011-03-05	\N	2023-08-08
+1754	362	1760	\N	\N	\N	\N	\N	\N	2023-08-08
+1755	362	1761	\N	\N	\N	\N	2013-11-17	\N	2023-08-08
+1756	362	1678	\N	\N	\N	\N	\N	\N	2023-08-08
+1757	362	1763	\N	\N	\N	\N	\N	\N	2023-08-08
+1758	362	1363	\N	\N	\N	\N	\N	\N	2023-08-08
+1759	362	1305	\N	\N	\N	\N	\N	\N	2023-08-08
+1760	362	1766	\N	t	\N	\N	2019-12-16	\N	2023-08-08
+1761	362	88	\N	\N	\N	\N	\N	\N	2023-08-08
+1762	362	1299	\N	\N	\N	\N	2012-10-10	\N	2023-08-08
+1763	362	360	\N	\N	\N	\N	\N	\N	2023-08-08
+1764	362	1300	\N	\N	\N	\N	\N	\N	2023-08-08
+1765	363	1771	\N	\N	\N	\N	2011-06-15	\N	2023-08-08
+1766	364	1772	\N	t	\N	\N	2012-06-29	\N	2023-08-08
+1767	365	1773	\N	t	\N	\N	2015-06-20	\N	2023-08-08
+1768	365	1774	\N	t	\N	\N	2015-06-13	\N	2023-08-08
+1769	365	1005	\N	t	\N	\N	2016-08-06	\N	2023-08-08
+1770	365	1054	\N	\N	\N	\N	\N	\N	2023-08-08
+1771	365	1777	\N	\N	\N	\N	2014-07-29	\N	2023-08-08
+1772	365	1332	\N	t	\N	\N	2010-09-19	\N	2023-08-08
+1773	365	1779	\N	t	\N	\N	2009-10-01	\N	2023-08-08
+1774	365	1780	\N	t	\N	\N	2015-08-08	\N	2023-08-08
+1775	365	1781	\N	\N	\N	\N	2014-08-25	\N	2023-08-08
+1776	365	1782	\N	\N	\N	\N	2021-07-17	\N	2023-08-08
+1777	365	1289	\N	\N	\N	\N	2018-09-16	\N	2023-08-08
+1778	365	76	\N	\N	\N	\N	2019-05-06	\N	2023-08-08
+1779	365	30	\N	\N	\N	\N	2016-03-27	\N	2023-08-08
+1780	365	53	\N	\N	\N	\N	2014-07-04	\N	2023-08-08
+1781	365	1787	\N	t	\N	\N	2020-07-25	\N	2023-08-08
+1782	365	1788	\N	t	\N	\N	2020-07-25	\N	2023-08-08
+1783	365	258	\N	\N	\N	\N	\N	\N	2023-08-08
+1784	365	863	\N	\N	\N	\N	2011-12-28	\N	2023-08-08
+1785	365	1294	\N	\N	\N	\N	2021-07-08	\N	2023-08-08
+1786	365	616	\N	\N	\N	\N	2017-08-20	\N	2023-08-08
+1787	365	1793	\N	t	\N	\N	2019-07-28	\N	2023-08-08
+1788	365	1345	\N	\N	\N	\N	\N	\N	2023-08-08
+1789	365	1795	\N	t	\N	\N	2018-08-05	\N	2023-08-08
+1790	365	1352	\N	\N	\N	\N	2014-08-22	\N	2023-08-08
+1791	365	39	\N	\N	\N	\N	\N	\N	2023-08-08
+1792	365	1798	\N	t	\N	\N	2019-05-30	\N	2023-08-08
+1793	365	1360	\N	t	\N	\N	2010-07-19	\N	2023-08-08
+1794	365	1800	\N	\N	\N	\N	2017-09-09	\N	2023-08-08
+1795	365	366	\N	\N	\N	\N	2014-07-09	\N	2023-08-08
+1796	365	1366	\N	t	\N	\N	2013-09-12	\N	2023-08-08
+1797	365	1803	\N	\N	\N	\N	\N	\N	2023-08-08
+1798	365	1369	\N	t	\N	\N	2012-09-09	\N	2023-08-08
+1799	365	232	\N	\N	\N	\N	2022-02-25	\N	2023-08-08
+1800	365	1299	\N	\N	\N	\N	2019-09-17	\N	2023-08-08
+1801	366	34	\N	\N	\N	\N	2003-09-05	\N	2023-08-08
+1802	366	1352	\N	\N	\N	\N	\N	\N	2023-08-08
+1803	366	430	\N	\N	\N	\N	\N	\N	2023-08-08
+1804	366	1758	\N	t	\N	\N	2007-08-12	\N	2023-08-08
+1805	367	1811	\N	\N	\N	\N	2021-04-06	\N	2023-08-08
+1806	368	1518	\N	\N	\N	\N	2020-11-07	\N	2023-08-08
+1807	368	254	\N	\N	\N	\N	2017-03-25	\N	2023-08-08
+1808	368	469	\N	\N	\N	\N	\N	\N	2023-08-08
+1809	368	430	\N	\N	\N	\N	2018-04-05	\N	2023-08-08
+1810	368	906	\N	\N	\N	\N	2020-09-11	\N	2023-08-08
+1811	368	868	\N	\N	\N	\N	2020-03-13	\N	2023-08-08
+1812	369	1818	\N	\N	\N	\N	\N	\N	2023-08-08
+1813	369	1819	\N	\N	\N	\N	\N	\N	2023-08-08
+1814	369	1820	\N	\N	\N	\N	\N	\N	2023-08-08
+1815	369	1821	\N	\N	\N	\N	\N	\N	2023-08-08
+1816	369	1822	\N	\N	\N	\N	\N	\N	2023-08-08
+1817	370	869	\N	\N	\N	\N	2016-09-22	\N	2023-08-08
+1818	370	1299	\N	\N	\N	\N	2016-05-31	\N	2023-08-08
+1819	371	1811	\N	\N	\N	\N	\N	\N	2023-08-08
+1820	372	1811	\N	\N	\N	\N	\N	\N	2023-08-08
+1821	372	884	\N	\N	\N	\N	\N	\N	2023-08-08
+1822	373	904	\N	\N	\N	\N	2016-03-31	\N	2023-08-08
+1823	374	1368	\N	\N	\N	\N	\N	\N	2023-08-08
+1824	375	71	\N	\N	\N	\N	2016-12-03	\N	2023-08-08
+1825	376	1779	\N	\N	\N	\N	2010-09-19	\N	2023-08-08
+1826	376	1294	\N	\N	\N	\N	2010-04-26	\N	2023-08-08
+1827	376	1352	\N	\N	\N	\N	2014-07-29	\N	2023-08-08
+1828	376	1360	\N	\N	\N	\N	2010-09-05	\N	2023-08-08
+1829	377	1835	\N	\N	\N	\N	\N	\N	2023-08-08
+1830	378	1836	\N	t	\N	\N	2011-03-28	\N	2023-08-08
+1831	379	1837	\N	\N	\N	\N	\N	\N	2023-08-08
+1832	379	1838	\N	t	\N	\N	2020-07-22	\N	2023-08-08
+1833	379	1326	\N	\N	\N	\N	\N	\N	2023-08-08
+1834	379	1840	\N	\N	\N	\N	\N	\N	2023-08-08
+1835	379	1841	\N	\N	\N	\N	2017-10-26	\N	2023-08-08
+1836	380	30	\N	\N	\N	\N	2017-04-13	\N	2023-08-08
+1837	380	171	\N	\N	\N	\N	2012-01-24	\N	2023-08-08
+1838	380	866	\N	\N	\N	\N	2020-10-20	\N	2023-08-08
+1839	381	1297	\N	\N	\N	\N	2011-08-18	\N	2023-08-08
+1840	382	1846	\N	\N	\N	\N	\N	\N	2023-08-08
+1841	382	1847	\N	\N	\N	\N	\N	\N	2023-08-08
+1842	383	395	\N	\N	\N	\N	2020-08-28	\N	2023-08-08
+1843	384	1692	\N	\N	\N	\N	\N	\N	2023-08-08
+1844	385	1850	\N	\N	\N	\N	\N	\N	2023-08-08
+1845	386	1851	\N	\N	\N	\N	2014-05-25	\N	2023-08-08
+1846	387	1698	\N	\N	\N	\N	\N	\N	2023-08-08
+1847	387	1853	\N	\N	\N	\N	\N	\N	2023-08-08
+1848	387	510	\N	\N	\N	\N	\N	\N	2023-08-08
+1849	388	53	\N	\N	\N	\N	2013-04-24	\N	2023-08-08
+1850	389	1853	\N	\N	\N	\N	\N	\N	2023-08-08
+1851	390	616	\N	\N	\N	\N	2020-07-13	\N	2023-08-08
+1852	391	430	\N	\N	\N	\N	\N	\N	2023-08-08
+1853	392	1859	\N	\N	\N	\N	\N	\N	2023-08-08
+1854	392	870	\N	\N	\N	\N	\N	\N	2023-08-08
+1855	392	616	\N	t	\N	\N	2010-10-02	\N	2023-08-08
+1856	392	1862	\N	t	\N	\N	2011-02-09	\N	2023-08-08
+1857	393	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+1858	394	1819	\N	\N	\N	\N	\N	\N	2023-08-08
+1859	395	30	\N	\N	\N	\N	\N	\N	2023-08-08
+1860	395	1866	\N	\N	\N	\N	\N	\N	2023-08-08
+1861	395	1867	\N	\N	\N	\N	\N	\N	2023-08-08
+1862	396	395	\N	\N	\N	\N	\N	\N	2023-08-08
+1863	396	541	\N	\N	\N	\N	\N	\N	2023-08-08
+1864	396	1819	\N	\N	\N	\N	\N	\N	2023-08-08
+1865	396	1821	\N	\N	\N	\N	\N	\N	2023-08-08
+1866	396	616	\N	\N	\N	\N	\N	\N	2023-08-08
+1867	396	904	\N	\N	\N	\N	\N	\N	2023-08-08
+1868	396	1596	\N	\N	\N	\N	\N	\N	2023-08-08
+1869	396	906	\N	\N	\N	\N	\N	\N	2023-08-08
+1870	396	1305	\N	\N	\N	\N	\N	\N	2023-08-08
+1871	396	1299	\N	\N	\N	\N	2014-10-05	\N	2023-08-08
+1872	397	1781	\N	\N	\N	\N	2013-07-31	\N	2023-08-08
+1873	398	53	\N	\N	\N	\N	2018-05-03	\N	2023-08-08
+1874	399	1811	\N	\N	\N	\N	\N	\N	2023-08-08
+1875	400	1360	\N	\N	\N	\N	2020-09-01	\N	2023-08-08
+1876	400	1368	\N	\N	\N	\N	\N	\N	2023-08-08
+1877	401	906	\N	\N	\N	\N	2021-06-23	\N	2023-08-08
+1878	402	1884	\N	\N	\N	\N	\N	\N	2023-08-08
+1879	402	1885	\N	t	\N	\N	2017-08-01	\N	2023-08-08
+1880	402	1886	\N	t	\N	\N	2018-07-31	\N	2023-08-08
+1881	402	1887	\N	\N	\N	\N	\N	\N	2023-08-08
+1882	402	1800	\N	\N	\N	\N	\N	\N	2023-08-08
+1883	402	1889	\N	t	\N	\N	2020-10-01	\N	2023-08-08
+1884	403	395	\N	\N	\N	\N	\N	\N	2023-08-08
+1885	403	1129	\N	t	\N	\N	2007-08-20	\N	2023-08-08
+1886	403	64	\N	\N	\N	\N	2003-10-23	\N	2023-08-08
+1887	404	1893	\N	t	\N	\N	2020-10-18	\N	2023-08-08
+1888	404	1894	\N	\N	\N	\N	2022-03-26	\N	2023-08-08
+1889	405	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+1890	406	1896	\N	t	\N	\N	2021-06-05	\N	2023-08-08
+1891	406	869	\N	\N	\N	\N	2021-07-03	\N	2023-08-08
+1892	406	74	\N	\N	\N	\N	\N	\N	2023-08-08
+1893	406	1518	\N	\N	\N	\N	2022-02-13	\N	2023-08-08
+1894	406	32	\N	\N	\N	\N	\N	\N	2023-08-08
+1895	406	1901	\N	t	\N	\N	2021-06-06	\N	2023-08-08
+1896	406	1902	\N	\N	\N	\N	2019-07-17	\N	2023-08-08
+1897	406	34	\N	\N	\N	\N	\N	\N	2023-08-08
+1898	406	1758	\N	\N	\N	\N	2020-09-06	\N	2023-08-08
+1899	406	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+1900	406	643	\N	\N	\N	\N	2021-01-14	\N	2023-08-08
+1901	407	240	\N	t	\N	\N	2003-03-19	\N	2023-08-08
+1902	407	145	\N	t	\N	\N	2000-08-25	\N	2023-08-08
+1903	407	1761	\N	t	\N	\N	2000-12-22	\N	2023-08-08
+1904	408	66	\N	\N	\N	\N	2020-05-21	\N	2023-08-08
+1905	409	1811	\N	t	\N	\N	2016-01-13	\N	2023-08-08
+1906	410	1912	\N	t	\N	\N	2018-07-15	\N	2023-08-08
+1907	410	1913	\N	\N	\N	\N	\N	\N	2023-08-08
+1908	410	1800	\N	\N	\N	\N	2017-08-11	\N	2023-08-08
+1909	411	74	\N	\N	\N	\N	\N	\N	2023-08-08
+1910	411	34	\N	\N	\N	\N	2005-08-18	\N	2023-08-08
+1911	411	1758	\N	\N	\N	\N	\N	\N	2023-08-08
+1912	411	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+1913	412	1698	\N	\N	\N	\N	\N	\N	2023-08-08
+1914	412	1920	\N	\N	\N	\N	\N	\N	2023-08-08
+1915	412	1703	\N	\N	\N	\N	\N	\N	2023-08-08
+1916	412	395	\N	\N	\N	\N	\N	\N	2023-08-08
+1917	412	1923	\N	t	\N	\N	2017-06-27	\N	2023-08-08
+1918	412	1714	\N	\N	\N	\N	\N	\N	2023-08-08
+1919	412	1913	\N	\N	\N	\N	\N	\N	2023-08-08
+1920	412	510	\N	\N	\N	\N	\N	\N	2023-08-08
+1921	412	1894	\N	\N	\N	\N	\N	\N	2023-08-08
+1922	412	1596	\N	\N	\N	\N	\N	\N	2023-08-08
+1923	412	39	\N	\N	\N	\N	\N	\N	2023-08-08
+1924	412	231	\N	\N	\N	\N	\N	\N	2023-08-08
+1925	413	1352	\N	\N	\N	\N	2014-07-28	\N	2023-08-08
+1926	413	1363	\N	\N	\N	\N	2014-08-04	\N	2023-08-08
+1928	414	395	\N	\N	\N	\N	2020-11-01	\N	2023-08-08
+1929	414	472	\N	\N	\N	\N	2021-07-19	\N	2023-08-08
+1930	414	616	\N	\N	\N	\N	2020-07-13	\N	2023-08-08
+1931	415	11	\N	\N	\N	\N	2004-05-24	\N	2023-08-08
+1932	416	108	\N	\N	\N	\N	2020-06-04	\N	2023-08-08
+1933	416	632	\N	\N	\N	\N	2021-06-02	\N	2023-08-08
+1934	417	616	\N	\N	\N	\N	\N	\N	2023-08-08
+1935	418	1759	\N	\N	\N	\N	\N	\N	2023-08-08
+1936	419	510	\N	\N	\N	\N	\N	\N	2023-08-08
+1937	420	1818	\N	\N	\N	\N	\N	\N	2023-08-08
+1938	420	1820	\N	\N	\N	\N	\N	\N	2023-08-08
+1939	420	1945	\N	\N	\N	\N	\N	\N	2023-08-08
+1940	421	1695	\N	\N	\N	\N	2011-05-12	\N	2023-08-08
+1941	421	11	\N	\N	\N	\N	2010-08-17	\N	2023-08-08
+1942	421	74	\N	\N	\N	\N	\N	\N	2023-08-08
+1943	421	450	\N	\N	\N	\N	\N	\N	2023-08-08
+1944	421	395	\N	\N	\N	\N	2010-09-12	\N	2023-08-08
+1945	421	1951	\N	\N	\N	\N	\N	\N	2023-08-08
+1946	421	53	\N	\N	\N	\N	2011-04-26	\N	2023-08-08
+1947	421	76	\N	\N	\N	\N	2011-12-03	\N	2023-08-08
+1948	421	30	\N	\N	\N	\N	2012-01-07	\N	2023-08-08
+1949	421	1902	\N	t	\N	\N	2012-08-04	\N	2023-08-08
+1950	421	32	\N	\N	\N	\N	2009-11-06	\N	2023-08-08
+1951	421	472	\N	t	\N	\N	2011-06-14	\N	2023-08-08
+1952	421	36	\N	\N	\N	\N	2011-12-23	\N	2023-08-08
+1953	421	1297	\N	\N	\N	\N	2012-08-10	\N	2023-08-08
+1954	421	1681	\N	\N	\N	\N	2012-08-09	\N	2023-08-08
+1955	421	889	\N	\N	\N	\N	2009-09-04	\N	2023-08-08
+1956	421	1129	\N	\N	\N	\N	\N	\N	2023-08-08
+1957	421	360	\N	\N	\N	\N	2010-05-27	\N	2023-08-08
+1958	421	643	\N	\N	\N	\N	2012-03-03	\N	2023-08-08
+1959	422	65	\N	\N	\N	\N	2021-09-05	\N	2023-08-08
+1960	423	1847	\N	\N	\N	\N	\N	\N	2023-08-08
+1961	424	1781	\N	t	\N	\N	2012-09-16	\N	2023-08-08
+1962	425	1968	\N	\N	\N	\N	\N	\N	2023-08-08
+1963	425	1054	\N	\N	\N	\N	\N	\N	2023-08-08
+1964	425	395	\N	\N	\N	\N	\N	\N	2023-08-08
+1965	425	1518	\N	\N	\N	\N	\N	\N	2023-08-08
+1966	425	472	\N	\N	\N	\N	\N	\N	2023-08-08
+1967	425	1345	\N	\N	\N	\N	\N	\N	2023-08-08
+1968	425	1348	\N	\N	\N	\N	\N	\N	2023-08-08
+1969	425	430	\N	\N	\N	\N	2018-02-24	\N	2023-08-08
+1970	425	632	\N	\N	\N	\N	\N	\N	2023-08-08
+1971	425	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+1972	426	1818	\N	t	\N	\N	2016-04-19	\N	2023-08-08
+1973	426	1968	\N	t	\N	\N	2015-03-21	\N	2023-08-08
+1974	426	395	\N	\N	\N	\N	\N	\N	2023-08-08
+1975	426	1981	\N	\N	\N	\N	\N	\N	2023-08-08
+1976	426	1771	\N	\N	\N	\N	\N	\N	2023-08-08
+1977	426	1983	\N	t	\N	\N	2015-11-07	\N	2023-08-08
+1978	426	1984	\N	\N	\N	\N	\N	\N	2023-08-08
+1979	426	906	\N	\N	\N	\N	\N	\N	2023-08-08
+1980	426	1945	\N	\N	\N	\N	\N	\N	2023-08-08
+1981	426	884	\N	\N	\N	\N	\N	\N	2023-08-08
+1982	426	1988	\N	\N	\N	\N	\N	\N	2023-08-08
+1983	426	868	\N	\N	\N	\N	\N	\N	2023-08-08
+1984	427	1054	\N	\N	\N	\N	\N	\N	2023-08-08
+1985	428	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1986	429	1695	\N	\N	\N	\N	\N	\N	2023-08-08
+1987	429	53	\N	\N	\N	\N	\N	\N	2023-08-08
+1988	429	76	\N	\N	\N	\N	\N	\N	2023-08-08
+1989	429	1294	\N	\N	\N	\N	\N	\N	2023-08-08
+1990	429	1724	\N	\N	\N	\N	\N	\N	2023-08-08
+1991	429	616	\N	\N	\N	\N	\N	\N	2023-08-08
+1992	429	1345	\N	\N	\N	\N	\N	\N	2023-08-08
+1993	429	1734	\N	\N	\N	\N	\N	\N	2023-08-08
+1994	429	1352	\N	\N	\N	\N	\N	\N	2023-08-08
+1995	429	430	\N	\N	\N	\N	\N	\N	2023-08-08
+1996	429	1681	\N	\N	\N	\N	\N	\N	2023-08-08
+1997	429	889	\N	\N	\N	\N	2009-09-21	\N	2023-08-08
+1998	429	1867	\N	t	\N	\N	2009-05-28	\N	2023-08-08
+1999	429	868	\N	\N	\N	\N	\N	\N	2023-08-08
+2000	429	1299	\N	\N	\N	\N	\N	\N	2023-08-08
+2001	430	1851	\N	t	\N	\N	2011-11-14	\N	2023-08-08
+2002	430	1771	\N	t	\N	\N	2011-02-20	\N	2023-08-08
+2003	430	616	\N	\N	\N	\N	\N	\N	2023-08-08
+2004	430	1129	\N	\N	\N	\N	2011-06-07	\N	2023-08-08
+2005	431	1698	\N	\N	\N	\N	\N	\N	2023-08-08
+2006	431	71	\N	\N	\N	\N	\N	\N	2023-08-08
+2007	431	723	\N	\N	\N	\N	\N	\N	2023-08-08
+2008	431	1837	\N	\N	\N	\N	\N	\N	2023-08-08
+2009	431	510	\N	t	\N	\N	1993-12-11	\N	2023-08-08
+2010	431	1733	\N	t	\N	\N	1997-12-06	\N	2023-08-08
+2011	431	1840	\N	t	\N	\N	2004-11-10	\N	2023-08-08
+2012	431	1841	\N	\N	\N	\N	\N	\N	2023-08-08
+2013	432	906	\N	\N	\N	\N	2020-07-11	\N	2023-08-08
+2014	433	1923	\N	\N	\N	\N	\N	\N	2023-08-08
+2015	433	76	\N	\N	\N	\N	\N	\N	2023-08-08
+2016	433	1913	\N	\N	\N	\N	\N	\N	2023-08-08
+2017	434	1360	\N	\N	\N	\N	2020-09-01	\N	2023-08-08
+2018	435	1430	\N	\N	\N	\N	2019-09-27	\N	2023-08-08
+2019	437	2025	\N	\N	\N	\N	\N	\N	2023-08-08
+2020	437	1294	\N	\N	\N	\N	\N	\N	2023-08-08
+2021	438	1294	\N	t	\N	\N	2009-02-19	\N	2023-08-08
+2022	439	1289	\N	\N	\N	\N	\N	\N	2023-08-08
+2023	439	30	\N	\N	\N	\N	\N	\N	2023-08-08
+2024	440	906	\N	\N	\N	\N	2020-10-10	\N	2023-08-08
+2025	441	1819	\N	\N	\N	\N	\N	\N	2023-08-08
+2026	442	1923	\N	\N	\N	\N	\N	\N	2023-08-08
+2027	442	1017	\N	\N	\N	\N	\N	\N	2023-08-08
+2028	443	2034	\N	t	\N	\N	2010-06-22	\N	2023-08-08
+2029	443	2035	\N	\N	\N	\N	\N	\N	2023-08-08
+2030	443	2036	\N	t	\N	\N	2009-07-09	\N	2023-08-08
+2031	443	2037	\N	\N	\N	\N	2016-10-09	\N	2023-08-08
+2032	443	2038	\N	\N	\N	\N	\N	\N	2023-08-08
+2033	443	2039	\N	t	\N	\N	2013-04-19	\N	2023-08-08
+2034	443	2040	\N	t	\N	\N	2012-05-14	\N	2023-08-08
+2035	444	2041	\N	t	\N	\N	2020-06-17	\N	2023-08-08
+2036	444	2042	\N	\N	\N	\N	2019-09-11	\N	2023-08-08
+2037	444	2043	\N	t	\N	\N	2018-08-25	\N	2023-08-08
+2038	444	2044	\N	\N	\N	\N	\N	\N	2023-08-08
+2039	444	2045	\N	t	\N	\N	2022-04-16	\N	2023-08-08
+2040	444	2046	\N	\N	\N	\N	\N	\N	2023-08-08
+2041	444	2034	\N	\N	\N	\N	2019-09-11	\N	2023-08-08
+2042	444	2035	\N	\N	\N	\N	\N	\N	2023-08-08
+2043	444	2049	\N	\N	\N	\N	\N	\N	2023-08-08
+2044	444	2036	\N	\N	\N	\N	\N	\N	2023-08-08
+2045	444	2051	\N	\N	\N	\N	\N	\N	2023-08-08
+2046	444	1782	\N	t	\N	\N	2021-07-08	\N	2023-08-08
+2047	444	2053	\N	\N	\N	\N	\N	\N	2023-08-08
+2048	444	2054	\N	t	\N	\N	2018-01-06	\N	2023-08-08
+2049	444	2055	\N	\N	\N	\N	\N	\N	2023-08-08
+2050	444	1913	\N	\N	\N	\N	2021-07-31	\N	2023-08-08
+2051	444	2057	\N	\N	\N	\N	\N	\N	2023-08-08
+2052	444	2058	\N	\N	\N	\N	\N	\N	2023-08-08
+2053	444	2059	\N	\N	\N	\N	\N	\N	2023-08-08
+2054	444	2060	\N	\N	\N	\N	\N	\N	2023-08-08
+2055	444	2061	\N	\N	\N	\N	\N	\N	2023-08-08
+2056	444	2037	\N	\N	\N	\N	\N	\N	2023-08-08
+2057	444	1724	\N	\N	\N	\N	2021-04-25	\N	2023-08-08
+2058	444	2064	\N	\N	\N	\N	2022-02-18	\N	2023-08-08
+2059	444	108	\N	\N	\N	\N	2017-10-26	\N	2023-08-08
+2060	444	2066	\N	\N	\N	\N	\N	\N	2023-08-08
+2061	444	2067	\N	t	\N	\N	2019-09-06	\N	2023-08-08
+2062	444	2068	\N	t	\N	\N	2021-03-09	\N	2023-08-08
+2063	444	2069	\N	t	\N	\N	2021-04-17	\N	2023-08-08
+2064	444	2070	\N	\N	\N	\N	\N	\N	2023-08-08
+2065	444	2071	\N	\N	\N	\N	\N	\N	2023-08-08
+2066	444	2072	\N	\N	\N	\N	\N	\N	2023-08-08
+2067	444	2073	\N	\N	\N	\N	\N	\N	2023-08-08
+2068	444	1866	\N	\N	\N	\N	\N	\N	2023-08-08
+2069	444	997	\N	\N	\N	\N	2021-10-28	\N	2023-08-08
+2070	444	2076	\N	t	\N	\N	2019-09-06	\N	2023-08-08
+2071	444	478	\N	\N	\N	\N	2018-02-24	\N	2023-08-08
+2072	444	2078	\N	t	\N	\N	2017-11-29	\N	2023-08-08
+2073	444	2079	\N	\N	\N	\N	\N	\N	2023-08-08
+2074	444	2080	\N	\N	\N	\N	\N	\N	2023-08-08
+2075	444	430	\N	\N	\N	\N	\N	\N	2023-08-08
+2076	444	2082	\N	\N	\N	\N	\N	\N	2023-08-08
+2077	444	2083	\N	t	\N	\N	2019-09-06	\N	2023-08-08
+2078	444	2084	\N	\N	\N	\N	\N	\N	2023-08-08
+2079	444	1759	\N	\N	\N	\N	2022-01-25	\N	2023-08-08
+2080	444	2039	\N	\N	\N	\N	\N	\N	2023-08-08
+2081	444	1867	\N	\N	\N	\N	2018-04-10	\N	2023-08-08
+2082	444	2088	\N	\N	\N	\N	\N	\N	2023-08-08
+2083	444	906	\N	\N	\N	\N	2020-08-25	\N	2023-08-08
+2084	444	2090	\N	\N	\N	\N	\N	\N	2023-08-08
+2086	444	2092	\N	\N	\N	\N	\N	\N	2023-08-08
+2087	444	2093	\N	\N	\N	\N	\N	\N	2023-08-08
+2088	444	2094	\N	\N	\N	\N	\N	\N	2023-08-08
+2089	444	2095	\N	\N	\N	\N	\N	\N	2023-08-08
+2090	444	2040	\N	\N	\N	\N	\N	\N	2023-08-08
+2091	444	2097	\N	\N	\N	\N	2022-01-25	\N	2023-08-08
+2092	445	1403	\N	\N	\N	\N	\N	\N	2023-08-08
+2093	445	2	\N	\N	\N	\N	\N	\N	2023-08-08
+2094	445	1605	\N	\N	\N	\N	\N	\N	2023-08-08
+2095	445	2101	\N	\N	\N	\N	\N	\N	2023-08-08
+2096	445	1678	\N	\N	\N	\N	\N	\N	2023-08-08
+2097	445	2103	\N	\N	\N	\N	\N	\N	2023-08-08
+2098	446	207	\N	\N	\N	\N	\N	\N	2023-08-08
+2099	447	207	\N	\N	\N	\N	\N	\N	2023-08-08
+2100	447	2	\N	\N	\N	\N	2016-05-05	\N	2023-08-08
+2101	447	525	\N	\N	\N	\N	2016-04-03	\N	2023-08-08
+2102	447	15	\N	\N	\N	\N	2019-02-20	\N	2023-08-08
+2103	448	2109	\N	\N	\N	\N	\N	\N	2023-08-08
+2104	448	2110	\N	\N	\N	\N	\N	\N	2023-08-08
+2105	448	2111	\N	\N	\N	\N	\N	\N	2023-08-08
+2824	592	1851	\N	\N	\N	\N	2013-08-16	\N	2023-08-12
+2825	592	74	\N	\N	\N	\N	2015-08-30	\N	2023-08-12
+2826	592	461	\N	\N	\N	\N	2007-11-20	\N	2023-08-12
+2827	592	199	\N	\N	\N	\N	2010-10-13	\N	2023-08-12
+2828	592	201	\N	t	\N	\N	2010-11-02	\N	2023-08-12
+2829	592	2854	\N	t	\N	\N	2014-04-05	\N	2023-08-12
+2830	592	2793	\N	\N	\N	\N	2009-05-06	\N	2023-08-12
+2831	592	1289	\N	\N	\N	\N	2006-05-31	\N	2023-08-12
+2832	592	1430	\N	\N	\N	\N	2012-11-21	\N	2023-08-12
+2833	592	2858	\N	\N	\N	\N	\N	\N	2023-08-12
+2834	592	53	\N	\N	\N	\N	2010-06-07	\N	2023-08-12
+2835	592	2860	\N	\N	\N	\N	\N	\N	2023-08-12
+2836	592	76	\N	t	\N	\N	2006-04-17	\N	2023-08-12
+2837	592	30	\N	t	\N	\N	2004-03-15	\N	2023-08-12
+2838	592	944	\N	\N	\N	\N	2008-12-09	\N	2023-08-12
+2839	592	2864	\N	t	\N	\N	2015-11-24	\N	2023-08-12
+2840	592	2588	\N	\N	\N	\N	2015-04-01	\N	2023-08-12
+2841	592	971	\N	\N	\N	\N	\N	\N	2023-08-12
+2842	592	207	\N	\N	\N	\N	2008-11-29	\N	2023-08-12
+2843	592	208	\N	\N	\N	\N	2008-07-05	\N	2023-08-12
+2844	592	1547	\N	\N	\N	\N	\N	\N	2023-08-12
+2845	592	2541	\N	\N	\N	\N	2008-01-26	\N	2023-08-12
+2846	592	258	\N	\N	\N	\N	2015-04-03	\N	2023-08-12
+2847	592	34	\N	\N	\N	\N	2002-08-13	\N	2023-08-12
+2848	592	614	\N	\N	\N	\N	\N	\N	2023-08-12
+2849	592	213	\N	\N	\N	\N	2008-12-09	\N	2023-08-12
+2850	592	2803	\N	t	\N	\N	2013-03-24	\N	2023-08-12
+2851	592	36	\N	t	\N	\N	2003-03-08	\N	2023-08-12
+2852	592	171	\N	\N	\N	\N	\N	\N	2023-08-12
+2853	592	215	\N	\N	\N	\N	2010-10-10	\N	2023-08-12
+2854	592	2879	\N	t	\N	\N	2016-09-11	\N	2023-08-12
+2855	592	216	\N	\N	\N	\N	2013-06-24	\N	2023-08-12
+2856	592	108	\N	\N	\N	\N	2011-08-03	\N	2023-08-12
+2857	592	2591	\N	\N	\N	\N	2014-04-14	\N	2023-08-12
+2858	592	272	\N	\N	\N	\N	\N	\N	2023-08-12
+2859	592	2884	\N	t	\N	\N	2007-12-02	\N	2023-08-12
+2860	592	2885	\N	\N	\N	\N	2016-09-10	\N	2023-08-12
+2861	592	2653	\N	t	\N	\N	2013-07-26	\N	2023-08-12
+2862	592	910	\N	t	\N	\N	2008-07-31	\N	2023-08-12
+2863	592	2888	\N	\N	\N	\N	2012-07-02	\N	2023-08-12
+2864	592	2889	\N	t	\N	\N	2021-04-24	\N	2023-08-12
+2865	592	221	\N	t	\N	\N	2008-12-08	\N	2023-08-12
+2866	592	2560	\N	\N	\N	\N	2008-12-17	\N	2023-08-12
+2867	592	222	\N	\N	\N	\N	2015-04-03	\N	2023-08-12
+2868	592	618	\N	t	\N	\N	2007-10-27	\N	2023-08-12
+2869	592	39	\N	\N	\N	\N	2009-03-23	\N	2023-08-12
+2870	592	224	\N	\N	\N	\N	2014-03-03	\N	2023-08-12
+2871	592	2739	\N	\N	\N	\N	2008-03-24	\N	2023-08-12
+2872	592	2897	\N	t	\N	\N	2013-08-30	\N	2023-08-12
+2873	592	225	\N	\N	\N	\N	2010-07-06	\N	2023-08-12
+2874	592	1129	\N	\N	\N	\N	2011-08-04	\N	2023-08-12
+2875	592	291	\N	\N	\N	\N	2013-12-21	\N	2023-08-12
+2876	592	15	\N	\N	\N	\N	2005-03-27	\N	2023-08-12
+2877	592	953	\N	\N	\N	\N	2005-03-27	\N	2023-08-12
+2878	592	2592	\N	\N	\N	\N	2015-04-01	\N	2023-08-12
+2879	592	410	\N	\N	\N	\N	2015-09-03	\N	2023-08-12
+2880	592	229	\N	\N	\N	\N	2021-04-28	\N	2023-08-12
+2881	592	366	\N	\N	\N	\N	2009-09-13	\N	2023-08-12
+2882	592	232	\N	\N	\N	\N	2007-04-28	\N	2023-08-12
+2883	592	113	\N	t	\N	\N	2015-04-12	\N	2023-08-12
+2884	592	2579	\N	\N	\N	\N	\N	\N	2023-08-12
+2885	592	233	\N	\N	\N	\N	2008-08-23	\N	2023-08-12
+2886	592	360	\N	t	\N	\N	2008-10-26	\N	2023-08-12
+2887	592	983	\N	t	\N	\N	2015-11-29	\N	2023-08-12
+2888	592	985	\N	\N	\N	\N	\N	\N	2023-08-12
+2889	593	2914	\N	\N	\N	\N	\N	\N	2023-08-12
+2890	593	1443	\N	\N	\N	\N	\N	\N	2023-08-12
+2891	593	2916	\N	\N	\N	\N	\N	\N	2023-08-12
+2892	593	76	\N	\N	\N	\N	2011-02-06	\N	2023-08-12
+2893	593	30	\N	\N	\N	\N	\N	\N	2023-08-12
+2894	593	2919	\N	\N	\N	\N	2008-10-21	\N	2023-08-12
+2895	593	838	\N	\N	\N	\N	\N	\N	2023-08-12
+2896	594	2921	\N	\N	\N	\N	\N	\N	2023-08-12
+2897	594	2914	\N	\N	\N	\N	2007-02-21	\N	2023-08-12
+2898	594	1547	\N	\N	\N	\N	2010-12-14	\N	2023-08-12
+2899	594	1552	\N	\N	\N	\N	\N	\N	2023-08-12
+2900	594	2551	\N	\N	\N	\N	\N	\N	2023-08-12
+2901	594	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+2902	594	2927	\N	\N	\N	\N	\N	\N	2023-08-12
+2903	594	2928	\N	\N	\N	\N	\N	\N	2023-08-12
+2904	594	1632	\N	\N	\N	\N	2009-11-24	\N	2023-08-12
+2905	594	2612	\N	\N	\N	\N	\N	\N	2023-08-12
+2906	595	198	\N	\N	\N	\N	2021-11-06	\N	2023-08-12
+2907	595	234	\N	\N	\N	\N	2020-01-17	\N	2023-08-12
+2908	595	2521	\N	\N	\N	\N	2019-09-08	\N	2023-08-12
+2909	595	461	\N	\N	\N	\N	2022-02-11	\N	2023-08-12
+2910	595	877	\N	\N	\N	\N	2018-07-05	\N	2023-08-12
+2911	595	53	\N	\N	\N	\N	2016-04-24	\N	2023-08-12
+2912	595	30	\N	\N	\N	\N	2017-04-09	\N	2023-08-12
+2913	595	2938	\N	t	\N	\N	2019-10-11	\N	2023-08-12
+2914	595	207	\N	\N	\N	\N	2016-02-09	\N	2023-08-12
+2915	595	2539	\N	\N	\N	\N	2019-09-08	\N	2023-08-12
+2916	595	2941	\N	\N	\N	\N	\N	\N	2023-08-12
+2917	595	259	\N	t	\N	\N	2019-01-29	\N	2023-08-12
+2918	595	863	\N	\N	\N	\N	2015-02-12	\N	2023-08-12
+2919	595	2544	\N	\N	\N	\N	2019-04-26	\N	2023-08-12
+2920	595	213	\N	\N	\N	\N	2017-03-24	\N	2023-08-12
+2921	595	36	\N	\N	\N	\N	\N	\N	2023-08-12
+2922	595	171	\N	\N	\N	\N	2017-01-06	\N	2023-08-12
+2923	595	2646	\N	\N	\N	\N	2020-09-26	\N	2023-08-12
+2924	595	216	\N	\N	\N	\N	2019-06-12	\N	2023-08-12
+2925	595	2654	\N	\N	\N	\N	2020-09-26	\N	2023-08-12
+2926	595	2728	\N	\N	\N	\N	2020-09-29	\N	2023-08-12
+2927	595	880	\N	\N	\N	\N	2017-09-23	\N	2023-08-12
+2928	595	2953	\N	t	\N	\N	2021-04-13	\N	2023-08-12
+2929	595	2739	\N	\N	\N	\N	2021-04-17	\N	2023-08-12
+2930	595	15	\N	\N	\N	\N	2016-11-06	\N	2023-08-12
+2931	595	2571	\N	\N	\N	\N	2016-10-01	\N	2023-08-12
+2932	595	1800	\N	\N	\N	\N	2018-07-14	\N	2023-08-12
+2933	595	360	\N	\N	\N	\N	2018-06-12	\N	2023-08-12
+2934	595	983	\N	\N	\N	\N	2019-10-21	\N	2023-08-12
+2935	595	1159	\N	\N	\N	\N	2020-08-30	\N	2023-08-12
+2936	596	1443	\N	\N	\N	\N	\N	\N	2023-08-12
+2937	596	1547	\N	\N	\N	\N	2013-01-27	\N	2023-08-12
+2938	596	2612	\N	\N	\N	\N	\N	\N	2023-08-12
+2939	596	838	\N	\N	\N	\N	2011-10-05	\N	2023-08-12
+2940	596	2965	\N	\N	\N	\N	\N	\N	2023-08-12
+2941	596	1159	\N	t	\N	\N	2016-06-12	\N	2023-08-12
+2942	597	2914	\N	\N	\N	\N	\N	\N	2023-08-12
+2943	597	1547	\N	\N	\N	\N	\N	\N	2023-08-12
+2944	597	2581	\N	\N	\N	\N	\N	\N	2023-08-12
+2945	597	2612	\N	\N	\N	\N	\N	\N	2023-08-12
+2946	597	838	\N	\N	\N	\N	\N	\N	2023-08-12
+2947	598	1760	\N	\N	\N	\N	\N	\N	2023-08-12
+2948	599	2585	\N	\N	\N	\N	2019-06-22	\N	2023-08-12
+2949	599	461	\N	\N	\N	\N	2006-08-01	\N	2023-08-12
+2950	599	863	\N	\N	\N	\N	2013-12-30	\N	2023-08-12
+2951	599	618	\N	\N	\N	\N	2013-02-13	\N	2023-08-12
+2952	599	366	\N	\N	\N	\N	2010-08-17	\N	2023-08-12
+2953	599	232	\N	\N	\N	\N	2009-10-12	\N	2023-08-12
+2954	599	1159	\N	\N	\N	\N	2016-08-27	\N	2023-08-12
+2955	600	1019	\N	\N	\N	\N	\N	\N	2023-08-12
+2956	600	1001	\N	\N	\N	\N	2021-04-08	\N	2023-08-12
+2957	601	67	\N	\N	\N	\N	2007-07-11	\N	2023-08-12
+2958	601	272	\N	t	\N	\N	2008-07-24	\N	2023-08-12
+2959	602	2829	\N	\N	\N	\N	\N	\N	2023-08-12
+2960	603	2914	\N	\N	\N	\N	2007-10-17	\N	2023-08-12
+2961	603	2921	\N	t	\N	\N	2009-10-31	\N	2023-08-12
+2962	603	2916	\N	\N	\N	\N	\N	\N	2023-08-12
+2963	603	2988	\N	\N	\N	\N	\N	\N	2023-08-12
+2964	603	2919	\N	t	\N	\N	2008-09-25	\N	2023-08-12
+2965	604	2828	\N	\N	\N	\N	\N	\N	2023-08-12
+2966	605	69	\N	\N	\N	\N	\N	\N	2023-08-12
+2967	605	127	\N	\N	\N	\N	\N	\N	2023-08-12
+2968	605	1442	\N	\N	\N	\N	\N	\N	2023-08-12
+2969	605	957	\N	\N	\N	\N	\N	\N	2023-08-12
+2970	605	960	\N	\N	\N	\N	\N	\N	2023-08-12
+2971	605	234	\N	t	\N	\N	2009-12-05	\N	2023-08-12
+2972	605	2997	\N	\N	\N	\N	\N	\N	2023-08-12
+2973	605	2521	\N	\N	\N	\N	2015-09-20	\N	2023-08-12
+2974	605	53	\N	\N	\N	\N	2012-05-01	\N	2023-08-12
+2975	605	30	\N	\N	\N	\N	2006-11-24	\N	2023-08-12
+2976	605	944	\N	\N	\N	\N	\N	\N	2023-08-12
+2977	605	207	\N	\N	\N	\N	2008-02-24	\N	2023-08-12
+2978	605	34	\N	\N	\N	\N	2003-08-14	\N	2023-08-12
+2979	605	863	\N	t	\N	\N	2008-02-01	\N	2023-08-12
+2980	605	213	\N	\N	\N	\N	2008-01-31	\N	2023-08-12
+2981	605	36	\N	\N	\N	\N	2006-11-30	\N	2023-08-12
+2982	605	171	\N	\N	\N	\N	2015-06-08	\N	2023-08-12
+2983	605	1350	\N	\N	\N	\N	\N	\N	2023-08-12
+2984	605	2654	\N	\N	\N	\N	\N	\N	2023-08-12
+2985	605	1887	\N	\N	\N	\N	\N	\N	2023-08-12
+2986	605	3011	\N	t	\N	\N	2019-02-19	\N	2023-08-12
+2987	605	1615	\N	\N	\N	\N	\N	\N	2023-08-12
+2988	605	291	\N	\N	\N	\N	2016-01-11	\N	2023-08-12
+2989	605	15	\N	\N	\N	\N	2009-03-21	\N	2023-08-12
+2990	605	787	\N	\N	\N	\N	2009-03-21	\N	2023-08-12
+2991	605	232	\N	\N	\N	\N	2007-12-31	\N	2023-08-12
+2992	605	3017	\N	\N	\N	\N	2018-09-20	\N	2023-08-12
+2993	606	76	\N	\N	\N	\N	2012-01-19	\N	2023-08-12
+2994	606	2941	\N	\N	\N	\N	2013-11-10	\N	2023-08-12
+2995	606	3020	\N	\N	\N	\N	2017-05-15	\N	2023-08-12
+2996	606	1295	\N	\N	\N	\N	2015-04-20	\N	2023-08-12
+2997	607	2921	\N	\N	\N	\N	\N	\N	2023-08-12
+2998	608	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+2999	608	53	\N	\N	\N	\N	2012-05-14	\N	2023-08-12
+3000	608	614	\N	\N	\N	\N	\N	\N	2023-08-12
+3001	608	618	\N	\N	\N	\N	\N	\N	2023-08-12
+3002	608	2739	\N	\N	\N	\N	2014-03-14	\N	2023-08-12
+3003	608	366	\N	t	\N	\N	2009-03-29	\N	2023-08-12
+3004	609	2585	\N	\N	\N	\N	\N	\N	2023-08-12
+3005	609	2608	\N	\N	\N	\N	\N	\N	2023-08-12
+3006	610	3031	\N	\N	\N	\N	\N	\N	2023-08-12
+3007	611	366	\N	\N	\N	\N	\N	\N	2023-08-12
+3008	612	3033	\N	\N	\N	\N	2020-01-14	\N	2023-08-12
+3009	613	2064	\N	\N	\N	\N	2018-12-30	\N	2023-08-12
+1927	414	1054	\N	\N	\N	\N	2020-01-18	\N	2023-08-08
+934	205	938	\N	\N	\N	\N	2010-08-29	\N	2023-08-08
+3010	613	2080	\N	\N	\N	\N	2019-12-14	\N	2023-08-12
+3011	614	1552	\N	t	\N	\N	2002-06-18	\N	2023-08-12
+3012	614	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+3013	614	848	\N	\N	\N	\N	\N	\N	2023-08-12
+3014	614	838	\N	\N	\N	\N	\N	\N	2023-08-12
+3015	615	368	\N	t	\N	\N	2019-04-16	\N	2023-08-12
+3016	615	127	\N	\N	\N	\N	2014-03-19	\N	2023-08-12
+3017	615	2617	\N	\N	\N	\N	\N	\N	2023-08-12
+3018	615	1439	\N	\N	\N	\N	\N	\N	2023-08-12
+3019	615	1443	\N	\N	\N	\N	\N	\N	2023-08-12
+3020	615	877	\N	\N	\N	\N	2016-09-22	\N	2023-08-12
+3021	615	2704	\N	t	\N	\N	2019-04-16	\N	2023-08-12
+3022	615	2793	\N	\N	\N	\N	\N	\N	2023-08-12
+3023	615	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+3024	615	78	\N	t	\N	\N	2019-04-16	\N	2023-08-12
+3025	615	3050	\N	\N	\N	\N	2014-12-18	\N	2023-08-12
+3026	615	2539	\N	t	\N	\N	2019-09-02	\N	2023-08-12
+3027	615	2941	\N	\N	\N	\N	2017-09-28	\N	2023-08-12
+3028	615	3053	\N	\N	\N	\N	\N	\N	2023-08-12
+3029	615	3054	\N	\N	\N	\N	\N	\N	2023-08-12
+3030	615	3055	\N	\N	\N	\N	\N	\N	2023-08-12
+3031	615	3056	\N	\N	\N	\N	\N	\N	2023-08-12
+3032	615	863	\N	\N	\N	\N	2014-03-05	\N	2023-08-12
+3033	615	3020	\N	t	\N	\N	2016-02-25	\N	2023-08-12
+3034	615	2591	\N	\N	\N	\N	2015-09-22	\N	2023-08-12
+3035	615	3033	\N	t	\N	\N	2018-12-08	\N	2023-08-12
+3036	615	272	\N	\N	\N	\N	2016-08-20	\N	2023-08-12
+3037	615	275	\N	\N	\N	\N	2017-11-13	\N	2023-08-12
+3038	615	2654	\N	\N	\N	\N	2020-09-15	\N	2023-08-12
+3039	615	2728	\N	\N	\N	\N	2020-06-07	\N	2023-08-12
+3040	615	3065	\N	\N	\N	\N	2020-06-07	\N	2023-08-12
+3041	615	1295	\N	\N	\N	\N	\N	\N	2023-08-12
+3042	615	866	\N	t	\N	\N	2019-04-16	\N	2023-08-12
+3043	615	2612	\N	\N	\N	\N	2015-05-14	\N	2023-08-12
+3044	615	2819	\N	\N	\N	\N	\N	\N	2023-08-12
+3045	615	2568	\N	\N	\N	\N	\N	\N	2023-08-12
+3046	615	2592	\N	\N	\N	\N	2015-08-23	\N	2023-08-12
+3047	615	2570	\N	\N	\N	\N	\N	\N	2023-08-12
+3048	615	2746	\N	\N	\N	\N	2016-09-18	\N	2023-08-12
+3049	615	1800	\N	\N	\N	\N	2017-09-01	\N	2023-08-12
+3050	616	2793	\N	\N	\N	\N	2014-11-15	\N	2023-08-12
+3051	617	2793	\N	t	\N	\N	2003-08-20	\N	2023-08-12
+3052	617	2064	\N	\N	\N	\N	\N	\N	2023-08-12
+3053	617	2080	\N	t	\N	\N	2001-09-11	\N	2023-08-12
+3054	618	66	\N	\N	\N	\N	2000-06-07	\N	2023-08-12
+3055	618	1433	\N	\N	\N	\N	\N	\N	2023-08-12
+3056	618	3081	\N	\N	\N	\N	\N	\N	2023-08-12
+3057	618	71	\N	\N	\N	\N	2003-03-18	\N	2023-08-12
+3058	618	2914	\N	\N	\N	\N	2006-12-25	\N	2023-08-12
+3059	618	3084	\N	\N	\N	\N	\N	\N	2023-08-12
+3060	618	3085	\N	\N	\N	\N	\N	\N	2023-08-12
+3061	618	1443	\N	t	\N	\N	2012-09-21	\N	2023-08-12
+3062	618	2828	\N	\N	\N	\N	\N	\N	2023-08-12
+3063	618	199	\N	\N	\N	\N	2010-02-23	\N	2023-08-12
+3064	618	1289	\N	\N	\N	\N	2006-04-26	\N	2023-08-12
+3065	618	2858	\N	\N	\N	\N	\N	\N	2023-08-12
+3066	618	2829	\N	\N	\N	\N	\N	\N	2023-08-12
+3067	618	3092	\N	\N	\N	\N	\N	\N	2023-08-12
+3068	618	3093	\N	\N	\N	\N	\N	\N	2023-08-12
+3069	618	3094	\N	\N	\N	\N	\N	\N	2023-08-12
+3070	618	2589	\N	\N	\N	\N	\N	\N	2023-08-12
+3071	618	1547	\N	\N	\N	\N	2010-04-21	\N	2023-08-12
+3072	618	3097	\N	\N	\N	\N	\N	\N	2023-08-12
+3073	618	3098	\N	\N	\N	\N	\N	\N	2023-08-12
+3074	618	2551	\N	\N	\N	\N	\N	\N	2023-08-12
+3075	618	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+3076	618	3101	\N	\N	\N	\N	\N	\N	2023-08-12
+3077	618	3102	\N	\N	\N	\N	\N	\N	2023-08-12
+3078	618	2888	\N	t	\N	\N	2012-01-11	\N	2023-08-12
+3079	618	3104	\N	\N	\N	\N	\N	\N	2023-08-12
+3080	618	618	\N	\N	\N	\N	\N	\N	2023-08-12
+3081	618	3106	\N	\N	\N	\N	\N	\N	2023-08-12
+3082	618	1760	\N	\N	\N	\N	\N	\N	2023-08-12
+3083	618	2830	\N	\N	\N	\N	\N	\N	2023-08-12
+3084	618	838	\N	\N	\N	\N	2005-05-13	\N	2023-08-12
+3085	618	360	\N	\N	\N	\N	2010-03-23	\N	2023-08-12
+3086	619	2860	\N	\N	\N	\N	\N	\N	2023-08-12
+3087	620	3112	\N	\N	\N	\N	\N	\N	2023-08-12
+3088	620	2527	\N	\N	\N	\N	\N	\N	2023-08-12
+3089	620	3114	\N	\N	\N	\N	\N	\N	2023-08-12
+3090	620	2640	\N	\N	\N	\N	2016-10-07	\N	2023-08-12
+3091	620	975	\N	\N	\N	\N	\N	\N	2023-08-12
+3092	620	3117	\N	t	\N	\N	2018-09-24	\N	2023-08-12
+3093	620	979	\N	\N	\N	\N	\N	\N	2023-08-12
+3094	620	2592	\N	\N	\N	\N	\N	\N	2023-08-12
+3095	620	3120	\N	\N	\N	\N	\N	\N	2023-08-12
+3096	621	1434	\N	\N	\N	\N	\N	\N	2023-08-12
+3097	621	960	\N	\N	\N	\N	\N	\N	2023-08-12
+3098	621	3123	\N	t	\N	\N	2018-10-08	\N	2023-08-12
+3099	621	275	\N	\N	\N	\N	2016-11-14	\N	2023-08-12
+3100	621	1350	\N	\N	\N	\N	2017-09-21	\N	2023-08-12
+3101	622	3031	\N	t	\N	\N	2018-10-19	\N	2023-08-12
+3102	622	2535	\N	\N	\N	\N	2017-12-16	\N	2023-08-12
+3103	623	36	\N	\N	\N	\N	2018-02-23	\N	2023-08-12
+3104	624	2535	\N	\N	\N	\N	\N	\N	2023-08-12
+3105	625	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+3106	626	1433	\N	\N	\N	\N	\N	\N	2023-08-12
+3107	626	2921	\N	\N	\N	\N	\N	\N	2023-08-12
+3108	627	1632	\N	\N	\N	\N	\N	\N	2023-08-12
+3109	627	2612	\N	\N	\N	\N	\N	\N	2023-08-12
+3110	628	66	\N	\N	\N	\N	2008-10-24	\N	2023-08-12
+3111	628	2914	\N	t	\N	\N	2006-12-01	\N	2023-08-12
+3112	628	11	\N	\N	\N	\N	2004-07-29	\N	2023-08-12
+3113	628	1443	\N	\N	\N	\N	2014-07-01	\N	2023-08-12
+3114	628	3139	\N	t	\N	\N	2009-10-29	\N	2023-08-12
+3115	628	1289	\N	\N	\N	\N	2006-05-01	\N	2023-08-12
+3116	628	76	\N	\N	\N	\N	2007-12-07	\N	2023-08-12
+3117	628	30	\N	\N	\N	\N	2007-11-27	\N	2023-08-12
+3118	628	3143	\N	t	\N	\N	2007-11-22	\N	2023-08-12
+3119	628	207	\N	t	\N	\N	2007-12-09	\N	2023-08-12
+3120	628	2	\N	\N	\N	\N	2009-08-24	\N	2023-08-12
+3121	628	1547	\N	t	\N	\N	2003-03-21	\N	2023-08-12
+3122	628	1552	\N	\N	\N	\N	2003-04-01	\N	2023-08-12
+3123	628	34	\N	\N	\N	\N	2006-06-14	\N	2023-08-12
+3124	628	863	\N	\N	\N	\N	2008-03-22	\N	2023-08-12
+3125	628	3150	\N	\N	\N	\N	\N	\N	2023-08-12
+3126	628	213	\N	\N	\N	\N	2007-12-03	\N	2023-08-12
+3127	628	36	\N	\N	\N	\N	2007-11-27	\N	2023-08-12
+3128	628	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+3129	628	3102	\N	\N	\N	\N	2007-12-16	\N	2023-08-12
+3130	628	222	\N	\N	\N	\N	2017-11-10	\N	2023-08-12
+3131	628	39	\N	\N	\N	\N	2017-03-31	\N	2023-08-12
+3132	628	905	\N	\N	\N	\N	\N	\N	2023-08-12
+3133	628	1632	\N	t	\N	\N	2004-07-08	\N	2023-08-12
+3134	628	889	\N	\N	\N	\N	2010-09-11	\N	2023-08-12
+3135	628	2612	\N	\N	\N	\N	\N	\N	2023-08-12
+3136	628	2592	\N	\N	\N	\N	\N	\N	2023-08-12
+3137	628	838	\N	\N	\N	\N	2001-11-08	\N	2023-08-12
+3138	629	457	\N	\N	\N	\N	2022-03-03	\N	2023-08-12
+3139	629	877	\N	\N	\N	\N	2021-08-22	\N	2023-08-12
+3140	629	3020	\N	\N	\N	\N	2018-04-21	\N	2023-08-12
+3141	629	525	\N	\N	\N	\N	\N	\N	2023-08-12
+3142	629	3167	\N	\N	\N	\N	\N	\N	2023-08-12
+3143	629	574	\N	\N	\N	\N	\N	\N	2023-08-12
+3144	629	1	\N	\N	\N	\N	2021-05-26	\N	2023-08-12
+3145	630	877	\N	\N	\N	\N	2020-09-27	\N	2023-08-12
+3146	631	2919	\N	\N	\N	\N	\N	\N	2023-08-12
+3147	632	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+3148	632	2919	\N	\N	\N	\N	2011-09-20	\N	2023-08-12
+2085	444	2091	\N	\N	\N	\N	2022-04-02	\N	2023-08-08
+1227	294	39	\N	\N	\N	\N	2016-06-09	\N	2023-08-08
+308	58	12	\N	\N	\N	\N	2020-03-17	\N	2023-08-08
+443	100	446	\N	\N	\N	\N	2021-04-03	\N	2023-08-08
+1	1	1	\N	\N	\N	\N	2020-10-29	\N	2023-08-08
+4000	633	3168	\N	t	\N	\N	2023-08-24	\N	2023-08-24
+2496	342	2521	\N	t	\N	\N	2015-09-18	\N	2023-08-12
+2497	342	2522	\N	\N	\N	\N	\N	\N	2023-08-12
+2498	342	1712	\N	t	\N	\N	2017-07-03	\N	2023-08-12
+2499	342	461	\N	\N	\N	\N	\N	\N	2023-08-12
+2500	342	2525	\N	t	\N	\N	2008-09-13	\N	2023-08-12
+2501	342	201	\N	\N	\N	\N	2010-12-18	\N	2023-08-12
+2502	342	2527	\N	\N	\N	\N	\N	\N	2023-08-12
+2503	342	877	\N	\N	\N	\N	\N	\N	2023-08-12
+2504	342	1289	\N	t	\N	\N	2005-10-01	\N	2023-08-12
+2505	342	1430	\N	\N	\N	\N	\N	\N	2023-08-12
+2506	342	2531	\N	\N	\N	\N	\N	\N	2023-08-12
+2507	342	2532	\N	t	\N	\N	2009-10-08	\N	2023-08-12
+2508	342	53	\N	\N	\N	\N	2010-11-13	\N	2023-08-12
+2509	342	2534	\N	\N	\N	\N	\N	\N	2023-08-12
+2510	342	2535	\N	t	\N	\N	2005-03-02	\N	2023-08-12
+2511	342	30	\N	\N	\N	\N	2005-12-23	\N	2023-08-12
+2512	342	944	\N	t	\N	\N	2008-02-20	\N	2023-08-12
+2513	342	207	\N	\N	\N	\N	2008-03-08	\N	2023-08-12
+2514	342	2539	\N	\N	\N	\N	\N	\N	2023-08-12
+2515	342	2540	\N	\N	\N	\N	\N	\N	2023-08-12
+2516	342	2541	\N	\N	\N	\N	\N	\N	2023-08-12
+2517	342	614	\N	\N	\N	\N	\N	\N	2023-08-12
+2518	342	863	\N	\N	\N	\N	2008-02-01	\N	2023-08-12
+2519	342	2544	\N	\N	\N	\N	\N	\N	2023-08-12
+2520	342	213	\N	t	\N	\N	2005-04-16	\N	2023-08-12
+2521	342	2546	\N	\N	\N	\N	\N	\N	2023-08-12
+2522	342	2547	\N	\N	\N	\N	\N	\N	2023-08-12
+2523	342	1576	\N	\N	\N	\N	\N	\N	2023-08-12
+2524	342	171	\N	\N	\N	\N	2011-12-21	\N	2023-08-12
+2525	342	215	\N	\N	\N	\N	2009-05-15	\N	2023-08-12
+2526	342	2551	\N	\N	\N	\N	\N	\N	2023-08-12
+2527	342	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+2528	342	2553	\N	\N	\N	\N	\N	\N	2023-08-12
+2529	342	272	\N	\N	\N	\N	\N	\N	2023-08-12
+2530	342	2555	\N	\N	\N	\N	\N	\N	2023-08-12
+2531	342	2556	\N	\N	\N	\N	\N	\N	2023-08-12
+2532	342	221	\N	\N	\N	\N	2010-03-02	\N	2023-08-12
+2533	342	1615	\N	\N	\N	\N	2010-03-02	\N	2023-08-12
+2534	342	2559	\N	\N	\N	\N	\N	\N	2023-08-12
+2535	342	2560	\N	t	\N	\N	2005-11-25	\N	2023-08-12
+2536	342	1295	\N	\N	\N	\N	\N	\N	2023-08-12
+2537	342	2562	\N	\N	\N	\N	\N	\N	2023-08-12
+2538	342	2563	\N	\N	\N	\N	\N	\N	2023-08-12
+2539	342	2564	\N	\N	\N	\N	\N	\N	2023-08-12
+2540	342	2565	\N	\N	\N	\N	\N	\N	2023-08-12
+2541	342	866	\N	t	\N	\N	2006-08-14	\N	2023-08-12
+2542	342	2567	\N	\N	\N	\N	\N	\N	2023-08-12
+2543	342	2568	\N	\N	\N	\N	\N	\N	2023-08-12
+2544	342	15	\N	t	\N	\N	2005-01-30	\N	2023-08-12
+2545	342	2570	\N	\N	\N	\N	\N	\N	2023-08-12
+2546	342	2571	\N	\N	\N	\N	\N	\N	2023-08-12
+2547	342	2572	\N	\N	\N	\N	\N	\N	2023-08-12
+2548	342	366	\N	\N	\N	\N	\N	\N	2023-08-12
+2549	342	838	\N	\N	\N	\N	\N	\N	2023-08-12
+2550	342	2575	\N	\N	\N	\N	\N	\N	2023-08-12
+2551	342	2576	\N	\N	\N	\N	\N	\N	2023-08-12
+2552	342	2577	\N	\N	\N	\N	\N	\N	2023-08-12
+2553	342	232	\N	\N	\N	\N	2005-04-08	\N	2023-08-12
+2554	342	2579	\N	\N	\N	\N	\N	\N	2023-08-12
+2555	342	113	\N	\N	\N	\N	\N	\N	2023-08-12
+2556	566	2581	\N	\N	\N	\N	\N	\N	2023-08-12
+2557	567	2551	\N	\N	\N	\N	\N	\N	2023-08-12
+2558	567	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+2559	568	1443	\N	\N	\N	\N	\N	\N	2023-08-12
+2560	568	2585	\N	\N	\N	\N	\N	\N	2023-08-12
+2561	568	1289	\N	\N	\N	\N	2006-09-11	\N	2023-08-12
+2562	568	53	\N	\N	\N	\N	2012-05-09	\N	2023-08-12
+2563	568	2588	\N	\N	\N	\N	\N	\N	2023-08-12
+2564	568	2589	\N	\N	\N	\N	\N	\N	2023-08-12
+2565	568	2590	\N	\N	\N	\N	\N	\N	2023-08-12
+2566	568	2591	\N	t	\N	\N	2008-10-02	\N	2023-08-12
+2567	568	2592	\N	\N	\N	\N	\N	\N	2023-08-12
+2568	568	838	\N	\N	\N	\N	\N	\N	2023-08-12
+2569	569	71	\N	\N	\N	\N	2002-10-29	\N	2023-08-12
+2570	569	649	\N	\N	\N	\N	2005-05-09	\N	2023-08-12
+2571	569	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+2572	569	848	\N	\N	\N	\N	2004-11-24	\N	2023-08-12
+2573	570	366	\N	\N	\N	\N	\N	\N	2023-08-12
+2574	571	877	\N	\N	\N	\N	2017-09-07	\N	2023-08-12
+2575	571	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+2576	572	2601	\N	\N	\N	\N	2021-05-11	\N	2023-08-12
+2577	572	2602	\N	\N	\N	\N	2021-05-11	\N	2023-08-12
+2578	572	2603	\N	\N	\N	\N	\N	\N	2023-08-12
+2579	572	877	\N	\N	\N	\N	\N	\N	2023-08-12
+2580	572	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+2581	572	1295	\N	\N	\N	\N	\N	\N	2023-08-12
+2582	572	2607	\N	\N	\N	\N	\N	\N	2023-08-12
+2583	572	2608	\N	\N	\N	\N	\N	\N	2023-08-12
+2584	572	2567	\N	\N	\N	\N	\N	\N	2023-08-12
+2585	572	2592	\N	\N	\N	\N	\N	\N	2023-08-12
+2586	573	1443	\N	\N	\N	\N	\N	\N	2023-08-12
+2587	573	2612	\N	\N	\N	\N	\N	\N	2023-08-12
+2588	573	2551	\N	\N	\N	\N	\N	\N	2023-08-12
+2589	573	2552	\N	\N	\N	\N	\N	\N	2023-08-12
+2590	574	368	\N	\N	\N	\N	2017-08-12	\N	2023-08-12
+2591	574	68	\N	\N	\N	\N	2017-08-12	\N	2023-08-12
+2592	574	2617	\N	\N	\N	\N	2020-08-17	\N	2023-08-12
+2593	574	11	\N	\N	\N	\N	2019-07-13	\N	2023-08-12
+2594	574	2619	\N	t	\N	\N	2021-11-02	\N	2023-08-12
+2595	574	2620	\N	t	\N	\N	2021-11-02	\N	2023-08-12
+2596	574	1443	\N	\N	\N	\N	2020-09-01	\N	2023-08-12
+2597	574	2622	\N	t	\N	\N	2018-11-02	\N	2023-08-12
+2598	574	2602	\N	\N	\N	\N	\N	\N	2023-08-12
+2599	574	1712	\N	\N	\N	\N	\N	\N	2023-08-12
+2600	574	202	\N	\N	\N	\N	2020-09-28	\N	2023-08-12
+2601	574	2626	\N	t	\N	\N	2019-04-27	\N	2023-08-12
+2602	574	1289	\N	\N	\N	\N	2017-11-05	\N	2023-08-12
+2603	574	2628	\N	\N	\N	\N	2017-11-05	\N	2023-08-12
+2604	574	53	\N	\N	\N	\N	\N	\N	2023-08-12
+2605	574	2535	\N	\N	\N	\N	2018-05-23	\N	2023-08-12
+2606	574	30	\N	\N	\N	\N	2022-02-16	\N	2023-08-12
+2607	574	78	\N	\N	\N	\N	2017-08-12	\N	2023-08-12
+2608	574	79	\N	\N	\N	\N	\N	\N	2023-08-12
+2609	574	206	\N	\N	\N	\N	2021-04-01	\N	2023-08-12
+2610	574	2588	\N	\N	\N	\N	\N	\N	2023-08-12
+2611	574	208	\N	\N	\N	\N	\N	\N	2023-08-12
+2612	574	2637	\N	\N	\N	\N	2017-08-12	\N	2023-08-12
+2613	574	14	\N	\N	\N	\N	2020-03-06	\N	2023-08-12
+2614	574	2639	\N	\N	\N	\N	2020-09-06	\N	2023-08-12
+2615	574	2640	\N	\N	\N	\N	2017-11-07	\N	2023-08-12
+2616	574	2590	\N	\N	\N	\N	2019-09-18	\N	2023-08-12
+2617	574	2642	\N	t	\N	\N	2020-07-16	\N	2023-08-12
+2618	574	2643	\N	t	\N	\N	2020-07-16	\N	2023-08-12
+2619	574	266	\N	\N	\N	\N	2019-05-28	\N	2023-08-12
+2620	574	95	\N	\N	\N	\N	\N	\N	2023-08-12
+2621	574	2646	\N	\N	\N	\N	\N	\N	2023-08-12
+2622	574	2647	\N	\N	\N	\N	\N	\N	2023-08-12
+2623	574	774	\N	\N	\N	\N	2022-02-20	\N	2023-08-12
+2624	574	2591	\N	\N	\N	\N	2019-06-22	\N	2023-08-12
+2625	574	272	\N	\N	\N	\N	2019-09-06	\N	2023-08-12
+2626	574	275	\N	\N	\N	\N	\N	\N	2023-08-12
+2627	574	1350	\N	\N	\N	\N	\N	\N	2023-08-12
+2628	574	2653	\N	\N	\N	\N	2021-05-15	\N	2023-08-12
+2629	574	2654	\N	\N	\N	\N	\N	\N	2023-08-12
+2630	574	880	\N	\N	\N	\N	2019-08-11	\N	2023-08-12
+2631	574	1295	\N	\N	\N	\N	2016-12-24	\N	2023-08-12
+2632	574	2608	\N	\N	\N	\N	2018-07-15	\N	2023-08-12
+2633	574	1754	\N	\N	\N	\N	2019-08-26	\N	2023-08-12
+2634	574	2659	\N	\N	\N	\N	2021-06-15	\N	2023-08-12
+2635	574	979	\N	\N	\N	\N	2020-10-01	\N	2023-08-12
+2636	574	2564	\N	\N	\N	\N	\N	\N	2023-08-12
+2637	574	866	\N	\N	\N	\N	2017-08-12	\N	2023-08-12
+2638	574	225	\N	\N	\N	\N	2021-12-01	\N	2023-08-12
+2639	574	2664	\N	t	\N	\N	2019-09-25	\N	2023-08-12
+2640	574	2592	\N	t	\N	\N	2019-09-25	\N	2023-08-12
+2641	574	2666	\N	\N	\N	\N	2022-02-03	\N	2023-08-12
+2642	574	2579	\N	\N	\N	\N	2022-02-03	\N	2023-08-12
+2643	574	233	\N	\N	\N	\N	2021-05-23	\N	2023-08-12
+2644	574	360	\N	\N	\N	\N	\N	\N	2023-08-12
+2645	574	380	\N	\N	\N	\N	2020-10-15	\N	2023-08-12
+2646	575	1434	\N	\N	\N	\N	2018-01-29	\N	2023-08-12
+2647	575	2672	\N	\N	\N	\N	2018-01-05	\N	2023-08-12
+2648	575	2673	\N	\N	\N	\N	2020-03-11	\N	2023-08-12
+2649	576	2674	\N	\N	\N	\N	\N	\N	2023-08-12
+2650	576	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+2651	576	2591	\N	\N	\N	\N	\N	\N	2023-08-12
+2652	576	1295	\N	\N	\N	\N	\N	\N	2023-08-12
+2653	576	2567	\N	\N	\N	\N	\N	\N	2023-08-12
+2654	576	2592	\N	\N	\N	\N	\N	\N	2023-08-12
+2655	576	838	\N	\N	\N	\N	\N	\N	2023-08-12
+2656	576	2681	\N	\N	\N	\N	\N	\N	2023-08-12
+2657	577	2682	\N	\N	\N	\N	\N	\N	2023-08-12
+2658	578	1434	\N	\N	\N	\N	\N	\N	2023-08-12
+2659	578	957	\N	\N	\N	\N	\N	\N	2023-08-12
+2660	578	2685	\N	\N	\N	\N	\N	\N	2023-08-12
+2661	578	2686	\N	\N	\N	\N	\N	\N	2023-08-12
+2662	578	2672	\N	\N	\N	\N	\N	\N	2023-08-12
+2663	579	1131	\N	\N	\N	\N	2019-07-17	\N	2023-08-12
+2664	579	68	\N	\N	\N	\N	2019-07-17	\N	2023-08-12
+2665	579	2617	\N	t	\N	\N	2019-08-21	\N	2023-08-12
+2666	579	1439	\N	t	\N	\N	2019-08-21	\N	2023-08-12
+2667	579	1441	\N	\N	\N	\N	\N	\N	2023-08-12
+2668	579	1443	\N	\N	\N	\N	\N	\N	2023-08-12
+2669	579	957	\N	\N	\N	\N	\N	\N	2023-08-12
+2670	579	2622	\N	\N	\N	\N	2020-02-24	\N	2023-08-12
+2671	579	2603	\N	\N	\N	\N	\N	\N	2023-08-12
+2672	579	2682	\N	\N	\N	\N	\N	\N	2023-08-12
+2673	579	2521	\N	\N	\N	\N	\N	\N	2023-08-12
+2674	579	1712	\N	\N	\N	\N	\N	\N	2023-08-12
+2675	579	2525	\N	\N	\N	\N	\N	\N	2023-08-12
+2676	579	1714	\N	\N	\N	\N	\N	\N	2023-08-12
+2677	579	877	\N	\N	\N	\N	\N	\N	2023-08-12
+2678	579	2626	\N	\N	\N	\N	\N	\N	2023-08-12
+2679	579	2704	\N	\N	\N	\N	2019-07-17	\N	2023-08-12
+2680	579	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+2681	579	2706	\N	\N	\N	\N	\N	\N	2023-08-12
+2682	579	2534	\N	\N	\N	\N	\N	\N	2023-08-12
+2683	579	30	\N	\N	\N	\N	\N	\N	2023-08-12
+2684	579	78	\N	\N	\N	\N	2019-07-17	\N	2023-08-12
+2685	579	2539	\N	\N	\N	\N	\N	\N	2023-08-12
+2686	579	2589	\N	\N	\N	\N	\N	\N	2023-08-12
+2687	579	2712	\N	\N	\N	\N	\N	\N	2023-08-12
+2688	579	2639	\N	\N	\N	\N	\N	\N	2023-08-12
+2689	579	2590	\N	\N	\N	\N	\N	\N	2023-08-12
+2690	579	2064	\N	\N	\N	\N	\N	\N	2023-08-12
+2691	579	266	\N	\N	\N	\N	2020-12-07	\N	2023-08-12
+2692	579	36	\N	\N	\N	\N	\N	\N	2023-08-12
+2693	579	171	\N	\N	\N	\N	\N	\N	2023-08-12
+2694	579	2646	\N	\N	\N	\N	\N	\N	2023-08-12
+2695	579	2647	\N	\N	\N	\N	\N	\N	2023-08-12
+2696	579	2591	\N	\N	\N	\N	\N	\N	2023-08-12
+2697	579	272	\N	\N	\N	\N	\N	\N	2023-08-12
+2698	579	2723	\N	\N	\N	\N	\N	\N	2023-08-12
+2699	579	275	\N	\N	\N	\N	\N	\N	2023-08-12
+2700	579	1350	\N	\N	\N	\N	2020-10-10	\N	2023-08-12
+2701	579	2726	\N	\N	\N	\N	\N	\N	2023-08-12
+2702	579	2654	\N	\N	\N	\N	\N	\N	2023-08-12
+2703	579	2728	\N	\N	\N	\N	\N	\N	2023-08-12
+2704	579	1886	\N	\N	\N	\N	\N	\N	2023-08-12
+2705	579	2730	\N	\N	\N	\N	\N	\N	2023-08-12
+2706	579	880	\N	\N	\N	\N	\N	\N	2023-08-12
+2707	579	2559	\N	\N	\N	\N	\N	\N	2023-08-12
+2708	579	1295	\N	\N	\N	\N	\N	\N	2023-08-12
+2709	579	1754	\N	\N	\N	\N	\N	\N	2023-08-12
+2710	579	2564	\N	\N	\N	\N	\N	\N	2023-08-12
+2711	579	2736	\N	\N	\N	\N	\N	\N	2023-08-12
+2712	579	2737	\N	\N	\N	\N	\N	\N	2023-08-12
+2713	579	632	\N	\N	\N	\N	\N	\N	2023-08-12
+2714	579	2739	\N	\N	\N	\N	\N	\N	2023-08-12
+2715	579	2740	\N	\N	\N	\N	\N	\N	2023-08-12
+2716	579	2568	\N	\N	\N	\N	\N	\N	2023-08-12
+2717	579	2742	\N	\N	\N	\N	\N	\N	2023-08-12
+2718	579	2664	\N	\N	\N	\N	\N	\N	2023-08-12
+2719	579	2592	\N	\N	\N	\N	\N	\N	2023-08-12
+2720	579	2570	\N	\N	\N	\N	\N	\N	2023-08-12
+2721	579	2746	\N	\N	\N	\N	\N	\N	2023-08-12
+2722	579	2571	\N	\N	\N	\N	\N	\N	2023-08-12
+2723	579	1800	\N	\N	\N	\N	\N	\N	2023-08-12
+2724	579	2579	\N	\N	\N	\N	\N	\N	2023-08-12
+2725	579	2750	\N	\N	\N	\N	\N	\N	2023-08-12
+2726	580	1131	\N	\N	\N	\N	2020-09-22	\N	2023-08-12
+2727	580	68	\N	\N	\N	\N	2020-09-22	\N	2023-08-12
+2728	580	877	\N	\N	\N	\N	2016-09-21	\N	2023-08-12
+2729	580	1441	\N	\N	\N	\N	2021-04-09	\N	2023-08-12
+2730	580	1289	\N	\N	\N	\N	2018-04-30	\N	2023-08-12
+2731	580	53	\N	\N	\N	\N	2012-04-18	\N	2023-08-12
+2732	580	78	\N	\N	\N	\N	2020-09-22	\N	2023-08-12
+2733	580	614	\N	\N	\N	\N	2016-02-06	\N	2023-08-12
+2734	580	863	\N	\N	\N	\N	\N	\N	2023-08-12
+2735	580	2760	\N	t	\N	\N	2017-05-18	\N	2023-08-12
+2736	580	272	\N	\N	\N	\N	2016-06-15	\N	2023-08-12
+2737	580	880	\N	t	\N	\N	2017-06-06	\N	2023-08-12
+2738	580	1295	\N	\N	\N	\N	2015-10-25	\N	2023-08-12
+2739	580	1754	\N	\N	\N	\N	\N	\N	2023-08-12
+2740	580	2659	\N	t	\N	\N	2015-05-24	\N	2023-08-12
+2741	580	866	\N	\N	\N	\N	2020-09-22	\N	2023-08-12
+2742	580	2739	\N	\N	\N	\N	2016-01-21	\N	2023-08-12
+2743	580	2746	\N	\N	\N	\N	2016-08-27	\N	2023-08-12
+2744	580	2571	\N	\N	\N	\N	2016-08-16	\N	2023-08-12
+2745	580	1800	\N	\N	\N	\N	2017-08-13	\N	2023-08-12
+2746	580	366	\N	\N	\N	\N	2009-05-29	\N	2023-08-12
+2747	580	2772	\N	\N	\N	\N	\N	\N	2023-08-12
+2748	581	368	\N	\N	\N	\N	2019-08-19	\N	2023-08-12
+2749	581	866	\N	\N	\N	\N	2019-08-19	\N	2023-08-12
+2750	582	979	\N	\N	\N	\N	2021-05-02	\N	2023-08-12
+2751	582	632	\N	\N	\N	\N	2021-08-22	\N	2023-08-12
+2752	583	1777	\N	\N	\N	\N	\N	\N	2023-08-12
+2753	583	76	\N	\N	\N	\N	2011-02-06	\N	2023-08-12
+2754	583	2779	\N	\N	\N	\N	\N	\N	2023-08-12
+2755	584	1131	\N	\N	\N	\N	\N	\N	2023-08-12
+2756	584	2781	\N	\N	\N	\N	\N	\N	2023-08-12
+2757	584	1777	\N	\N	\N	\N	2021-09-02	\N	2023-08-12
+2758	584	2622	\N	\N	\N	\N	\N	\N	2023-08-12
+2759	584	2601	\N	\N	\N	\N	\N	\N	2023-08-12
+2760	584	2602	\N	\N	\N	\N	\N	\N	2023-08-12
+2761	584	2603	\N	t	\N	\N	2019-12-07	\N	2023-08-12
+2762	584	2787	\N	\N	\N	\N	\N	\N	2023-08-12
+2763	584	2682	\N	t	\N	\N	2020-12-19	\N	2023-08-12
+2764	584	2789	\N	t	\N	\N	2020-12-23	\N	2023-08-12
+2765	584	877	\N	\N	\N	\N	2021-08-09	\N	2023-08-12
+2766	584	2791	\N	t	\N	\N	2019-12-07	\N	2023-08-12
+2767	584	2626	\N	\N	\N	\N	\N	\N	2023-08-12
+2768	584	2793	\N	\N	\N	\N	2021-07-01	\N	2023-08-12
+2769	584	1289	\N	\N	\N	\N	2018-10-25	\N	2023-08-12
+2770	584	2628	\N	\N	\N	\N	2018-10-25	\N	2023-08-12
+2771	584	2706	\N	\N	\N	\N	\N	\N	2023-08-12
+2772	584	2534	\N	\N	\N	\N	2021-09-02	\N	2023-08-12
+2773	584	2588	\N	\N	\N	\N	2021-04-05	\N	2023-08-12
+2774	584	971	\N	\N	\N	\N	2022-01-07	\N	2023-08-12
+2775	584	2589	\N	\N	\N	\N	2021-08-29	\N	2023-08-12
+2776	584	614	\N	\N	\N	\N	2021-12-05	\N	2023-08-12
+2777	584	2590	\N	t	\N	\N	2019-05-11	\N	2023-08-12
+2778	584	2803	\N	\N	\N	\N	2021-07-04	\N	2023-08-12
+2779	584	2591	\N	t	\N	\N	2021-06-04	\N	2023-08-12
+2780	584	2805	\N	t	\N	\N	2021-04-17	\N	2023-08-12
+2781	584	2806	\N	t	\N	\N	2021-04-17	\N	2023-08-12
+2782	584	272	\N	\N	\N	\N	2021-08-01	\N	2023-08-12
+2783	584	2723	\N	t	\N	\N	2020-12-19	\N	2023-08-12
+2784	584	275	\N	\N	\N	\N	\N	\N	2023-08-12
+2785	584	1350	\N	\N	\N	\N	2021-10-15	\N	2023-08-12
+2786	584	2811	\N	\N	\N	\N	\N	\N	2023-08-12
+2787	584	2812	\N	t	\N	\N	2021-06-04	\N	2023-08-12
+2788	584	2813	\N	t	\N	\N	2021-03-03	\N	2023-08-12
+2789	584	1295	\N	\N	\N	\N	2018-12-21	\N	2023-08-12
+2790	584	618	\N	\N	\N	\N	2022-01-06	\N	2023-08-12
+2791	584	2608	\N	\N	\N	\N	2021-05-23	\N	2023-08-12
+2792	584	866	\N	\N	\N	\N	\N	\N	2023-08-12
+2793	584	2568	\N	\N	\N	\N	2021-09-02	\N	2023-08-12
+2794	584	2819	\N	\N	\N	\N	2021-09-02	\N	2023-08-12
+2795	584	2664	\N	\N	\N	\N	2018-11-16	\N	2023-08-12
+2796	584	2592	\N	\N	\N	\N	2018-11-16	\N	2023-08-12
+2797	584	664	\N	\N	\N	\N	2021-12-07	\N	2023-08-12
+2798	584	2750	\N	\N	\N	\N	2021-08-31	\N	2023-08-12
+2799	585	618	\N	\N	\N	\N	\N	\N	2023-08-12
+2800	585	1289	\N	\N	\N	\N	\N	\N	2023-08-12
+2801	585	2591	\N	\N	\N	\N	2020-09-30	\N	2023-08-12
+2802	585	380	\N	\N	\N	\N	2018-04-02	\N	2023-08-12
+2803	586	2828	\N	\N	\N	\N	2019-03-21	\N	2023-08-12
+2804	586	2829	\N	\N	\N	\N	\N	\N	2023-08-12
+2805	586	2830	\N	t	\N	\N	2019-01-21	\N	2023-08-12
+2806	587	2831	\N	\N	\N	\N	\N	\N	2023-08-12
+2807	588	15	\N	\N	\N	\N	\N	\N	2023-08-12
+2808	589	2833	\N	t	\N	\N	2013-03-01	\N	2023-08-12
+2809	589	2834	\N	t	\N	\N	1996-05-31	\N	2023-08-12
+2810	589	2835	\N	\N	\N	\N	\N	\N	2023-08-12
+2811	589	2836	\N	t	\N	\N	2010-09-17	\N	2023-08-12
+2812	590	1442	\N	\N	\N	\N	2014-09-07	\N	2023-08-12
+2813	590	272	\N	\N	\N	\N	2014-10-22	\N	2023-08-12
+2814	591	275	\N	\N	\N	\N	\N	\N	2023-08-12
+2815	592	1477	\N	t	\N	\N	2010-06-19	\N	2023-08-12
+2816	592	2841	\N	t	\N	\N	2013-03-10	\N	2023-08-12
+2817	592	1240	\N	t	\N	\N	2014-02-23	\N	2023-08-12
+2818	592	11	\N	\N	\N	\N	2008-07-28	\N	2023-08-12
+2819	592	1440	\N	\N	\N	\N	2010-03-14	\N	2023-08-12
+2820	592	1442	\N	\N	\N	\N	2002-02-10	\N	2023-08-12
+2821	592	2846	\N	t	\N	\N	2015-12-09	\N	2023-08-12
+2822	592	198	\N	t	\N	\N	2012-06-29	\N	2023-08-12
+1234	298	525	\N	\N	\N	\N	2001-05-04	\N	2023-08-08
+1648	348	18	\N	\N	\N	\N	2012-10-29	\N	2023-08-08
+\.
+
+
+--
+-- Data for Name: ascent_media; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.ascent_media (id, ascent_id, media_id) FROM stdin;
+1	1653	3209
+2	1597	3214
+3	934	3217
+4	12	3220
+\.
+
+
+--
+-- Data for Name: climb; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+--
+
+COPY public.climb (id, name, grade, crag_id, description, added_at) FROM stdin;
+2	Hades	9a	2	\N	2023-08-08
+3	Juturna	8c+/9a	2	\N	2023-08-08
+4	Kraftplatzl	9a	4	\N	2023-08-08
+5	Lichtblick	8c+/9a	5	\N	2023-08-08
+6	Sanjski Par Extension	9a	6	\N	2023-08-08
+194	Alasha	9a	194	\N	2023-08-08
+8	Wheel of Life Direct	9a/+	8	\N	2023-08-08
+9	Shadowboxing	9a	9	\N	2023-08-08
+10	Bibliographie	9b+	10	\N	2023-08-08
+11	Biographie	9a+	10	\N	2023-08-08
+12	Coup de Grâce	9a	12	\N	2023-08-08
+13	Grand Illusion	9a+/b	13	\N	2023-08-08
+14	Joe Mama	9a+	14	\N	2023-08-08
+15	Seleccio Natural	8c+/9a	15	\N	2023-08-08
+16	Arrested Development	8c+/9a	16	\N	2023-08-08
+17	Life of Villains	9a	17	\N	2023-08-08
+18	Southern Smoke Direct	9a	18	\N	2023-08-08
+19	Bad Girls Club	8c+/9a	9	\N	2023-08-08
+20	In Hell I'll Be In Good Company	9a	20	\N	2023-08-08
+21	Moonshine	9a	21	\N	2023-08-08
+22	Planet Garbage	9a	9	\N	2023-08-08
+23	Dawn Wall L14	9a	23	\N	2023-08-08
+24	Dawn Wall L15	8c+/9a	23	\N	2023-08-08
+25	Flex Luthor	9a+/b	9	\N	2023-08-08
+26	Kryptonite	9a	9	\N	2023-08-08
+195	Analogica	9a	15	\N	2023-08-08
+196	Big Fish	8c+/9a	194	\N	2023-08-08
+29	Diarrhea Mouth	9a	9	\N	2023-08-08
+30	Estado Critico	8c+/9a	30	\N	2023-08-08
+31	Fat Camp	8c+/9a	9	\N	2023-08-08
+32	Inga	9a	32	\N	2023-08-08
+444	Witch of Darkness	9a	441	\N	2023-08-08
+34	Kinematix	9a	32	\N	2023-08-08
+198	Catxasa	9a+	15	\N	2023-08-08
+36	La Rambla Original	9a+	30	\N	2023-08-08
+37	Las Cuatro Estaciones	8c+/9a	37	\N	2023-08-08
+199	Demencia Senil	9a+	53	\N	2023-08-08
+39	Papichulo	9a+	14	\N	2023-08-08
+445	El Torkio	9a	445	\N	2023-08-08
+201	Duele la Realidad	9a	14	\N	2023-08-08
+202	El Bon Combat	9b	202	\N	2023-08-08
+43	Stocking Stuffer	9a	9	\N	2023-08-08
+44	Z Nation	9a	9	\N	2023-08-08
+45	Jaws II	9a+	45	\N	2023-08-08
+46	Algorithm	9a	46	\N	2023-08-08
+47	Dreamcatcher	9a	47	\N	2023-08-08
+446	I Giocchi Della Mente	9a	446	\N	2023-08-08
+447	L'Ombra Del Vento	8c+/9a	446	\N	2023-08-08
+50	Empath	9a+	50	\N	2023-08-08
+448	Volo d'Acquila	8c+/9a	446	\N	2023-08-08
+52	Lee Majors	9a	52	\N	2023-08-08
+53	Era Vella	8c+/9a	53	\N	2023-08-08
+54	Wheel of Life	9a/+	8	\N	2023-08-08
+206	First Round First Minute	9b	53	\N	2023-08-08
+56	The Activator	9a/+	17	\N	2023-08-08
+57	Permutations of Synergy	9a	57	\N	2023-08-08
+58	Frequency	9a	58	\N	2023-08-08
+207	Fuck the System	9a	15	\N	2023-08-08
+60	China Glide	9a	45	\N	2023-08-08
+208	Gancho Perfecto	9a	53	\N	2023-08-08
+209	Golpe de Estado	9b	30	\N	2023-08-08
+63	Spirit Quest	9a	47	\N	2023-08-08
+64	The Fly	9a	45	\N	2023-08-08
+65	Unendliche Geschichte 1, 2, 3	9a	65	\N	2023-08-08
+66	Action Directe	9a	66	\N	2023-08-08
+67	Ali Hulk	9a	67	\N	2023-08-08
+68	Ali Hulk Sit Start Extension Total	9b	67	\N	2023-08-08
+69	A Muerte	8c+/9a	30	\N	2023-08-08
+449	Aziona Diretta	8c+/9a	449	\N	2023-08-08
+71	Bain de Sang	8c+/9a	71	\N	2023-08-08
+450	Comité d'Accueil	9a	450	\N	2023-08-08
+73	Bunda de Fora	8c+/9a	73	\N	2023-08-08
+74	Chocholocco	9a	74	\N	2023-08-08
+212	La Dura Dura	9b+	14	\N	2023-08-08
+76	Esclatamasters	8c+/9a	76	\N	2023-08-08
+213	La Novena Enmienda	9a	15	\N	2023-08-08
+78	Fin de Ali Hulk Extension Sit Start	9a+	67	\N	2023-08-08
+79	First Ley	9a+	53	\N	2023-08-08
+80	Illusionist	9a	80	\N	2023-08-08
+81	Kook Slam	9a	81	\N	2023-08-08
+953	Seleccio Natural Extension Gauche	9a	15	\N	2023-08-08
+215	Las 4 Estaciones	8c+/9a	37	\N	2023-08-08
+216	La Tierra Negra	9a/+	53	\N	2023-08-08
+85	Passion	8c+/9a	85	\N	2023-08-08
+86	Psychedelic	9a	86	\N	2023-08-08
+217	Mega Arch	9a	217	\N	2023-08-08
+88	Thor's Hammer	9a/+	80	\N	2023-08-08
+218	Mercenaris del Passat	9a	15	\N	2023-08-08
+90	Helsinki	9a	90	\N	2023-08-08
+219	Néanderthal	9b	15	\N	2023-08-08
+220	Nevera Severa	8c+/9a	53	\N	2023-08-08
+221	Open your Mind Direct	9a	15	\N	2023-08-08
+222	Pachamama	9a+	14	\N	2023-08-08
+95	La Rambla	9a+	30	\N	2023-08-08
+452	Narcissus	9a	432	\N	2023-08-08
+224	Power Inverter	9a+	14	\N	2023-08-08
+225	Samfaina	9a/+	53	\N	2023-08-08
+99	Bone Tomahawk	9a/+	99	\N	2023-08-08
+1443	Celedon	9a	1433	\N	2023-08-08
+227	Shaxi	9a+	14	\N	2023-08-08
+102	Fight or Flight	9b	14	\N	2023-08-08
+228	Stoking the Fire	9b	15	\N	2023-08-08
+229	Super Blood Wolf Moon	9a/b	202	\N	2023-08-08
+454	Beginning	9a	1	\N	2023-08-08
+231	Three Degrees of Separation	9a/+	10	\N	2023-08-08
+232	Travers de la Enmienda	8c+/9a	15	\N	2023-08-08
+108	Le Cadre	9a	10	\N	2023-08-08
+233	Victima Perfecta	8c+/9a	53	\N	2023-08-08
+234	Ciudad de Dios	9a	15	\N	2023-08-08
+235	Open Your Mind Direct	9a/+	15	\N	2023-08-08
+700	Qui	9a+	700	\N	2023-08-08
+113	20 Anos Despues	9a	30	\N	2023-08-08
+2739	Priorato de Sion	8c+/9a	1438	\N	2023-08-12
+238	All You Can Eat	9a+	238	\N	2023-08-08
+457	Biologico	9a	1	\N	2023-08-08
+240	Bachelor Party	8c+/9a	238	\N	2023-08-08
+118	Mutation	9a	21	\N	2023-08-08
+119	White Ligntning	9a	21	\N	2023-08-08
+241	Big Bursa	9a/+	187	\N	2023-08-08
+458	Change	9b+	80	\N	2023-08-08
+122	Dawn Wall L16	8c+/9a	23	\N	2023-08-08
+243	Black Hole Sun	9a	243	\N	2023-08-08
+702	Mordor	8c+/9a	702	\N	2023-08-08
+245	Close Encounters	9a+	245	\N	2023-08-08
+2740	Rheingold	9a	2740	\N	2023-08-12
+127	Analogica natural extension gauche	8c+/9a	15	\N	2023-08-08
+461	Definicion de Resistencia Democrata	9a	461	\N	2023-08-08
+704	Missing Link	8c+/9a	296	\N	2023-08-08
+463	Erebor	9b	1	\N	2023-08-08
+133	Kinder Cakes	9a+	9	\N	2023-08-08
+251	Full Metal Brisket	9a	251	\N	2023-08-08
+705	Black Power	8c+/9a	675	\N	2023-08-08
+136	Mamajama	9a+	136	\N	2023-08-08
+137	Manphibian	9a	137	\N	2023-08-08
+138	Phat Camp	9a	9	\N	2023-08-08
+253	Goldrake	9a+	253	\N	2023-08-08
+140	Re-Up	9a	140	\N	2023-08-08
+254	Ground Zero	9a	16	\N	2023-08-08
+255	Honour and Glory	9a	255	\N	2023-08-08
+143	The Club	9a	9	\N	2023-08-08
+144	Tiger Kween	9a	136	\N	2023-08-08
+145	Ghetto Booty	8c+/9a	16	\N	2023-08-08
+256	Hyper Finale	9a	256	\N	2023-08-08
+257	Iron Butterfly	8c+/9a	257	\N	2023-08-08
+148	Ace of Spade	9a+	148	\N	2023-08-08
+149	Master of the Universe	8c+/9a	149	\N	2023-08-08
+150	Peruvian Necktie	9a+/b	148	\N	2023-08-08
+258	Joe Cita	9a	14	\N	2023-08-08
+259	JoeDan	9a	15	\N	2023-08-08
+706	Hantillo	9a	706	\N	2023-08-08
+262	Jungfraumarathon	9a	262	\N	2023-08-08
+708	Vakuumgeist	9a	706	\N	2023-08-08
+157	Pneuma	9a	149	\N	2023-08-08
+264	La Lune	9a	264	\N	2023-08-08
+709	Baumwesen	9a	709	\N	2023-08-08
+266	La Planta de Shiva	9b	266	\N	2023-08-08
+267	Lapsus	9a+	267	\N	2023-08-08
+469	Hell'Avaro	8c+/9a	406	\N	2023-08-08
+710	Die Rechte Hand	9a	709	\N	2023-08-08
+270	Le Rêve	9a	264	\N	2023-08-08
+1208	Iordanit	9a	913	\N	2023-08-08
+272	Los Inconformistas	8c+/9a	67	\N	2023-08-08
+273	Lülü	9a	10	\N	2023-08-08
+274	Mala Leche	9a	46	\N	2023-08-08
+169	Jumbo Love	9b	169	\N	2023-08-08
+275	Mandanga Total	8c+/9a	266	\N	2023-08-08
+171	La Reina Mora	8c+/9a	30	\N	2023-08-08
+472	La Moustache qui Fâche	9a+	395	\N	2023-08-08
+277	Mistero	9a	267	\N	2023-08-08
+174	Spicy Dumpling	9a	174	\N	2023-08-08
+959	Agnes Buen	9a	959	\N	2023-08-08
+960	Chilam Malenum	9a	266	\N	2023-08-08
+280	Nu World	9a+/b	243	\N	2023-08-08
+281	One Hundred Proof	9a+	182	\N	2023-08-08
+179	L'Oeuvre	8c+/9a	179	\N	2023-08-08
+180	Dad Bod	9a	16	\N	2023-08-08
+475	L'Arenauta	9b	475	\N	2023-08-08
+182	The Eggporkalypse	9a	182	\N	2023-08-08
+714	Maitre Vauban und der Basilisk	9a	714	\N	2023-08-08
+715	Der Lange Atem	9a	714	\N	2023-08-08
+478	Llamp y Tromps	8c+/9a	53	\N	2023-08-08
+479	Los Revolucionarios	9a	479	\N	2023-08-08
+187	Me, I Eat Dust	9a	187	\N	2023-08-08
+188	Brave New World	9a	188	\N	2023-08-08
+480	Omen Nomen	9a	1	\N	2023-08-08
+190	The Assassin	9a	190	\N	2023-08-08
+481	One Punch	9a+	1	\N	2023-08-08
+289	Pub Crawl	8c+/9a	289	\N	2023-08-08
+482	One Slap	9b	1	\N	2023-08-08
+291	Seleccio Anal	9a+	15	\N	2023-08-08
+483	Perfecto Mundo	9b+	53	\N	2023-08-08
+484	Queen Line	9b	1	\N	2023-08-08
+294	Smoke Wagon	9a	182	\N	2023-08-08
+295	Spectrum	9a	295	\N	2023-08-08
+296	Speed Integrale	9a	296	\N	2023-08-08
+485	Ring of Life	9a/+	396	\N	2023-08-08
+298	Stalk and Ambush	8c+/9a	298	\N	2023-08-08
+299	Superpod	9a	251	\N	2023-08-08
+716	Avaatara	9a	716	\N	2023-08-08
+1446	Chilam Vito	9a	266	\N	2023-08-08
+302	The Day The Earth Stood Still	8c+/9a	302	\N	2023-08-08
+962	Belly's Gonna Get Ya	9a	962	\N	2023-08-08
+490	Terapia d'Urto	9a+	1	\N	2023-08-08
+491	The Bow	9a+	1	\N	2023-08-08
+307	Le rêve	9a	264	\N	2023-08-08
+492	The Lonely Mountain	9b	1	\N	2023-08-08
+964	Pilgrimage	8c+/9a	964	\N	2023-08-08
+494	Trofeo Dell'Adriatico	9a+	1	\N	2023-08-08
+965	Stimulating Cartwheel	9a	8	\N	2023-08-08
+2742	Santo Mulero	9a	2534	\N	2023-08-12
+313	Im Reich Des Schogun	9a	313	\N	2023-08-08
+497	Under Vibes	9a	1	\N	2023-08-08
+315	Black Sheep	9a	298	\N	2023-08-08
+316	Lion's Share	9a	298	\N	2023-08-08
+317	Monkey From Hell	9a	317	\N	2023-08-08
+723	Eau Profonde	9a	723	\N	2023-08-08
+967	Catxasita	9a/+	15	\N	2023-08-08
+1212	Random Core	8c+/9a	918	\N	2023-08-08
+726	Rehabilitation	9a/+	683	\N	2023-08-08
+322	The Hunter	9a	298	\N	2023-08-08
+727	Sehnsucht	9a	727	\N	2023-08-08
+503	Ten	9a/+	503	\N	2023-08-08
+504	The End Of The Dark Holes	9a	504	\N	2023-08-08
+505	Ultimo Tango In Zagarolo	9a/+	504	\N	2023-08-08
+969	Direct Fabelita	9a	15	\N	2023-08-08
+507	Il Guerriero del Futuro	8c+/9a	396	\N	2023-08-08
+1449	To tu ješte nebylo	9a	1449	\N	2023-08-08
+730	Keep it Mooving Even If The World Stops	8c+/9a	680	\N	2023-08-08
+510	Hugh	9a	510	\N	2023-08-08
+971	Frenesi	9a	53	\N	2023-08-08
+732	Frontman Deluxe	8c+/9a	732	\N	2023-08-08
+513	Helmutant	9a	513	\N	2023-08-08
+514	Instructor	8c+/9a	514	\N	2023-08-08
+733	Hias Line	8c+/9a	680	\N	2023-08-08
+1215	Redpoint Rice	9a	174	\N	2023-08-08
+518	Sprengstoff	9a	514	\N	2023-08-08
+736	L'Isola Che Non C'é	9a	736	\N	2023-08-08
+520	Black Lotus	8c+/9a	520	\N	2023-08-08
+737	Monkey Line	9a	680	\N	2023-08-08
+522	Grande Onda	8c+/9a	522	\N	2023-08-08
+1216	Redpoint Meal	9a	174	\N	2023-08-08
+524	La Grande Linea dei Sogni	8c+/9a	524	\N	2023-08-08
+525	Martin Krpan	9a	6	\N	2023-08-08
+526	Nove G	9a	526	\N	2023-08-08
+348	La Capella	9a+	30	\N	2023-08-08
+739	Walk The Line	9a	680	\N	2023-08-08
+975	La Vida In High Definition	8c+/9a	53	\N	2023-08-08
+529	Water World	9a	6	\N	2023-08-08
+530	Welcome to the Club	9a	522	\N	2023-08-08
+976	Life Is A Road Trip	9a	53	\N	2023-08-08
+354	Return of the Sleepwalker	9A	354	\N	2023-08-08
+977	Mr Big	9a	53	\N	2023-08-08
+533	Back Road	9a	533	\N	2023-08-08
+535	Black Label	8c+/9a	66	\N	2023-08-08
+359	Tinipi	9a+	359	\N	2023-08-08
+360	Victimas Perez	9a	53	\N	2023-08-08
+536	Classified	9a/+	66	\N	2023-08-08
+362	Zoolander	9a	18	\N	2023-08-08
+1818	Ametsa	9a	1818	\N	2023-08-08
+365	El ordre del Factors – els super mon	9a	365	\N	2023-08-08
+366	Supernowa	8c+/9a	366	\N	2023-08-08
+539	Coup de Bambou	9a	539	\N	2023-08-08
+368	Ali Hulk Extension	9a+	67	\N	2023-08-08
+369	Climb Free	9a	369	\N	2023-08-08
+979	Perfecto Passat	8c+/9a	53	\N	2023-08-08
+541	Der Heilige Graal	9a	66	\N	2023-08-08
+1819	La Barbe à Papa	8c+/9a	1819	\N	2023-08-08
+1220	Chiroptera	9a+	1220	\N	2023-08-08
+374	Baker's Dozen	9a	374	\N	2023-08-08
+375	Cheesecake	9a	375	\N	2023-08-08
+376	Kitten Mittens	9a	374	\N	2023-08-08
+377	Little Baby Cheese	9a	375	\N	2023-08-08
+378	Schweinebaumeln	9a	374	\N	2023-08-08
+1221	Proces	9a	1221	\N	2023-08-08
+380	Victimes del Futur	9a	53	\N	2023-08-08
+545	Life's Blood for the Downtrodden	9a	66	\N	2023-08-08
+382	Infinity	9a	1	\N	2023-08-08
+383	Thunder Ribes	8c+/9a	1	\N	2023-08-08
+384	Ultimatum	9a+	1	\N	2023-08-08
+546	Masoniamoci	8c+/9a	546	\N	2023-08-08
+386	Coup de Foudre	8c+/9a	386	\N	2023-08-08
+387	Abusive Love	9a	387	\N	2023-08-08
+388	Battle Of Hearts	9a	387	\N	2023-08-08
+389	Extrasistole Galoppante	9a	253	\N	2023-08-08
+983	Widowmaker	9a	53	\N	2023-08-08
+1820	L'Ame Slave	8c+/9a	1347	\N	2023-08-08
+392	Moon Landing	9a	392	\N	2023-08-08
+393	Stone War	8c+/9a	387	\N	2023-08-08
+394	Super Circo Abusivo	9a	387	\N	2023-08-08
+395	Condé de Choc	9a	395	\N	2023-08-08
+396	L'Attimo	9a	396	\N	2023-08-08
+985	Wild West	9a/+	53	\N	2023-08-08
+398	Cobra Reale	8c+/9a	267	\N	2023-08-08
+399	La Terza Eta	8c+/9a	386	\N	2023-08-08
+400	Naturalmente	9a+	386	\N	2023-08-08
+401	TCT	9a	401	\N	2023-08-08
+1821	La Picole Qui Rigole	9a	906	\N	2023-08-08
+403	Elementi di Disturbo	8c+/9a	403	\N	2023-08-08
+551	San Ku Kaï	8c+/9a	395	\N	2023-08-08
+552	Sever the Wicked Hand	9a	66	\N	2023-08-08
+553	Speed Intégrale	9a	296	\N	2023-08-08
+407	Hakuna Matata	9a	407	\N	2023-08-08
+987	Ben’s Roof + Evolution	9a	962	\N	2023-08-08
+988	Brandenburg Gate	9a+	962	\N	2023-08-08
+410	St Anger	8c+/9a	1	\N	2023-08-08
+556	The Elder Statesman	9a	66	\N	2023-08-08
+557	The Essentiel	9a	66	\N	2023-08-08
+558	The Last Dance	8c+/9a	403	\N	2023-08-08
+414	Voortrekker	9a	414	\N	2023-08-08
+1822	Twist Again	9a	906	\N	2023-08-08
+416	A Little Badder	9a	80	\N	2023-08-08
+755	Companion of Change	9a+	680	\N	2023-08-08
+418	A Present to the Futur	9a/+	418	\N	2023-08-08
+1457	Open your Mind	9a	15	\N	2023-08-08
+420	Brunhilde Low Start	9a	80	\N	2023-08-08
+421	Charlie Power	9a	421	\N	2023-08-08
+562	Zugzwang	8c+/9a	66	\N	2023-08-08
+1226	Goriles Extension	9a	1226	\N	2023-08-08
+992	Hubble	8c+/9a	962	\N	2023-08-08
+993	Hunger	9a	993	\N	2023-08-08
+427	Jungle Boogie	9a+	10	\N	2023-08-08
+567	La Valle dei Sogni	8c+/9a	567	\N	2023-08-08
+429	Mega Geremia	8c+/9a	429	\N	2023-08-08
+430	Mollasse'Son	8c+/9a	430	\N	2023-08-08
+568	Camo	9a	504	\N	2023-08-08
+432	Perfect Man 2.0	8c+/9a	432	\N	2023-08-08
+569	Sitting Bull	8c+/9a	569	\N	2023-08-08
+434	The Party's Here	9a	429	\N	2023-08-08
+570	The Bomb	9a	569	\N	2023-08-08
+436	Emma	8c+/9a	436	\N	2023-08-08
+761	Fugu	9a	675	\N	2023-08-08
+438	Halupca 1979	9a	6	\N	2023-08-08
+439	Rivoluzione	9a	439	\N	2023-08-08
+762	Furia de Jabali	9a+	30	\N	2023-08-08
+441	Lord of Darkness	9a	441	\N	2023-08-08
+442	The Walking Dead	9a	441	\N	2023-08-08
+1459	Procesor	9a/+	1221	\N	2023-08-08
+574	Pure Dreaming plus	9a+	1	\N	2023-08-08
+2746	Siempre Inconformado	9a	67	\N	2023-08-12
+997	Ley Indignata	9a	53	\N	2023-08-08
+767	Kangaroo's Limb	9a+	80	\N	2023-08-08
+999	Northern Lights	9a	999	\N	2023-08-08
+769	King Capella	9b/+	30	\N	2023-08-08
+1000	Perla Vychodu	9a	1000	\N	2023-08-08
+1001	Rainshadow	9a	1001	\N	2023-08-08
+1002	Stevolution	8c+/9a	962	\N	2023-08-08
+1003	The Southern Hooligan	9a	962	\N	2023-08-08
+774	Last Night	8c+/9a	30	\N	2023-08-08
+586	Iron Moon	8c+/9a	414	\N	2023-08-08
+587	Ultra Istinto	9a	587	\N	2023-08-08
+1005	Big Bang	9a	1005	\N	2023-08-08
+1006	Meltdown	9a	1006	\N	2023-08-08
+779	Neanderthal	9b	15	\N	2023-08-08
+780	Neuron	9a/+	5	\N	2023-08-08
+594	Musa	9a	396	\N	2023-08-08
+1233	In Time	9a	1233	\N	2023-08-08
+2750	Zeleputza	9a+	1433	\N	2023-08-12
+1010	Total Eclipse	9a	1001	\N	2023-08-08
+1012	Silk Cut	8c+/9a	964	\N	2023-08-08
+787	Seleccio Natural Extension	9a	15	\N	2023-08-08
+1015	Violent New Breed	9a+	1015	\N	2023-08-08
+791	The Void	9a	5	\N	2023-08-08
+1017	Descente Lolita	8c+/9a	1017	\N	2023-08-08
+1239	Aikula	9a	1239	\N	2023-08-08
+1019	Batman	9a/+	1001	\N	2023-08-08
+609	Corvo Morto	8c+/9a	609	\N	2023-08-08
+1240	Bi Herri Borroka Bat	9a	202	\N	2023-08-08
+1241	Dugi Rat	9a+	1241	\N	2023-08-08
+612	Iron Man	9a	612	\N	2023-08-08
+797	Weisse Rose	9a	675	\N	2023-08-08
+614	La Bongada	8c+/9a	53	\N	2023-08-08
+615	La Gasparita	8c+/9a	569	\N	2023-08-08
+616	La Prophétie des Grenouilles	9a	616	\N	2023-08-08
+798	Die Nackte Kanonen	9a	798	\N	2023-08-08
+618	Pal Norte	8c+/9a	53	\N	2023-08-08
+1242	Es Pontas/Mega Arch	9a/b	194	\N	2023-08-08
+620	Réveille Toi	9a	569	\N	2023-08-08
+1470	Santa Linya Never Ending Story	9a	15	\N	2023-08-08
+1245	Massacrate	9a+	1245	\N	2023-08-08
+1246	Pescena Ura	9a	1233	\N	2023-08-08
+1247	Umetnost	9a	1247	\N	2023-08-08
+1471	Seleccio Natural extension	9a	15	\N	2023-08-08
+627	Fidel Incastro	9a	627	\N	2023-08-08
+1030	Finest Pedigree	9a+	1030	\N	2023-08-08
+1835	Demain C'est Loin	9a	1835	\N	2023-08-08
+1836	Haribal Lecter	9a	1368	\N	2023-08-08
+808	Soul Mate	9b	808	\N	2023-08-08
+632	Pornographie	9a	10	\N	2023-08-08
+1033	North Star	9a	999	\N	2023-08-08
+634	Kein Licht kein Schatten	8c+/9a	634	\N	2023-08-08
+1474	120 Degrees	9a+	80	\N	2023-08-08
+1035	Overshadow	9a+	1001	\N	2023-08-08
+1036	Rainman	9b	1001	\N	2023-08-08
+1475	Absolutorium	9a	1475	\N	2023-08-08
+1837	Empreintes	8c+/9a	1837	\N	2023-08-08
+815	Karachi	8c+/9a	815	\N	2023-08-08
+1477	Airva Ese	8c+/9a	1477	\N	2023-08-08
+1838	La Horde Intégrale	9a	1838	\N	2023-08-08
+643	WRC	9a	643	\N	2023-08-08
+1042	Echo Wall	8c+/9a	1042	\N	2023-08-08
+646	Solitary Souls	8c+/9a	1	\N	2023-08-08
+820	Maturity	9a+	820	\N	2023-08-08
+1043	Fight the Feeling	8c+/9a	1043	\N	2023-08-08
+650	Eternit	9a/+	650	\N	2023-08-08
+651	Roby Present	8c+/9a	651	\N	2023-08-08
+1840	Mandallaz Drive	9a	1840	\N	2023-08-08
+1481	Art of Flight	8c+/9a	80	\N	2023-08-08
+824	Rise	9a+	824	\N	2023-08-08
+1482	Athena Natural	9a	1	\N	2023-08-08
+826	Seleccio Natural Extension gauche	9a	15	\N	2023-08-08
+827	Spectator	9a	827	\N	2023-08-08
+1841	Salamandre	9a+	1837	\N	2023-08-08
+3050	Fuck The Police	8c+/9a	3050	\N	2023-08-12
+2760	Los Cucos	8c+/9a	67	\N	2023-08-12
+664	Wild Publico	9a	53	\N	2023-08-08
+1846	Blaoum	9a	1846	\N	2023-08-08
+1847	High Voltage	8c+/9a	1847	\N	2023-08-08
+836	Peaceful Mountain	9a	832	\N	2023-08-08
+837	Pogulian do Koduduo	9a	359	\N	2023-08-08
+838	Tas Tas	8c+/9a	838	\N	2023-08-08
+839	The Fifth Element	9a	839	\N	2023-08-08
+671	Cryptography	9b	71	\N	2023-08-08
+672	Energia Cosmica	9a+	672	\N	2023-08-08
+1054	Ca Chauffe	9a	1054	\N	2023-08-08
+674	Per Aspera Ad Astra	9a	674	\N	2023-08-08
+675	Mongo	9a	675	\N	2023-08-08
+676	Eiszeit	8c+/9a	675	\N	2023-08-08
+1491	Bohemian Rhapsody	9a	1491	\N	2023-08-08
+843	Bongo	9a	66	\N	2023-08-08
+680	Dolby Surround	8c+/9a	680	\N	2023-08-08
+844	Corona	9a+	66	\N	2023-08-08
+682	Kraftplatz	9a	682	\N	2023-08-08
+683	Intermezzo XY Gelöst	9a	683	\N	2023-08-08
+684	Balkon Projekt	9a/+	683	\N	2023-08-08
+685	Big Hammer	9a	685	\N	2023-08-08
+845	House of Shock	9a	66	\N	2023-08-08
+687	Fluch der Meer	9a	687	\N	2023-08-08
+1492	Bomba	9b	1	\N	2023-08-08
+1493	Bombardino	9a+/b	1	\N	2023-08-08
+690	Madame Ching	9b	687	\N	2023-08-08
+691	Queen Anne's Revenge	9a+	687	\N	2023-08-08
+692	Schatzinsel	9a	692	\N	2023-08-08
+693	Intermezzo XY gelöst	9a	683	\N	2023-08-08
+848	Logical Progression	9a	848	\N	2023-08-08
+849	Mélange	8c+/9a	849	\N	2023-08-08
+696	Erfolg ist Trainierbar	9a	696	\N	2023-08-08
+850	Monolithic Baby	8c+/9a	66	\N	2023-08-08
+852	Unplugged	9a	66	\N	2023-08-08
+1850	Centre Village variante	9a	1850	\N	2023-08-08
+854	The Essential	9a	66	\N	2023-08-08
+1496	Campo con Corvi	9a	1496	\N	2023-08-08
+856	Zootopia	8c+/9a	66	\N	2023-08-08
+1275	Ekstaza	8c+/9a	6	\N	2023-08-08
+1497	Carmina Burana	9a	1000	\N	2023-08-08
+1851	Centre Village	9a	1850	\N	2023-08-08
+3053	La Catedral del Mal	9a	2941	\N	2023-08-12
+1500	Ci Sta	9a	1	\N	2023-08-08
+1853	Bi-ctateur	8c+/9a	510	\N	2023-08-08
+863	La Fabela Pa la Enmienda	9a	15	\N	2023-08-08
+864	Coup d'Etat	9a	864	\N	2023-08-08
+865	Fin de Ali Hulk Extension Total	8c+/9a	67	\N	2023-08-08
+866	Proa con Finde Ali mas Hulk Extension	9a	67	\N	2023-08-08
+1502	Cizi Agent	9a	1000	\N	2023-08-08
+868	Super Crackinette	9a+	868	\N	2023-08-08
+869	Asaï XXL	8c+/9a	32	\N	2023-08-08
+870	Du neuf avec du Vieux	9a	870	\N	2023-08-08
+3054	La Catedral de los Narcos	9a/+	2941	\N	2023-08-12
+1070	Kein Licht Kein Schatten	8c+/9a	1070	\N	2023-08-08
+873	Vakunamatata	8c+/9a	30	\N	2023-08-08
+1283	Soul Rock Dance	9b	302	\N	2023-08-08
+3055	La Catedral del Suci	8c+/9a	2941	\N	2023-08-12
+876	Aloha	9a	876	\N	2023-08-08
+877	El Autoengano	9a	67	\N	2023-08-08
+1073	Acapulco Extension	9a	1073	\N	2023-08-08
+879	La Fabela pa la Enmienda	9a	15	\N	2023-08-08
+880	No Pain No Gain	9a+	67	\N	2023-08-08
+3056	La Catedral pa la Hipoxia	9a	2941	\N	2023-08-12
+1075	Sprawa Honoru	9a	1073	\N	2023-08-08
+884	Soudain Seul	8c+/9a	884	\N	2023-08-08
+1077	Capoeira	8c+/9a	1073	\N	2023-08-08
+1078	Climb for Life	9a	1078	\N	2023-08-08
+887	Tatanka	9a	887	\N	2023-08-08
+888	Traversée de K	9a	888	\N	2023-08-08
+889	Punt'X	9a	32	\N	2023-08-08
+1508	CRS	9b	1353	\N	2023-08-08
+1289	El Intento	8c+/9a	1289	\N	2023-08-08
+1290	Era Vella 	8c+/9a	53	\N	2023-08-08
+1083	Made in Poland	9a	1083	\N	2023-08-08
+895	Erfolg ist trainierbar	9a	696	\N	2023-08-08
+1859	Crotte de Geek	9a	1859	\N	2023-08-08
+897	Ciudad de Dios pa la Enmienda	9a/+	15	\N	2023-08-08
+1085	Napalm in the Morning	9a	696	\N	2023-08-08
+1086	Pandemonium	9a	1086	\N	2023-08-08
+1294	La Guerre des Nerfs	8c+/9a	1294	\N	2023-08-08
+904	Ma Belle, Ma Muse	8c+/9a	904	\N	2023-08-08
+905	Patxitxulo	9a/+	14	\N	2023-08-08
+906	Sang Neuf	9a	906	\N	2023-08-08
+907	Sweet Neuf	9a+	906	\N	2023-08-08
+1091	Xaxid Hostel	9a	6	\N	2023-08-08
+910	Necros	8c+/9a	910	\N	2023-08-08
+1295	Palestina	8c+/9a	1289	\N	2023-08-08
+912	Acca	8c+/9a	912	\N	2023-08-08
+913	Backspacer	9a	913	\N	2023-08-08
+914	Chronicle of the Diving Bomber	9a	914	\N	2023-08-08
+915	Dolce Vita	9a	914	\N	2023-08-08
+916	Dragons of Passion	9a	912	\N	2023-08-08
+917	Fobos	9a	912	\N	2023-08-08
+918	Gioconda Smile Total	9a+/b	918	\N	2023-08-08
+919	Inkorpi	9a	913	\N	2023-08-08
+1862	Tendres Biscotos	9a	1850	\N	2023-08-08
+921	New Life	8c+/9a	914	\N	2023-08-08
+922	Stolen Sun	8c+/9a	914	\N	2023-08-08
+923	Temptation	8c+/9a	912	\N	2023-08-08
+924	Troyanski Kon	8c+/9a	912	\N	2023-08-08
+925	Vibrazioni Squilibrate 	8c+/9a	925	\N	2023-08-08
+1297	PPP	9a	1297	\N	2023-08-08
+1514	Dioklecijan	8c+/9a	1514	\N	2023-08-08
+1299	TripTikTonik	9a	32	\N	2023-08-08
+1300	Witchhammer	8c+/9a	80	\N	2023-08-08
+1515	Directa Bongada	9a	53	\N	2023-08-08
+1516	Disbelief	9b	1516	\N	2023-08-08
+932	Logan	8c+/9a	932	\N	2023-08-08
+1303	Amazonie	9a	1303	\N	2023-08-08
+1304	Black Beauty	9a	1304	\N	2023-08-08
+1305	Super Finale	9a	256	\N	2023-08-08
+1518	Eagle 4	9b	868	\N	2023-08-08
+938	Ali Hulk Sit start Extension	9b	67	\N	2023-08-08
+1519	Echolokace	9a	1000	\N	2023-08-08
+2772	The Punisher	8c+/9a	67	\N	2023-08-12
+1310	Baba Yaga	9a	1310	\N	2023-08-08
+1311	Legacy	9a	1311	\N	2023-08-08
+944	Fabelita	9a	15	\N	2023-08-08
+1866	Les Mollahs du Mur	8c+/9a	1866	\N	2023-08-08
+1314	Combinaison	9a	1303	\N	2023-08-08
+1867	Sachidananda	9a+	1866	\N	2023-08-08
+1115	Stal Mielec	9a/+	1073	\N	2023-08-08
+1116	Zugswang	8c+/9a	66	\N	2023-08-08
+1319	Un Bel Eté	9a	1303	\N	2023-08-08
+1120	Game Over	9a	1073	\N	2023-08-08
+3065	Mona Lisa Intégrale	9a+	67	\N	2023-08-12
+1321	Alpenbitter	8c+/9a	262	\N	2023-08-08
+1528	Flammen Inuti	9a	80	\N	2023-08-08
+1125	Tysiac Kotletow	9a	1125	\N	2023-08-08
+1324	Ultime Souffrance	9a	71	\N	2023-08-08
+1127	Black Cobra Extension	9a	1127	\N	2023-08-08
+2779	Ni Blog Ni Facebook	8c+/9a	2740	\N	2023-08-12
+1129	SanKuKaï	8c+/9a	395	\N	2023-08-08
+1326	Les Rats Sous Marins	9a	1326	\N	2023-08-08
+1131	Ali Hulk Extension Total	9a+	67	\N	2023-08-08
+1327	Finite Infinity	9a	1327	\N	2023-08-08
+1532	Genius Loci	8c+/9a	1532	\N	2023-08-08
+1330	Bad Patting	8c+/9a	1330	\N	2023-08-08
+1533	Geocache	9a	66	\N	2023-08-08
+1332	Classée Dure	9a	1332	\N	2023-08-08
+1333	DTN	9a	1333	\N	2023-08-08
+2781	Ali Hulk Sit Start Extension 	9b	67	\N	2023-08-12
+1144	La prophétie des Grenouilles	9a	616	\N	2023-08-08
+1539	Happy Day	9a/+	14	\N	2023-08-08
+1540	Hello	9a	1540	\N	2023-08-08
+1341	La Cène du Lézard	9a+	1341	\N	2023-08-08
+1541	Hell Racer	9a+	1540	\N	2023-08-08
+1542	High Line	9a+/b	1542	\N	2023-08-08
+1345	Le Cadafist	9a/+	868	\N	2023-08-08
+1544	House of Cards	9a	1544	\N	2023-08-08
+1347	Le Dard	9a	1347	\N	2023-08-08
+1348	L'Hygiène de l'Assassin	8c+/9a	1054	\N	2023-08-08
+1545	House of Schock	9a	66	\N	2023-08-08
+1350	Mangarbo	9a/+	266	\N	2023-08-08
+1351	Massala Tea	9a	256	\N	2023-08-08
+1352	Moksha	9a	1352	\N	2023-08-08
+1159	XL	9a	838	\N	2023-08-08
+1160	Hvezdna Relikivie	8c+/9a	1160	\N	2023-08-08
+2787	Copadrina	8c+/9a	1289	\N	2023-08-12
+1162	El Nino	8c+/9a	1162	\N	2023-08-08
+1547	Il Domani	9a	838	\N	2023-08-08
+1164	El Nino Extension	9a	1162	\N	2023-08-08
+1165	Napred I Nagore	9a	1165	\N	2023-08-08
+2789	Daemonologie	9a	1289	\N	2023-08-12
+1357	Retour Gagnant	9a	868	\N	2023-08-08
+1169	Peixe Porco	9a	1169	\N	2023-08-08
+1884	La Hija de la Luna	9a	1800	\N	2023-08-08
+1171	Filipinos	9a	1171	\N	2023-08-08
+1551	Inception	8c+/9a	369	\N	2023-08-08
+1360	Shortcut	9a	1332	\N	2023-08-08
+1174	L'Autre coté du Ciel	9a	510	\N	2023-08-08
+1175	Dark Matter	9a/+	47	\N	2023-08-08
+1552	Ini Ameriketan	9a/+	838	\N	2023-08-08
+1553	Interklemezzo	9a	1542	\N	2023-08-08
+1178	Bow Valley Challenge	9a	1178	\N	2023-08-08
+1363	Staphylocoque	9a/+	1352	\N	2023-08-08
+1554	Ira	9a	838	\N	2023-08-08
+1555	Iron Curtain	9b	80	\N	2023-08-08
+1366	Super Size	9a	1332	\N	2023-08-08
+1183	Sacrifice	9a+	255	\N	2023-08-08
+1556	Jaws 11	8c+/9a	1556	\N	2023-08-08
+1185	Steep And Sweet	9a	1178	\N	2023-08-08
+1368	Takamine	9a	1368	\N	2023-08-08
+1369	Titan	9a	1332	\N	2023-08-08
+1885	La Minute de Rési	9a	1885	\N	2023-08-08
+1886	My Little Princess	9a	1800	\N	2023-08-08
+1887	Nilbru	8c+/9a	67	\N	2023-08-08
+1191	The Missing Link	9a	1191	\N	2023-08-08
+1373	Inferno	9a	262	\N	2023-08-08
+2521	Cosi Se Arete	9a	67	\N	2023-08-12
+1889	To The Moon	9a	1800	\N	2023-08-08
+1195	Forever Expired	9a	1195	\N	2023-08-08
+1376	Schwarz Mönch	9a/+	262	\N	2023-08-08
+1197	Pasito a Pasito	9a	1197	\N	2023-08-08
+1562	Keep On Mooving Even If The World Stops	8c+/9a	680	\N	2023-08-08
+1563	Kostitras Nesmrtelny	8c+/9a	1000	\N	2023-08-08
+1564	Kout Pickle	9a+	1000	\N	2023-08-08
+2522	Daker	8c+/9a	2522	\N	2023-08-12
+1202	Max Factor	9a	918	\N	2023-08-08
+1567	La Castagne	9a/+	868	\N	2023-08-08
+2791	El Calvario de las Obsesiones	9a	1289	\N	2023-08-12
+1893	Le Syndrome Rubio Garcia	9a	1893	\N	2023-08-08
+1894	Mémorial GS	9a	1893	\N	2023-08-08
+1896	Alone	9a	32	\N	2023-08-08
+2793	El Gran Bellanco	8c+/9a	2793	\N	2023-08-12
+1576	La Real Tierra de Nadie	9a	37	\N	2023-08-08
+1577	La Teoria del Gesto	9a	475	\N	2023-08-08
+1901	Just Two Fix	9a/+	32	\N	2023-08-08
+1397	La Mola Mola	9a	1397	\N	2023-08-08
+1398	Le Donjon De Naheulbeuk	8c+/9a	1398	\N	2023-08-08
+1580	L'Etrange Ivresse des Lenteurs	9a+	10	\N	2023-08-08
+1902	Kick Ass	9a	32	\N	2023-08-08
+1582	Life's Blood for Downtrodden	9a	66	\N	2023-08-08
+1403	Chromosome X	8c+/9a	1398	\N	2023-08-08
+1585	Maitre Vauban und der Basilik	9a	714	\N	2023-08-08
+1586	Mamichula	9b	14	\N	2023-08-08
+1587	Marina Superstar	9a+/b	1496	\N	2023-08-08
+1408	Meiose	9a	1398	\N	2023-08-08
+1409	Minimalomania	9a+	1409	\N	2023-08-08
+1588	Marsupilami	9a	1556	\N	2023-08-08
+1411	The Back Of Beyond	9a	1411	\N	2023-08-08
+1412	Transcription	9a	1398	\N	2023-08-08
+1414	Aragon	9a	1414	\N	2023-08-08
+1415	Arcobaleno Direkt	9a	1415	\N	2023-08-08
+1417	Brissago Extra	9a	1417	\N	2023-08-08
+1418	Fingertest	9a	1418	\N	2023-08-08
+1419	Frittenbude	9a	1415	\N	2023-08-08
+1420	Licht und Schatten	9a+	1420	\N	2023-08-08
+1421	P'antheon Part 2	9a	1415	\N	2023-08-08
+1422	Verbrecher XY Gelöst	9a	1422	\N	2023-08-08
+1591	Matador	8c+/9a	66	\N	2023-08-08
+1593	Mia	8c+/9a	1593	\N	2023-08-08
+1594	Modified	9a+	66	\N	2023-08-08
+1595	Molekuly	9a+	1000	\N	2023-08-08
+1596	Mollans Culler	8c+/9a	1353	\N	2023-08-08
+1430	El ordre del Factors – El super mon	9a	365	\N	2023-08-08
+1599	More	9a	1599	\N	2023-08-08
+1433	Akelarre	8c+/9a	1433	\N	2023-08-08
+1434	Al Hakam	8c+/9a	1434	\N	2023-08-08
+1600	Move	9b/+	80	\N	2023-08-08
+1436	Analogica natural extension	9a	15	\N	2023-08-08
+1601	Move Hard	9b	80	\N	2023-08-08
+1438	Apego Del Monje	8c+/9a	1438	\N	2023-08-08
+1439	Apocalypto	8c+/9a	67	\N	2023-08-08
+1440	Barrakito Puro y Dur	8c+/9a	1440	\N	2023-08-08
+1441	Borrachos Libres	9a	67	\N	2023-08-08
+1442	Broadway	8c+/9a	30	\N	2023-08-08
+3084	Big Men	9a+	3084	\N	2023-08-12
+2803	La Parada de los Monstruos	9a	2793	\N	2023-08-12
+1912	Coup Fourré	9a	1912	\N	2023-08-08
+1605	Nice Freshly Backed	9a	66	\N	2023-08-08
+1913	Flesh For Fantasy	9a	1893	\N	2023-08-08
+3085	Cantamananas Express	9a	194	\N	2023-08-12
+2805	Lider Negra	9a+	1289	\N	2023-08-12
+1609	Obrint el Sistema	9a+	1609	\N	2023-08-08
+1610	Om	9a	1610	\N	2023-08-08
+2806	Lider Iberico	9a+/b	1289	\N	2023-08-12
+1614	Open Air	9a+	675	\N	2023-08-08
+1615	Open your Mind Extension	9a	15	\N	2023-08-08
+1616	Orca	9a	675	\N	2023-08-08
+1920	A la Limite de la Rupture	9a	1893	\N	2023-08-08
+2811	Marillion	8c+/9a	1289	\N	2023-08-12
+1621	Pantera	9a	66	\N	2023-08-08
+1923	Descente en Terre Inconnue	9a	1017	\N	2023-08-08
+2812	Me Vengo Leire	9a	1289	\N	2023-08-12
+2525	Delincuente Natural	9a/b	67	\N	2023-08-12
+1625	Perlorodka	9a+	1000	\N	2023-08-08
+2813	Pa La Enmienda	8c+/9a	1289	\N	2023-08-12
+2527	El Arte de la Vengenza	9a	30	\N	2023-08-12
+1628	Predator	9a+	1628	\N	2023-08-08
+1631	Protivnik	9a	1000	\N	2023-08-08
+1632	Psikoterapia	9a	1632	\N	2023-08-08
+1633	Pungitopo	8c+/9a	1	\N	2023-08-08
+3092	Gran Guggenheim	9a+	194	\N	2023-08-12
+1635	Pure Dreaming Plus	9a+	1	\N	2023-08-08
+1636	Purgatory	9a	1540	\N	2023-08-08
+2531	El ordre del Factors – La Genmandaz	9a	365	\N	2023-08-12
+2532	Emborrachando al Hijo 	9a	67	\N	2023-08-12
+3093	Guggenheim	9a	194	\N	2023-08-12
+2534	Escaqueo de Mulero	8c+/9a	2534	\N	2023-08-12
+1641	Robin Ud	9b	1641	\N	2023-08-08
+1642	Roby in the Sky	8c+/9a	1642	\N	2023-08-08
+1643	Rodéo	9a	1000	\N	2023-08-08
+2535	Esperanza	8c+/9a	2535	\N	2023-08-12
+1645	Samuraj	8c+/9a	1000	\N	2023-08-08
+3094	Guggen Hell	9a+/b	194	\N	2023-08-12
+1647	Senzace	8c+/9a	1647	\N	2023-08-08
+2819	Santo Celedon	9a	2534	\N	2023-08-12
+1650	Shaxi Raxi	9b	14	\N	2023-08-08
+2539	Gioconda	9a	67	\N	2023-08-12
+2540	Guenga	8c+/9a	838	\N	2023-08-12
+2541	Ingravid Extension pa la Enmienda	8c+/9a	15	\N	2023-08-12
+3097	La Gran Pagachivas	8c+/9a	194	\N	2023-08-12
+1657	Stone Butterfly	9a+	1127	\N	2023-08-08
+2544	La Nevera Severa	8c+/9a	53	\N	2023-08-12
+1945	Schnouk Deug	8c+/9a	1945	\N	2023-08-08
+1660	Tanek Kuratek	9a	1660	\N	2023-08-08
+1661	Taurus	9b	1000	\N	2023-08-08
+3098	La Nave de los Locos	9a	194	\N	2023-08-12
+2546	La Rambla de 20 Anos	8c+/9a	30	\N	2023-08-12
+1664	The Change	9b+	80	\N	2023-08-08
+2547	La Rambla version Alex Huber	9a	30	\N	2023-08-12
+1668	The Man that follows Hell	9a/+	66	\N	2023-08-08
+1669	The Right of Passage	9a	80	\N	2023-08-08
+1951	Enzobble	8c+/9a	32	\N	2023-08-08
+1671	Thor's Hammer 2	9a+	80	\N	2023-08-08
+3101	La Ware	8c+/9a	302	\N	2023-08-12
+2551	La Travesia de Arroita	9a+	838	\N	2023-08-12
+2552	La Travesia de Baltzola	8c+/9a	838	\N	2023-08-12
+3081	Artaburu	9b/+	53	\N	2023-08-12
+1676	Burden of Dreams	9A	1676	\N	2023-08-08
+1678	Rock Erotics	8c+/9a	1678	\N	2023-08-08
+1652	Silence	9c	80	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.	2023-08-08
+1681	Promotion Canne à Pêche	8c+/9a	1297	\N	2023-08-08
+3102	Mendeku	9a	2534	\N	2023-08-12
+2828	Clepteropa Original	9a	2828	\N	2023-08-12
+2829	Free Full	9a	194	\N	2023-08-12
+2830	Santaropa	8c+/9a	194	\N	2023-08-12
+2831	Ataxia Hyperextension	8c+/9a	2831	\N	2023-08-12
+2833	Blasfemias de la Vida	8c+/9a	2730	\N	2023-08-12
+1689	Steppe de Pierres	9a	1642	\N	2023-08-08
+2834	Ejecucion Radical	8c+/9a	2730	\N	2023-08-12
+2553	Lista para Sentencia	9a	2534	\N	2023-08-12
+1692	L'Arquée Type du mal	8c+/9a	876	\N	2023-08-08
+1693	Pyrrhus	9a	1693	\N	2023-08-08
+2835	Sieres de Otra Epoca	9a	2730	\N	2023-08-12
+1695	Aubade	9a+	1695	\N	2023-08-08
+1968	Amicalement Blues	9a	1771	\N	2023-08-08
+2555	Malenum	8c+/9a	266	\N	2023-08-12
+1698	Akira	9a	1698	\N	2023-08-08
+2556	ONG Perez	8c+/9a	2534	\N	2023-08-12
+1700	A Muerte Bilou	9a	1297	\N	2023-08-08
+1701	A Quelques Mètres De La Légalité	9a	1701	\N	2023-08-08
+1702	Axe D'Ailes	8c+/9a	1702	\N	2023-08-08
+1703	Beyond	9a	1352	\N	2023-08-08
+2836	Supper Espacio Oceano	9a	2730	\N	2023-08-12
+1705	Beyond Intégrale	9b/+	1352	\N	2023-08-08
+3104	Odissy	8c+/9a	194	\N	2023-08-12
+1707	Bulle d'Air	9a	1701	\N	2023-08-08
+2559	Outer Del Mal	8c+/9a	1289	\N	2023-08-12
+2560	Overblomu	8c+/9a	1609	\N	2023-08-12
+2562	Perpetuisima	8c+/9a	1440	\N	2023-08-12
+1712	De Battre Mon Coeur S'est Arrêté	9a	67	\N	2023-08-08
+2563	Persistencia da Vinci	8c+/9a	67	\N	2023-08-12
+1714	Detectives	9a	67	\N	2023-08-08
+2564	Persistencia de la Gioconda	8c+/9a	67	\N	2023-08-12
+2565	Poderosa Afrodita	9a	30	\N	2023-08-12
+1717	Gold Thaurac	9a	1717	\N	2023-08-08
+1718	Guère de Bruit	9a	1718	\N	2023-08-08
+3106	Red Full	9a	194	\N	2023-08-12
+1981	Hanidalle Tracteur	9a	1818	\N	2023-08-08
+1721	Kmira	9a+	1352	\N	2023-08-08
+1722	La Côte d'Usure	9a+	1297	\N	2023-08-08
+1723	La Folle Histoire Immonde	8c+/9a	1717	\N	2023-08-08
+1724	La Madone	9a+	1724	\N	2023-08-08
+2567	Quassam Mix	8c+/9a	1289	\N	2023-08-12
+1983	La 9e Centenaire	9a	1771	\N	2023-08-08
+1984	Megos Proof	8c+/9a	10	\N	2023-08-08
+1728	La Rage d'Adam	9b/+	1297	\N	2023-08-08
+2568	Santo Escaqueo	8c+/9a	2534	\N	2023-08-12
+1731	La Tête Dans Le Guidon	9a	1701	\N	2023-08-08
+2570	Se Te Va La Pinza	8c+/9a	67	\N	2023-08-12
+1733	L'autre coté du ciel	9a	510	\N	2023-08-08
+1734	Le Complexe du Playboy	9a/+	1734	\N	2023-08-08
+1735	Legend	9a	1352	\N	2023-08-08
+1736	Le Goût Du Sang	9a	1736	\N	2023-08-08
+1737	Le Playboy Rode sans Complexe	9a/+	1734	\N	2023-08-08
+1738	Les Gardes Fous	9a+	1701	\N	2023-08-08
+1739	Les yeux Plus Gros Que L'Antre	9a+/b	1739	\N	2023-08-08
+1740	L'Homme Demain	9a/+	1297	\N	2023-08-08
+1988	Spoilt Kid	9a	10	\N	2023-08-08
+2571	Siempre Libre	8c+/9a	67	\N	2023-08-12
+2572	Suenos Locos	9a	2572	\N	2023-08-12
+2841	Anan Flutan	8c+/9a	2841	\N	2023-08-12
+2575	Tekimuking a Despertar	9a/+	2575	\N	2023-08-12
+1747	Moutchiki Extension	9a	1724	\N	2023-08-08
+2576	Tekimuking de la Mare	8c+/9a	2575	\N	2023-08-12
+1749	Myr	9a+	1701	\N	2023-08-08
+2577	Tierra de Nadie	9a	37	\N	2023-08-12
+2579	Variante de Ursus	8c+/9a	2579	\N	2023-08-12
+1753	Parejito	8c+/9a	1297	\N	2023-08-08
+1754	Patanics	9a+	67	\N	2023-08-08
+2581	Obada	9a	838	\N	2023-08-12
+1758	Punt’X	9a	32	\N	2023-08-08
+1759	Quasimono	9a	1297	\N	2023-08-08
+1760	Reikiavik Energy	9a	194	\N	2023-08-08
+1761	Robi in the Sky	8c+/9a	1642	\N	2023-08-08
+2846	Cal Rubell	9a	2846	\N	2023-08-12
+1763	Salida del Sol	8c+/9a	1763	\N	2023-08-08
+3112	El Arte de la Casa	8c+/9a	30	\N	2023-08-12
+2585	Clandestino	9a	2585	\N	2023-08-12
+1766	The Dream	9b	1766	\N	2023-08-08
+2848	Catxasa R2	9a+/b	15	\N	2023-08-12
+2588	Following the Leader	9a+	1289	\N	2023-08-12
+2589	Harroputza	9a	1433	\N	2023-08-12
+1771	La Directe du Crapaud	8c+/9a	1771	\N	2023-08-08
+1772	Fou Rire AR	9a	884	\N	2023-08-08
+1773	Apocalypse Now	9a	1332	\N	2023-08-08
+1774	Balmophilie	9a	1332	\N	2023-08-08
+2590	La Copa del Guey	8c+/9a	1289	\N	2023-08-12
+2591	Leire	9a	1289	\N	2023-08-12
+1777	Celedon 	9a	1433	\N	2023-08-08
+2592	Seta Total	9a	1289	\N	2023-08-12
+1779	Coincidence	8c+/9a	1332	\N	2023-08-08
+1780	Deep Spot	9a+	1332	\N	2023-08-08
+1781	Docteur Païsmaker	9a	1781	\N	2023-08-08
+1782	Dur Sexe Et Le Grand Moutchyki	9a	1724	\N	2023-08-08
+3114	Jungle Night	9a	30	\N	2023-08-12
+3117	Out of Time	9a	3031	\N	2023-08-12
+1787	Je Vais Bien Tout Va Bien	9a	1332	\N	2023-08-08
+1788	Je Vais Bien Tout Va Bien Exit	9a	1332	\N	2023-08-08
+3120	Tekimpeyback	9a	245	\N	2023-08-12
+1793	La Récré Dominicale	9a	1332	\N	2023-08-08
+2601	Circo Negro	8c+/9a	1289	\N	2023-08-12
+1795	Les Nuances du Ciel	9a	1332	\N	2023-08-08
+2602	Circo Total	9a	1289	\N	2023-08-12
+2603	Climbing Obsession	8c+/9a	1289	\N	2023-08-12
+1798	Retourne Toi	9a	1798	\N	2023-08-08
+1800	Soul Surfer	8c+/9a	1800	\N	2023-08-08
+3031	El Dorado	9a	3031	\N	2023-08-12
+3123	Chilam Salsera	9a	266	\N	2023-08-12
+1803	Team Frisouille	9a+	1332	\N	2023-08-08
+2025	Dieu Merci	8c+/9a	2025	\N	2023-08-08
+2607	Panodrama	8c+/9a	2607	\N	2023-08-12
+2608	Panorama	9a	2607	\N	2023-08-12
+3033	Ley del Nalesniki	8c+/9a	2941	\N	2023-08-12
+1811	La Force	9a	884	\N	2023-08-08
+2034	Corrida	9a	2034	\N	2023-08-08
+2035	Crépuscule	8c+/9a	1866	\N	2023-08-08
+2036	Décalage vers la lumière	8c+/9a	2036	\N	2023-08-08
+2037	La Lessiveuse	9a	1866	\N	2023-08-08
+2038	Les Yeux du Diable	9a	2038	\N	2023-08-08
+2039	Riders on the Storm	8c+/9a	2039	\N	2023-08-08
+2040	Une Epoque Formidable	9a	1866	\N	2023-08-08
+2041	A Contre Courant	9a	1866	\N	2023-08-08
+2042	Anesthésie	9a+	2034	\N	2023-08-08
+2043	Bélouga	8c+/9a	868	\N	2023-08-08
+2044	Carnaval	9a	2039	\N	2023-08-08
+2045	Chikane	9b	1866	\N	2023-08-08
+2046	Contrefaçon	9a	302	\N	2023-08-08
+2854	El Desentreno Mental	9a	2625	\N	2023-08-12
+2049	Culture Gym	9a	2049	\N	2023-08-08
+2051	Démon	9a+/b	1866	\N	2023-08-08
+2053	Evolution Arc En Ciel	9a	1866	\N	2023-08-08
+2054	Fast and Furious	9a	1866	\N	2023-08-08
+2055	Fat Cookie	9a	1866	\N	2023-08-08
+2858	Enemigo Publico n°1	8c+/9a	53	\N	2023-08-12
+2057	Irrévérence Extension	8c+/9a	1866	\N	2023-08-08
+2058	Jusqu'Au Bout Du Monde	8c+/9a	2049	\N	2023-08-08
+2059	La Déconnexion	8c+/9a	1866	\N	2023-08-08
+2060	La Grande Fiesta del Biceps	9a	2036	\N	2023-08-08
+2061	La Grande Vadrouille	9a	2036	\N	2023-08-08
+2860	Esclafit	9a	2860	\N	2023-08-12
+2064	La Negra	8c+/9a	2064	\N	2023-08-08
+2066	L'Enfance Prolongée	9a	1866	\N	2023-08-08
+2067	Le Poisson Pilote	9a+	1866	\N	2023-08-08
+2068	Les Affranchis	9a+/b	1866	\N	2023-08-08
+2069	Le Saucisson A Bonnod	8c+/9a	1724	\N	2023-08-08
+2070	Les Colos Fachos	8c+/9a	1866	\N	2023-08-08
+2071	Les Colos Travlo	9a/+	1866	\N	2023-08-08
+2072	Les Fakirs	9a	1866	\N	2023-08-08
+2073	Les Mollahs du Mollard	8c+/9a	1866	\N	2023-08-08
+2076	Little Fish	9a+	1866	\N	2023-08-08
+2864	Ficcio Digital	9a	2864	\N	2023-08-12
+2078	Ma Faute à Toi	9a	2039	\N	2023-08-08
+2079	Mentawai	9a+	302	\N	2023-08-08
+2080	Mestizaje	8c+/9a	2064	\N	2023-08-08
+2082	Mon Oncle d'Amérique	8c+/9a	2036	\N	2023-08-08
+2083	Obsession	9b	1866	\N	2023-08-08
+2084	Parle Avec Elle	9a/+	302	\N	2023-08-08
+3139	Demagun	8c+/9a	3139	\N	2023-08-12
+2088	Sahara	9a+	2036	\N	2023-08-08
+2090	Sea of Tranquility	9a/+	1866	\N	2023-08-08
+2091	Sherpa	9a	1866	\N	2023-08-08
+2092	Sparring Partner	9a	302	\N	2023-08-08
+2093	Teahupoo	9a	302	\N	2023-08-08
+2094	Trépied XXL	8c+/9a	2036	\N	2023-08-08
+2095	UFO Faire XXL	9a	1642	\N	2023-08-08
+2097	Vrillé Mono	9a	1297	\N	2023-08-08
+3143	Faxismoaren Txontxogiloak	9a	2914	\N	2023-08-12
+2101	Phantastica	8c+/9a	2101	\N	2023-08-08
+2103	Turkish Haircut	9a	1678	\N	2023-08-08
+2879	Las Tres Dures	9a	2879	\N	2023-08-12
+2109	Dark Dog	9a	2109	\N	2023-08-08
+2110	Die Hard 2	9a	2109	\N	2023-08-08
+2111	Extreme Makeover	8c+/9a	2109	\N	2023-08-08
+3150	La Fuga	9a	3150	\N	2023-08-12
+2884	M. Alba	9a	2884	\N	2023-08-12
+2885	Maya	9a+	53	\N	2023-08-12
+2888	Nit de Bruixes	9a+	53	\N	2023-08-12
+2889	Només Per Valents	9a	2889	\N	2023-08-12
+2897	Red Ram	9a+	2579	\N	2023-08-12
+3167	Pure Dreaming	8c+/9a	1	\N	2023-08-12
+1	Underground	8c+/9a	1	lorem	2023-08-08
+2914	Begi Puntuan	9a	2914	\N	2023-08-12
+2916	Enbor Bereko Ezpalak	8c+/9a	2914	\N	2023-08-12
+2919	Systematik Ihes	9a	2919	\N	2023-08-12
+2921	Basapiztien Eremua	9a	2914	\N	2023-08-12
+2612	4*4	8c+/9a	2522	\N	2023-08-12
+2927	Lau Belatz	9a	2522	\N	2023-08-12
+2928	Lau Polite	8c+/9a	2522	\N	2023-08-12
+2617	Apocalipsis de la Gioconda	9a+/b	67	\N	2023-08-12
+2619	Café Solo	9b	53	\N	2023-08-12
+2620	Carlota La Columbiana	9a/+	53	\N	2023-08-12
+649	Bimbaluna	9a/+	71	\N	2023-08-08
+2622	Circo Iberico	9a/+	1289	\N	2023-08-12
+832	Flat Mountain	9a/+	832	\N	2023-08-08
+1389	La Chimère des Hauteurs	9a/+	71	\N	2023-08-08
+957	Chilam Balam	9a+/b	266	\N	2023-08-08
+2626	El Carnicero de Rostov	9a	1289	\N	2023-08-12
+3168	dummy	9a	1	\N	2023-08-24
+2628	El Intento Deseado	9a	1289	\N	2023-08-12
+2938	Floriman	9a	67	\N	2023-08-12
+2941	Hipoxia Extension	8c+/9a	2941	\N	2023-08-12
+2637	Hulk Ahora Son Dos	8c+/9a	67	\N	2023-08-12
+2639	Kairos	9a	67	\N	2023-08-12
+2640	Kaisen	8c+/9a	2640	\N	2023-08-12
+2642	La Piedra Agermanat	9a	2625	\N	2023-08-12
+2643	La Piedra del Super Mon	9a	2625	\N	2023-08-12
+2646	Las Meninas R1	9a/+	67	\N	2023-08-12
+2647	Las Meninas R2	9a+/b	67	\N	2023-08-12
+2953	PanHaters	9a+	1438	\N	2023-08-12
+2653	Mejorando Imagen	9a+/b	53	\N	2023-08-12
+2654	Menina Sixtina	8c+/9a	67	\N	2023-08-12
+2659	Pata Tral	8c+/9a	67	\N	2023-08-12
+2664	Seta Iberica	9a+	1289	\N	2023-08-12
+2666	Ursus Sit Start	9a	2579	\N	2023-08-12
+2965	1 + 1 = 11	8c+/9a	245	\N	2023-08-12
+2672	Scarlett	8c+/9a	1434	\N	2023-08-12
+2673	Suspiro	9a	1434	\N	2023-08-12
+2674	Black Block	9a+	1289	\N	2023-08-12
+2681	Zurito	8c+/9a	1289	\N	2023-08-12
+2682	Cordia Maleficarum	9a	1289	\N	2023-08-12
+2685	El Duende	9a	2685	\N	2023-08-12
+2686	Orujo	9a+	2685	\N	2023-08-12
+2988	Harri Gosea	9a	2914	\N	2023-08-12
+2704	El Escape de Ali Baba	8c+/9a	67	\N	2023-08-12
+2706	El Subnormal Del Antihydral	9a	1289	\N	2023-08-12
+2997	Clinic	9a+	2997	\N	2023-08-12
+2712	Increible Total	8c+/9a	67	\N	2023-08-12
+2723	Malleus Maleficarum	9a+	1289	\N	2023-08-12
+2726	Masa	9a	67	\N	2023-08-12
+3011	Odyn's Crack	9a+	539	\N	2023-08-12
+2728	Mona Lisa	9a	67	\N	2023-08-12
+2730	Nigga	9a	2730	\N	2023-08-12
+3017	Valhalla	9a/+	80	\N	2023-08-12
+2736	Picacho	9b	67	\N	2023-08-12
+2737	Picacho Increible Total	9a+	67	\N	2023-08-12
+3020	La Trave de los Narcos	8c+/9a	2941	\N	2023-08-12
+\.
+
+
+--
+-- Data for Name: climb_media; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.climb_media (id, climb_id, media_id) FROM stdin;
+1	868	3209
+3	1601	3214
+4	938	3217
+5	12	3220
+\.
+
+
+--
+-- Data for Name: climber; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+--
+
+COPY public.climber (id, name, nickname, country_id, dob, sex, description, added_at) FROM stdin;
+199	Sergey Shaferov	Sergei Shaferov	34	1981-02-21	male	\N	2023-08-08
+203	Felipe Hoo	\N	29	\N	male	\N	2023-08-08
+205	Magnus Midtböe	Magnus Mitboe	164	1988-09-18	male	\N	2023-08-08
+213	Neil Carlson	\N	74	\N	male	\N	2023-08-08
+214	Franco Cookson	\N	74	\N	male	\N	2023-08-08
+217	John Dunne	\N	74	\N	male	\N	2023-08-08
+218	Steve Dunning	\N	74	\N	male	\N	2023-08-08
+219	Neil Dyer	\N	74	\N	male	\N	2023-08-08
+221	John Gaskins	\N	74	\N	male	\N	2023-08-08
+223	Steve Haston	\N	74	\N	male	\N	2023-08-08
+224	Josh Ibbertson	\N	74	\N	male	\N	2023-08-08
+227	Hamish Mc Arthur	\N	74	\N	male	\N	2023-08-08
+228	Steve Mc Clure	Steve Mcclure	74	1970-07-25	male	\N	2023-08-08
+229	James McHaffie	\N	74	\N	male	\N	2023-08-08
+230	Dave Mac Leod	Dave Mcleod	74	\N	male	\N	2023-08-08
+231	Ben Moon	\N	74	1966-06-13	male	\N	2023-08-08
+233	Ryan Pasquill	\N	74	\N	male	\N	2023-08-08
+235	Toby Roberts	\N	74	\N	male	\N	2023-08-08
+236	Pete Robin	\N	74	\N	male	\N	2023-08-08
+237	Richard Simpson	\N	74	1983-08-02	male	\N	2023-08-08
+238	Malcolm Smith	Malcom Smith	74	1973-10-27	male	\N	2023-08-08
+240	Stewart Watson	\N	74	\N	male	\N	2023-08-08
+241	Mathew Wright	\N	74	\N	male	\N	2023-08-08
+247	Adam Mach	\N	176	\N	male	\N	2023-08-08
+253	Adam Pustelnik	\N	176	1982-05-01	male	\N	2023-08-08
+256	Piotr Schab	\N	176	1996-08-26	male	\N	2023-08-08
+283	Alex Rubstov	\N	188	\N	male	\N	2023-08-08
+303	Domen Skofic	\N	197	1994-04-11	male	\N	2023-08-08
+314	Thomas Blaabjerg	\N	56	\N	male	\N	2023-08-08
+328	Sascha Lehmann	\N	41	\N	male	\N	2023-08-08
+331	Fred Nicole	\N	41	1970-05-21	male	\N	2023-08-08
+333	Alexander Rohr	\N	41	1995-11-29	male	\N	2023-08-08
+335	Jonas Schild	\N	41	\N	male	\N	2023-08-08
+337	Simon Wandeler	\N	41	1974-09-28	male	\N	2023-08-08
+338	Daniel Winkler	\N	41	\N	male	\N	2023-08-08
+340	José Agusti	\N	65	\N	male	\N	2023-08-08
+385	Diego Fourbet	\N	72	\N	male	\N	2023-08-08
+386	Olivier Fourbet	\N	72	\N	male	\N	2023-08-08
+389	Edwin Gaufres	\N	72	\N	male	\N	2023-08-08
+393	Benjamin Guigonnet	\N	72	\N	male	\N	2023-08-08
+395	Victor Guillermin	\N	72	\N	male	\N	2023-08-08
+396	Arthur Guinet	\N	72	\N	male	\N	2023-08-08
+400	Paul Jenft	\N	72	\N	male	\N	2023-08-08
+403	Tony Lamiche	\N	72	1977-07-05	male	\N	2023-08-08
+406	Pierre Le Cerf	\N	72	2000-03-12	male	\N	2023-08-08
+12	Sasha Di Giulian	\N	228	1992-10-23	female	\N	2023-08-08
+92	Mauro Calibani	\N	108	1974-05-10	male	\N	2023-08-08
+53	Ashima Shiraishi	\N	228	2001-04-03	female	\N	2023-08-08
+104	Gabriele Gorobey	\N	108	1986-12-15	male	\N	2023-08-08
+126	Laura Rogora	\N	108	\N	female	\N	2023-08-08
+191	Thomas Salakenos	\N	20	1994-06-03	male	\N	2023-08-08
+196	Santiago De Alba	\N	154	1992-06-22	male	\N	2023-08-08
+200	Josh Cornah	\N	168	2000-06-22	male	\N	2023-08-08
+201	Felipe Camargo	\N	29	1991-04-27	male	\N	2023-08-08
+202	Cesar Grosso	\N	29	1984-04-05	male	\N	2023-08-08
+204	Lucas Marques	\N	29	1981-09-29	male	\N	2023-08-08
+209	Alex Barrows	\N	74	1987-02-25	male	\N	2023-08-08
+210	Tom Bolger	\N	74	1988-01-22	male	\N	2023-08-08
+211	William Bosi	\N	74	1998-12-27	male	\N	2023-08-08
+215	Luke Dawson	\N	74	1996-05-18	male	\N	2023-08-08
+216	Peter Dawson	\N	74	1998-07-05	male	\N	2023-08-08
+222	Mike Hart	\N	74	1991-07-05	male	\N	2023-08-08
+225	Stuart Littlefair	\N	74	1976-07-06	male	\N	2023-08-08
+226	Buster Martin	\N	74	1996-07-21	male	\N	2023-08-08
+232	Jack Palmieri	\N	74	1984-11-20	male	\N	2023-08-08
+234	James Pearson	\N	74	1985-12-15	male	\N	2023-08-08
+242	Adrian Chmiala	\N	176	1996-02-23	male	\N	2023-08-08
+243	Lukasz Dudek	\N	176	1983-12-02	male	\N	2023-08-08
+277	Tomas Ravanal	\N	44	1984-12-10	male	\N	2023-08-08
+295	Martin Bergant	\N	197	1981-06-08	male	\N	2023-08-08
+296	Jakob Bizjak	\N	197	1991-11-14	male	\N	2023-08-08
+299	Jernej Kruder	\N	197	1990-12-05	male	\N	2023-08-08
+306	Gregor Vezonik	\N	197	1995-06-07	male	\N	2023-08-08
+324	David Hohl	\N	41	1969-09-29	male	\N	2023-08-08
+332	Samuel Ometz	\N	41	1995-07-22	male	\N	2023-08-08
+339	Andy Winterleitner	\N	41	1989-04-06	male	\N	2023-08-08
+10	Paige Claassen	\N	228	1990-06-13	female	\N	2023-08-08
+22	Margo Hayes	\N	228	1998-02-11	female	\N	2023-08-08
+80	Angie Scarth Johnson	\N	14	2004-05-20	female	\N	2023-08-08
+5	Dylan Barks	\N	228	1995-01-20	male	\N	2023-08-08
+114	Gabriele Moroni	\N	108	1987-09-20	male	\N	2023-08-08
+116	Simone Pedeferri	\N	108	\N	male	\N	2023-08-08
+136	Gianluca Vighetti	\N	108	2008-09-17	male	\N	2023-08-08
+124	Silvio Reffo	\N	108	1990-04-05	male	\N	2023-08-08
+133	Mauro Sormani	\N	108	\N	male	\N	2023-08-08
+293	Anghelo Bernal	\N	47	1990-05-15	male	\N	2023-08-08
+312	Erik Grandelius	\N	194	1990-12-04	male	\N	2023-08-08
+310	Sangwon Son	\N	120	1982-07-20	male	\N	2023-08-08
+321	Dylan Chuat	\N	41	2000-12-13	male	\N	2023-08-08
+329	Marco Müller	\N	41	1996-06-26	male	\N	2023-08-08
+298	Jure Golob	\N	197	\N	male	\N	2023-08-08
+157	Beat Kammerlander	\N	13	1959-04-14	male	\N	2023-08-08
+139	Andrea Zanone	\N	108	1992-11-08	male	\N	2023-08-08
+144	Clemens Berger	\N	13	1998-03-14	male	\N	2023-08-08
+177	Akito Matshusima	\N	112	\N	male	\N	2023-08-08
+169	Jakob Schubert	\N	13	1990-12-31	male	\N	2023-08-08
+151	Berni Fiedler	\N	13	\N	male	\N	2023-08-08
+173	Sachi Amma	\N	112	1989-01-01	male	\N	2023-08-08
+152	Kilian Fischhuber	Kilian Fishhuber	13	1983-08-01	male	\N	2023-08-08
+163	Klem Loskot	\N	13	1974-05-11	male	\N	2023-08-08
+182	Koen Baekelandt	\N	20	\N	male	\N	2023-08-08
+183	Sébastien Berthe	\N	20	\N	male	\N	2023-08-08
+184	Jérome de Boeck	\N	20	\N	male	\N	2023-08-08
+176	Daï Koyamada	Dai Koyamada	112	1976-08-23	male	\N	2023-08-08
+179	Shoda Shinichi	\N	112	\N	male	\N	2023-08-08
+189	Simon Lorenzi	\N	20	\N	male	\N	2023-08-08
+187	Antoine Kauffmann	\N	20	\N	male	\N	2023-08-08
+170	Andreas Spitaler	\N	13	1990-10-20	male	\N	2023-08-08
+267	Ben Harnden	\N	36	\N	male	\N	2023-08-08
+180	Yamada Wataru	\N	112	1984-10-01	male	\N	2023-08-08
+186	Stephane Hanssens	\N	20	1986-07-18	male	\N	2023-08-08
+175	Mei Kotake	\N	112	1997-05-18	female	\N	2023-08-08
+178	Toru Nakajima	\N	112	1993-09-17	male	\N	2023-08-08
+192	Muriel Sarkany	\N	20	1974-08-05	female	\N	2023-08-08
+193	Loïc Timmermans	\N	20	1995-04-08	male	\N	2023-08-08
+249	Kinga Ociepka-Grzegulska 	\N	176	\N	female	\N	2023-08-08
+252	Wojtek Pełka	\N	176	1999-07-22	male	\N	2023-08-08
+250	Tomasz Oleksy	\N	176	1976-09-14	male	\N	2023-08-08
+207	Thilo Schröter	\N	164	1996-01-02	male	\N	2023-08-08
+251	Kajtek Pawelec	\N	176	1994-12-04	male	\N	2023-08-08
+194	Micha Vanhoudt 	\N	20	1995-06-28	male	\N	2023-08-08
+198	Mauricio Huerta	\N	154	1989-03-16	male	\N	2023-08-08
+212	Jordan Buys	\N	74	\N	male	\N	2023-08-08
+244	Kamil Ferenc	\N	176	\N	male	\N	2023-08-08
+245	Mateusz Haladaj	\N	176	1985-10-17	male	\N	2023-08-08
+248	Rafel Moucka	\N	176	\N	male	\N	2023-08-08
+254	Alex Raczynski	\N	176	\N	male	\N	2023-08-08
+197	Hernan Garcia	\N	154	1982-09-08	male	\N	2023-08-08
+206	Sindre Saether	\N	164	1985-11-21	male	\N	2023-08-08
+208	Henning Wang	\N	164	1984-07-11	male	\N	2023-08-08
+246	Michal Jaworski	\N	176	1985-04-21	male	\N	2023-08-08
+264	André Neres	\N	181	1985-09-08	male	\N	2023-08-08
+271	Elan Jonas Mcrae	\N	36	1995-03-17	male	\N	2023-08-08
+257	Jedrzej Wilczynski	\N	176	1974-05-04	male	\N	2023-08-08
+259	Ivaylo Krastev	\N	22	\N	male	\N	2023-08-08
+260	Ivaylo Fazata Radkov	\N	22	\N	male	\N	2023-08-08
+263	Leopoldo Faria	\N	181	\N	male	\N	2023-08-08
+273	Lev Pinter	\N	36	\N	male	\N	2023-08-08
+255	Bogdan Rokosz	\N	176	1972-08-11	male	\N	2023-08-08
+258	Marcin Wszolek	\N	176	1984-07-05	male	\N	2023-08-08
+261	Niki Rusev	\N	22	2006-02-01	male	\N	2023-08-08
+269	JJ Mah	\N	36	1989-01-06	male	\N	2023-08-08
+262	Aleksandra Totkova	Alex Totkova	22	2005-01-29	female	\N	2023-08-08
+168	Matthias Schiestl	\N	13	\N	male	\N	2023-08-08
+397	Benoit Heintz	\N	72	1984-11-14	male	\N	2023-08-08
+402	Thibault Lair	\N	72	1992-10-10	male	\N	2023-08-08
+405	Guillaume Lebret	\N	72	1985-11-05	male	\N	2023-08-08
+388	Michaël Fuselier	\N	72	\N	male	\N	2023-08-08
+600	Eder Lomba	\N	65	\N	male	\N	2023-08-12
+603	Ekaitz Maiz	\N	65	\N	male	\N	2023-08-12
+604	Pau March	\N	65	\N	male	\N	2023-08-12
+607	Unai Mendia	\N	65	\N	male	\N	2023-08-12
+609	Ignacio Mulero	\N	65	\N	male	\N	2023-08-12
+268	Evan Hau	\N	36	\N	male	\N	2023-08-08
+270	Sean McColl	Sean Mccoll	36	1987-09-03	male	\N	2023-08-08
+272	Josh Muller	\N	36	\N	male	\N	2023-08-08
+149	Angela Eiter	\N	13	1986-01-24	female	\N	2023-08-08
+156	Eva Hammelmüller	\N	13	\N	female	\N	2023-08-08
+172	Barbara Zangerl	\N	13	\N	female	\N	2023-08-08
+195	Anak Verhoeven	\N	20	1996-07-15	female	\N	2023-08-08
+220	Hazel Findlay	\N	74	\N	female	\N	2023-08-08
+239	Emma Twyford	\N	74	\N	female	\N	2023-08-08
+266	Robert Girard	\N	36	\N	male	\N	2023-08-08
+614	Ricardo Otegui	\N	65	\N	male	\N	2023-08-12
+165	Mathias Posch	\N	13	1999-07-24	male	\N	2023-08-08
+166	Christof Rauch	\N	13	1994-05-13	male	\N	2023-08-08
+167	Stefan Scherz	\N	13	2001-07-11	male	\N	2023-08-08
+616	Juantxo Pons	\N	65	\N	male	\N	2023-08-12
+171	Roland Wagner	\N	13	1979-12-06	male	\N	2023-08-08
+174	Yuji Hirayama	Yuri	112	1969-01-01	male	\N	2023-08-08
+181	Nigel Armino	\N	20	1998-09-02	male	\N	2023-08-08
+185	Nicolas Favresse	\N	20	1980-04-07	male	\N	2023-08-08
+188	Sven Lempereur	\N	20	1999-01-28	male	\N	2023-08-08
+190	Mathieu Pauwels	\N	20	1991-07-27	male	\N	2023-08-08
+265	Miles Adamson	\N	36	1993-08-20	male	\N	2023-08-08
+618	Iker Pou	\N	65	1977-02-05	male	\N	2023-08-12
+619	Armando Raya	\N	65	\N	male	\N	2023-08-12
+623	Gerard Rull	\N	65	\N	male	\N	2023-08-12
+624	Nacho Sanchez	\N	65	\N	male	\N	2023-08-12
+626	Josema Urrestarazu	\N	65	\N	male	\N	2023-08-12
+591	Carlos Jimenez Munoz	\N	65	1976-04-29	male	\N	2023-08-12
+631	Antton Zabala	\N	65	\N	male	\N	2023-08-12
+630	Sergio Verdasco	\N	65	1996-01-17	male	\N	2023-08-12
+597	Mikel Linacisoro	\N	65	2000-07-16	male	\N	2023-08-12
+599	Tino Lois	\N	65	1978-08-30	male	\N	2023-08-12
+601	Erik Lopez	\N	65	1991-01-01	male	\N	2023-08-12
+606	Iris Matamoros Quero	\N	65	1980-09-22	male	\N	2023-08-12
+611	Pablo Ochoa	\N	65	1982-07-16	male	\N	2023-08-12
+613	Iker Ortiz	\N	65	1999-11-18	male	\N	2023-08-12
+620	Alberto Rocasolano	\N	65	1991-10-19	male	\N	2023-08-12
+621	Luis Rodriguez Martin	\N	65	1988-10-19	male	\N	2023-08-12
+627	Martin Urrutia	\N	65	1999-12-12	male	\N	2023-08-12
+629	Alex Ventajas	\N	65	1999-07-28	male	\N	2023-08-12
+632	Mikel Ziarrusta	\N	65	1985-08-20	male	\N	2023-08-12
+284	Dmitrii Sharafutdinov	\N	188	1986-09-16	male	\N	2023-08-08
+279	Dinara Fakhritdinova	\N	188	\N	female	\N	2023-08-08
+280	Dmitrii Fakirianov	\N	188	1994-11-18	male	\N	2023-08-08
+274	Sonnie Trotter	\N	36	1979-11-15	male	\N	2023-08-08
+285	Vladislav Shevchenko 	\N	188	1998-07-30	male	\N	2023-08-08
+276	Facundo Langbehn	\N	44	\N	male	\N	2023-08-08
+281	Rustam Gelmanov	\N	188	1987-12-06	male	\N	2023-08-08
+278	Mikhail Chernikov	\N	188	1985-03-21	male	\N	2023-08-08
+289	Weichang Xie	Weicheng "Acheng" Xie	46	\N	male	\N	2023-08-08
+287	Haibin Qu	\N	46	\N	male	\N	2023-08-08
+288	Qinghua Wang	\N	46	\N	male	\N	2023-08-08
+286	Vadim Timonov	\N	188	1992-11-06	male	\N	2023-08-08
+313	Matilda Söderlund	\N	194	1992-05-21	female	\N	2023-08-08
+300	Mina Markovic	\N	197	\N	female	\N	2023-08-08
+302	Gaper Pintar	\N	197	1994-02-19	male	\N	2023-08-08
+399	Nico Januel	\N	72	\N	male	\N	2023-08-08
+305	Jaka Šprah	\N	197	1999-01-16	male	\N	2023-08-08
+307	Matjaz Zorko	\N	197	1992-07-07	male	\N	2023-08-08
+294	Klemen Becan	\N	197	1982-08-14	male	\N	2023-08-08
+301	Uros Perko	\N	197	\N	male	\N	2023-08-08
+304	Matej Sova	\N	197	\N	male	\N	2023-08-08
+308	Hyunbin Min	\N	120	\N	male	\N	2023-08-08
+311	Said Belhaj	\N	194	1981-06-19	male	\N	2023-08-08
+315	Patrik Aufdenblatten 	\N	41	\N	male	\N	2023-08-08
+316	Dani Benz	\N	41	\N	male	\N	2023-08-08
+317	Cedric Bersandi	\N	41	\N	male	\N	2023-08-08
+290	Stefan Bednar	\N	199	1990-03-09	male	\N	2023-08-08
+291	Michal Mikusinec	\N	199	2001-08-07	male	\N	2023-08-08
+292	Juraj Repcik	\N	199	1978-10-02	male	\N	2023-08-08
+309	Chaehyeon Seo	\N	120	2003-11-01	female	\N	2023-08-08
+346	Jakub Konecny	\N	53	\N	male	\N	2023-08-08
+347	Tomasz Mrazek	Thomasz Mrazek	53	\N	male	\N	2023-08-08
+348	Adam Ondra	\N	53	1993-02-05	male	\N	2023-08-08
+349	Anthony Gullsten	\N	67	\N	male	\N	2023-08-08
+350	Nalle Hukkataival	\N	67	1986-09-08	male	\N	2023-08-08
+353	Kévin Aglaé	Kevin Aglae	72	1991-01-19	male	\N	2023-08-08
+354	Kevin Arc	\N	72	\N	male	\N	2023-08-08
+355	Axel Ballay	\N	72	\N	male	\N	2023-08-08
+356	Thomas Ballet	\N	72	\N	male	\N	2023-08-08
+359	Pierre Bollinger	\N	72	\N	male	\N	2023-08-08
+360	Jérémy Bonder	\N	72	\N	male	\N	2023-08-08
+362	Sébastien Bouin	\N	72	\N	male	\N	2023-08-08
+363	Sébastien Boussogne	\N	72	\N	male	\N	2023-08-08
+364	Jean Pierre Bouvier	\N	72	1957-05-06	male	\N	2023-08-08
+398	Manon Hily	\N	72	1994-01-24	female	\N	2023-08-08
+318	Hanspeter Bodmer	\N	41	\N	male	\N	2023-08-08
+326	Matthias König	\N	41	\N	male	\N	2023-08-08
+327	Cédric Lachat	\N	41	1984-08-17	male	\N	2023-08-08
+330	François Nicole	Francois Nicole	41	\N	male	\N	2023-08-08
+297	Janja Garnbret	\N	197	\N	female	\N	2023-08-08
+334	Stephan Schibli	\N	41	1971-12-21	male	\N	2023-08-08
+343	Ella Adamovska	\N	53	\N	female	\N	2023-08-08
+368	Julia Chanourdie	\N	72	\N	female	\N	2023-08-08
+342	Dani Andrada	\N	65	1975-07-15	male	\N	2023-08-08
+408	Mélissa Le Nevé	\N	72	\N	female	\N	2023-08-08
+387	Joshua Fourteau	\N	72	\N	male	\N	2023-08-08
+344	Ondrej Benes	\N	53	\N	male	\N	2023-08-08
+351	Tomi Nytorp	\N	67	\N	male	\N	2023-08-08
+357	Rémy Bergasse	\N	72	1986-11-01	male	\N	2023-08-08
+319	Giuliano Cameroni	\N	41	1997-05-11	male	\N	2023-08-08
+322	Nils Favre	\N	41	1991-12-02	male	\N	2023-08-08
+323	Obed Hardmeier	\N	41	1994-07-25	male	\N	2023-08-08
+325	Mathieu Holtz	\N	41	1986-03-07	male	\N	2023-08-08
+320	Katherine Choong	\N	41	1992-01-01	female	\N	2023-08-08
+366	Alex Chabot	\N	72	1981-12-27	male	\N	2023-08-08
+369	Quentin Chastagnier	\N	72	\N	male	\N	2023-08-08
+374	Esteban Daligault	\N	72	\N	male	\N	2023-08-08
+361	Anatole Bosio	\N	72	1988-03-10	male	\N	2023-08-08
+275	Darius Rapa	\N	186	2006-02-18	male	\N	2023-08-08
+379	Baptiste Dherbilly	\N	72	1993-05-26	male	\N	2023-08-08
+375	Titouan Dechamboux	\N	72	\N	male	\N	2023-08-08
+376	Geoffray de Flaugergues	Geoffray Flauvergues	72	1995-03-23	male	\N	2023-08-08
+382	Pierre Duroché	Pierre Duroche	72	\N	male	\N	2023-08-08
+345	Petr Blaha	\N	53	1976-05-31	male	\N	2023-08-08
+367	Killian Chabrier	\N	72	1999-04-26	male	\N	2023-08-08
+282	Sasha Gerzha	\N	188	1991-11-05	female	\N	2023-08-08
+341	Mar Alvarez	\N	65	1980-05-26	female	\N	2023-08-08
+352	Mümin Karabas	\N	220	1982-07-08	male	\N	2023-08-08
+365	Mathieu Bouyoud	Matthieu Bouyoud	72	1989-10-09	male	\N	2023-08-08
+370	Maxime Clerc	\N	72	1986-03-30	male	\N	2023-08-08
+372	Camille Coudert	\N	72	1995-08-12	male	\N	2023-08-08
+371	Manu Cornu	\N	72	1993-11-26	male	\N	2023-08-08
+373	Jean Elie Crestin Billet	\N	72	1990-04-10	male	\N	2023-08-08
+358	Nolwen Berthier	\N	72	1993-08-16	female	\N	2023-08-08
+381	Charlotte Durif	\N	72	1990-08-18	female	\N	2023-08-08
+377	Théo Denier	\N	72	1985-07-27	male	\N	2023-08-08
+378	Romain Desgranges	\N	72	1982-10-12	male	\N	2023-08-08
+380	Alizée Dufraisse	\N	72	1987-06-13	female	\N	2023-08-08
+383	Arsène Duval	\N	72	\N	male	\N	2023-08-08
+384	Loic Fossard	\N	72	\N	male	\N	2023-08-08
+390	Yannis Gautier	\N	72	\N	male	\N	2023-08-08
+391	Romaric Geffroy	\N	72	\N	male	\N	2023-08-08
+392	Yann Ghesquiers	\N	72	\N	male	\N	2023-08-08
+394	Johann Guillaume	\N	72	\N	male	\N	2023-08-08
+401	Louna Ladevant	\N	72	\N	male	\N	2023-08-08
+404	Fabrice Landry	\N	72	\N	male	\N	2023-08-08
+407	François Legrand	\N	72	1970-03-26	male	\N	2023-08-08
+633	dummy	\N	228	1998-10-31	male	\N	2023-08-23
+409	Alban Levier	\N	72	\N	male	\N	2023-08-08
+423	Brendan Pacquentin	\N	72	\N	male	\N	2023-08-08
+411	Cédric Lo Piccolo	Cedric Lo Piccolo	72	1982-06-05	male	\N	2023-08-08
+414	Tanguy Mérard	\N	72	\N	male	\N	2023-08-08
+431	Fred Rouhling	\N	72	1970-01-24	male	\N	2023-08-08
+434	Majdi Schalck	\N	72	\N	male	\N	2023-08-08
+436	Greg Sobczak	\N	72	1968-01-25	male	\N	2023-08-08
+438	Pierre Soulé	\N	72	\N	male	\N	2023-08-08
+440	Arthur Ternant	\N	72	\N	male	\N	2023-08-08
+442	Pierre Trolliet	\N	72	\N	male	\N	2023-08-08
+443	Christophe Zehani	\N	72	1974-06-29	male	\N	2023-08-08
+415	Sylvain Millet	\N	72	1978-04-16	male	\N	2023-08-08
+413	Hugo Meignan	\N	72	1995-12-22	male	\N	2023-08-08
+425	Hugo Parmentier	\N	72	1998-06-07	male	\N	2023-08-08
+426	Nicolas Pelorson	\N	72	1997-06-10	male	\N	2023-08-08
+416	Nao Monchois	\N	72	\N	male	\N	2023-08-08
+417	Soeren Montigny	\N	72	\N	male	\N	2023-08-08
+419	Noé Moutault	\N	72	\N	male	\N	2023-08-08
+421	Enzo Oddo	\N	72	\N	male	\N	2023-08-08
+424	Aurélien Païs	\N	72	\N	male	\N	2023-08-08
+429	Gérome Pouvreau	Gerome Pouvreau	72	\N	male	\N	2023-08-08
+430	Manu Romain	\N	72	\N	male	\N	2023-08-08
+433	Joseph Savarino	\N	72	\N	male	\N	2023-08-08
+437	Mattéo Soulé	\N	72	\N	male	\N	2023-08-08
+412	Lucien Martinez	\N	72	1993-02-11	male	\N	2023-08-08
+418	Elie Morieux	\N	72	1992-03-08	male	\N	2023-08-08
+420	Romain Noulette	\N	72	1996-03-14	male	\N	2023-08-08
+422	Roch Oddo	\N	72	1994-01-04	male	\N	2023-08-08
+427	Eloi Peretti	\N	72	1999-01-26	male	\N	2023-08-08
+435	Romain Schieber	\N	72	1985-02-05	male	\N	2023-08-08
+432	Rémi Samyn	\N	72	\N	male	\N	2023-08-08
+410	Manu Lopez	\N	72	1988-05-23	male	\N	2023-08-08
+428	Florence Pinet	\N	72	\N	female	\N	2023-08-08
+444	Loïc Zehani	Loic Zehani	72	2001-12-05	male	\N	2023-08-08
+439	Gautier Supper	\N	72	1990-10-01	male	\N	2023-08-08
+441	Mathieu Ternant	\N	72	1996-01-01	male	\N	2023-08-08
+445	Illya Bakhmet-Smolenskyi	\N	225	2005-02-07	male	\N	2023-08-08
+447	Fedir Samoilov	\N	225	1997-04-25	male	\N	2023-08-08
+448	Thanasis Htenas	\N	86	1979-12-06	male	\N	2023-08-08
+446	Nika Potapova	\N	225	2003-02-21	female	\N	2023-08-08
+622	Carlos Ruano	\N	65	1980-05-26	male	\N	2023-08-12
+587	Jonathan Guadalcazar	\N	65	1993-11-17	male	\N	2023-08-12
+574	Jorge Diaz Rullo	\N	65	1999-10-01	male	\N	2023-08-12
+579	Jonatan Flor	\N	65	1996-08-20	male	\N	2023-08-12
+580	Daniel Fuertes	Daniel-fuertes - Escalade9	65	1980-10-03	male	\N	2023-08-12
+581	Enrique Gallardo	\N	65	\N	male	\N	2023-08-12
+588	Alex Hernandez	\N	65	1998-05-28	male	\N	2023-08-12
+589	Ivan Hernandez	\N	65	1973-06-03	male	\N	2023-08-12
+602	Christian Lupion	\N	65	\N	male	\N	2023-08-12
+605	Edu Marin	\N	65	1985-01-01	male	\N	2023-08-12
+610	Jesus Munz Vaquero	\N	65	\N	male	\N	2023-08-12
+612	José Luis Olivares Ferrandiz	\N	65	\N	male	\N	2023-08-12
+615	José Luis Palao	\N	65	\N	male	\N	2023-08-12
+617	Pedro Pons	\N	65	\N	male	\N	2023-08-12
+628	Patxi Usobiaga	\N	65	1980-09-07	male	\N	2023-08-12
+568	Pablo Barbero	\N	65	1981-04-20	male	\N	2023-08-12
+571	Lucas de Jesus Martin	\N	65	1996-05-23	male	\N	2023-08-12
+583	David Gambus	\N	65	1984-09-18	male	\N	2023-08-12
+625	Ion Sard	\N	65	\N	\N	\N	2023-08-12
+585	Alberto Gines Lopez	\N	65	2002-10-23	male	\N	2023-08-12
+2	Jorg Verhoeven	\N	163	1985-06-05	male	\N	2023-08-08
+3	Mark Anderson	\N	228	\N	male	\N	2023-08-08
+6	Dalton Bunker	\N	228	\N	male	\N	2023-08-08
+7	Tommy Caldwell	\N	228	1978-08-11	male	\N	2023-08-08
+9	Tristan Chen	\N	228	\N	male	\N	2023-08-08
+16	Harry Edwards	\N	228	\N	male	\N	2023-08-08
+17	Samuel Elias	\N	228	\N	male	\N	2023-08-08
+19	Mike Fultz	\N	228	\N	male	\N	2023-08-08
+20	Dave Graham	\N	228	1981-11-10	male	\N	2023-08-08
+21	Ben Hanna	\N	228	\N	male	\N	2023-08-08
+23	Connor Herson	\N	228	\N	male	\N	2023-08-08
+24	Matty Hong	\N	228	1991-09-14	male	\N	2023-08-08
+26	Cameron Hörst	\N	228	\N	male	\N	2023-08-08
+27	Kevin Jorgeson	\N	228	\N	male	\N	2023-08-08
+30	Jason Kehl	\N	228	\N	male	\N	2023-08-08
+31	Joe Kinder	\N	228	1980-04-12	male	\N	2023-08-08
+32	Steve Lapen	\N	228	\N	male	\N	2023-08-08
+34	Kai Lightner	\N	228	\N	male	\N	2023-08-08
+35	James Litz	\N	228	\N	male	\N	2023-08-08
+36	Dru Mack	\N	228	\N	male	\N	2023-08-08
+40	Graham Owens	\N	228	\N	male	\N	2023-08-08
+42	Luke Parady	\N	228	\N	male	\N	2023-08-08
+43	Guido Princess	\N	228	\N	male	\N	2023-08-08
+44	Ethan Pringle	\N	228	1986-05-30	male	\N	2023-08-08
+47	Andy Reather	\N	228	\N	male	\N	2023-08-08
+49	Cody Roth	\N	228	\N	male	\N	2023-08-08
+608	Daniel Moreno	\N	65	1987-12-08	male	\N	2023-08-12
+8	Jon Cardwell	\N	228	1989-03-12	male	\N	2023-08-08
+11	Nathaniel Coleman	\N	228	1997-01-01	male	\N	2023-08-08
+13	Ian Dory	\N	228	1990-07-14	male	\N	2023-08-08
+14	Colin Duffy	\N	228	2003-12-10	male	\N	2023-08-08
+15	Nick Duttle	\N	228	1981-03-18	male	\N	2023-08-08
+18	Mike Foley	\N	228	1990-07-02	male	\N	2023-08-08
+25	Alex Honnold	\N	228	1985-08-17	male	\N	2023-08-08
+28	Peter Kamitses	\N	228	1976-03-16	male	\N	2023-08-08
+29	Timothy Kang	\N	228	1999-03-31	male	\N	2023-08-08
+33	Palmer Larsen	\N	228	1995-09-10	male	\N	2023-08-08
+37	Christophe Maschelein	\N	228	1980-05-22	male	\N	2023-08-08
+38	Nicholas Milburn	\N	228	1995-02-28	male	\N	2023-08-08
+39	Dan Mirsky	\N	228	1982-08-10	male	\N	2023-08-08
+41	Andrew Palmer	\N	228	1987-05-30	male	\N	2023-08-08
+45	Austin Purdy	\N	228	1997-09-01	male	\N	2023-08-08
+46	Shawn Raboutou	\N	228	1998-04-19	male	\N	2023-08-08
+48	Paul Robinson	\N	228	1987-08-28	male	\N	2023-08-08
+572	Kymy De La Pena	\N	65	1985-08-30	male	\N	2023-08-12
+575	Rafa Fanega	\N	65	1975-01-23	male	\N	2023-08-12
+567	Iker Arroitajauregi	\N	65	\N	male	\N	2023-08-12
+573	Ruben Diaz	\N	65	\N	male	\N	2023-08-12
+576	Luis Alfonso Félix	\N	65	\N	male	\N	2023-08-12
+578	Bernabe Fernandez	\N	65	\N	male	\N	2023-08-12
+584	Alex Garriga	\N	65	1998-12-05	male	\N	2023-08-12
+577	Ana Belen Argudo	\N	65	2002-04-01	female	\N	2023-08-12
+570	Pedro Bergua	\N	65	1981-02-25	male	\N	2023-08-12
+569	Josune Bereziartu	\N	65	1972-01-19	female	\N	2023-08-12
+582	Pau Galofré	\N	65	1999-03-04	male	\N	2023-08-12
+566	Inaki Arantzamendi	\N	65	1988-10-29	male	\N	2023-08-12
+590	Marcos Jimenez	\N	65	1990-10-26	male	\N	2023-08-12
+586	Xavi Gonzalez Martorell	\N	65	\N	male	\N	2023-08-12
+592	Ramon Julian	\N	65	1981-11-09	male	\N	2023-08-12
+593	Gorka Karapeto	\N	65	\N	male	\N	2023-08-12
+594	Iban Larrion	\N	65	\N	male	\N	2023-08-12
+595	Gonzalo Larrocha	\N	65	1984-08-20	male	\N	2023-08-12
+596	Ander Lasagabaster	\N	65	\N	male	\N	2023-08-12
+598	Jaume Llobeta Serra	\N	65	\N	male	\N	2023-08-12
+50	Drew Ruana	\N	228	\N	male	\N	2023-08-08
+52	Chris Sharma	\N	228	1981-04-23	male	\N	2023-08-08
+54	Jonathan Siegrist	\N	228	1985-08-27	male	\N	2023-08-08
+56	Adam Stack	\N	228	\N	male	\N	2023-08-08
+58	Keenan Takahashi	\N	228	\N	male	\N	2023-08-08
+59	Eric Talmadge	\N	228	\N	male	\N	2023-08-08
+60	Adam Taylor	\N	228	\N	male	\N	2023-08-08
+63	Vadim Vinokur	\N	228	\N	male	\N	2023-08-08
+65	Vasya Vorotnikov	\N	228	1987-05-02	male	\N	2023-08-08
+67	Brad Weaver	\N	228	\N	male	\N	2023-08-08
+68	Jimmy Webb	\N	228	\N	male	\N	2023-08-08
+71	Milky Williams	\N	228	\N	male	\N	2023-08-08
+73	Micky Page	\N	100	\N	male	\N	2023-08-08
+76	Alex Khazanov 	\N	101	\N	male	\N	2023-08-08
+77	Benjamin Cossey	\N	14	\N	male	\N	2023-08-08
+79	Thomas O'Halloran	\N	14	\N	male	\N	2023-08-08
+82	Eric Albertini	\N	108	\N	male	\N	2023-08-08
+83	Luca Andreozzi	\N	108	\N	male	\N	2023-08-08
+85	Davide Bassatto	\N	108	\N	male	\N	2023-08-08
+86	Giorgio Bendazzoli	\N	108	\N	male	\N	2023-08-08
+90	Christian Brenna	\N	108	\N	male	\N	2023-08-08
+91	Marcello Bruccini	\N	108	\N	male	\N	2023-08-08
+94	Enrico Cassol	\N	108	\N	male	\N	2023-08-08
+95	Francesco Castellano	\N	108	\N	male	\N	2023-08-08
+96	Fabio De Cesero	\N	108	\N	male	\N	2023-08-08
+97	Mauro Dell'Antonia	\N	108	\N	male	\N	2023-08-08
+98	Gianni Duregato	Gianni Durageto	108	\N	male	\N	2023-08-08
+99	Alexander Feichter 	Alexander Feichter	108	\N	male	\N	2023-08-08
+101	Matteo Gambarro	\N	108	\N	male	\N	2023-08-08
+102	Stefano Ghisolfi	\N	108	1993-02-18	male	\N	2023-08-08
+103	Alberto Gnerro	\N	108	1969-07-26	male	\N	2023-08-08
+107	Dino Lagni	\N	108	\N	male	\N	2023-08-08
+108	Alessandro Lamberti	\N	108	1964-12-09	male	\N	2023-08-08
+110	Jacopo Larcher	\N	108	\N	male	\N	2023-08-08
+113	Rocco Micheletto	\N	108	\N	male	\N	2023-08-08
+118	Nicolas Pesaventi	\N	108	\N	male	\N	2023-08-08
+121	Giovanni Placci	\N	108	\N	male	\N	2023-08-08
+125	Bernardo Rivadossi	\N	108	\N	male	\N	2023-08-08
+131	Manfred Stuffer	\N	108	\N	male	\N	2023-08-08
+137	Alfredo Webber	\N	108	\N	male	\N	2023-08-08
+138	Maurizio Zanolla	\N	108	1958-02-16	male	\N	2023-08-08
+142	Alessandro Zeni	\N	108	\N	male	\N	2023-08-08
+145	Stefan Brunner	\N	13	\N	male	\N	2023-08-08
+146	Christoph Cepus	\N	13	\N	male	\N	2023-08-08
+148	Max Eder	\N	13	\N	male	\N	2023-08-08
+150	Nicolas Ferlitsch	\N	13	\N	male	\N	2023-08-08
+153	Stefen Fürst	\N	13	\N	male	\N	2023-08-08
+154	Louis Gundolf	\N	13	\N	male	\N	2023-08-08
+155	Markus Haid	\N	13	\N	male	\N	2023-08-08
+158	Thomas Katzlberger	\N	13	\N	male	\N	2023-08-08
+159	Jakob Kromberger	\N	13	\N	male	\N	2023-08-08
+160	Artur Kubista	Arthur Kubista	13	\N	male	\N	2023-08-08
+161	David Lama	\N	13	1990-08-04	male	\N	2023-08-08
+162	Mario Lechner	\N	13	\N	male	\N	2023-08-08
+1	Leto Cavé	\N	163	2002-08-18	male	\N	2023-08-08
+51	Ryan Sewell	\N	228	1990-09-23	male	\N	2023-08-08
+4	Sean Bailey	Steezy Bailey	228	1996-05-20	male	\N	2023-08-08
+55	Ben Spannuth	\N	228	1988-05-16	male	\N	2023-08-08
+57	Gabor Szekely	\N	228	1990-04-03	male	\N	2023-08-08
+61	BJ Tilden	\N	228	1980-11-30	male	\N	2023-08-08
+62	Carlo Traversi	\N	228	1988-06-05	male	\N	2023-08-08
+64	Bryce Viola	\N	228	1994-05-30	male	\N	2023-08-08
+66	Alex Waterhouse	\N	228	1997-04-09	male	\N	2023-08-08
+69	Owen Whaley	\N	228	2004-03-16	male	\N	2023-08-08
+70	Matt Wilder	\N	228	1979-03-26	male	\N	2023-08-08
+72	Daniel Woods	\N	228	1989-08-01	male	\N	2023-08-08
+74	Diego Marsella	\N	11	1971-11-12	male	\N	2023-08-08
+75	Danilo Pereyra	\N	11	1983-01-07	male	\N	2023-08-08
+78	James Kassay	\N	14	1985-02-24	male	\N	2023-08-08
+81	Chris Webb Parsons	\N	14	1985-02-04	male	\N	2023-08-08
+84	Luca Bana	\N	108	1998-01-03	male	\N	2023-08-08
+87	Luca Bertacco	\N	108	2000-10-31	male	\N	2023-08-08
+88	Lorenzo Bogliacino	\N	108	1997-01-13	male	\N	2023-08-08
+89	Marcello Bombardi	\N	108	1993-08-08	male	\N	2023-08-08
+93	Stefano Carnati	\N	108	1998-06-12	male	\N	2023-08-08
+100	Stefano Folgarait	\N	108	1997-06-28	male	\N	2023-08-08
+105	Alberto Gotta	\N	108	1992-07-17	male	\N	2023-08-08
+106	Elias Iagnemma	\N	108	1995-11-17	male	\N	2023-08-08
+109	Alessandro Larcher	\N	108	1999-10-04	male	\N	2023-08-08
+111	Luca Marzari	\N	108	1995-10-16	male	\N	2023-08-08
+112	Matteo Menardi	\N	108	1998-11-15	male	\N	2023-08-08
+115	Giuseppe Nolasco	\N	108	1984-06-24	male	\N	2023-08-08
+117	Fabrizio Peri	\N	108	1971-05-06	male	\N	2023-08-08
+119	Davide Picco	\N	108	1992-11-30	male	\N	2023-08-08
+120	Michael Piccolruaz	\N	108	1995-12-31	male	\N	2023-08-08
+122	Lorenzo Puri	\N	108	1994-11-28	male	\N	2023-08-08
+123	Pietro Radassao	\N	108	1995-12-28	male	\N	2023-08-08
+127	Rocco Romano	\N	108	1974-03-17	male	\N	2023-08-08
+128	Riccardo Scarian	\N	108	1968-06-30	male	\N	2023-08-08
+129	Stefan Scarperi	\N	108	1991-05-01	male	\N	2023-08-08
+130	Filip Schenk	\N	108	2000-02-01	male	\N	2023-08-08
+132	Emilio Silvaroli	\N	108	1999-09-04	male	\N	2023-08-08
+134	Giorgio Tomatis	\N	108	2003-03-11	male	\N	2023-08-08
+135	Pietro Vidi	\N	108	2002-12-09	male	\N	2023-08-08
+140	Marco Zanone	\N	108	1994-05-06	male	\N	2023-08-08
+141	Luca Zardini	\N	108	1972-08-04	male	\N	2023-08-08
+143	Markus Bendler	\N	13	1984-05-01	male	\N	2023-08-08
+147	Alfons Dornauer	\N	13	1993-11-15	male	\N	2023-08-08
+164	Thomas Neyer	\N	13	1987-09-28	male	\N	2023-08-08
+\.
+
+
+--
+-- Data for Name: climber_media; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.climber_media (id, climber_id, media_id) FROM stdin;
+1	633	3169
+31	348	1
+32	348	3209
+34	348	3214
+35	205	3217
+36	4	3220
+\.
+
+
+--
+-- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+--
+
+COPY public.country (id, name, iso_code, description) FROM stdin;
+1	Andorra	AD	\N
+2	United Arab Emirates	AE	\N
+3	Afghanistan	AF	\N
+4	Antigua and Barbuda	AG	\N
+5	Anguilla	AI	\N
+6	Albania	AL	\N
+7	Armenia	AM	\N
+8	Netherlands Antilles	AN	\N
+9	Angola	AO	\N
+10	Antarctica	AQ	\N
+11	Argentina	AR	\N
+12	American Samoa	AS	\N
+13	Austria	AT	\N
+14	Australia	AU	\N
+15	Aruba	AW	\N
+16	Azerbaijan	AZ	\N
+17	Bosnia and Herzegovina	BA	\N
+18	Barbados	BB	\N
+19	Bangladesh	BD	\N
+20	Belgium	BE	\N
+21	Burkina Faso	BF	\N
+22	Bulgaria	BG	\N
+23	Bahrain	BH	\N
+24	Burundi	BI	\N
+25	Benin	BJ	\N
+26	Bermuda	BM	\N
+27	Brunei	BN	\N
+28	Bolivia	BO	\N
+29	Brazil	BR	\N
+30	Bahamas	BS	\N
+31	Bhutan	BT	\N
+32	Bouvet Island	BV	\N
+33	Botswana	BW	\N
+34	Belarus	BY	\N
+35	Belize	BZ	\N
+36	Canada	CA	\N
+37	Cocos [Keeling] Islands	CC	\N
+38	Congo [DRC]	CD	\N
+39	Central African Republic	CF	\N
+40	Congo [Republic]	CG	\N
+41	Switzerland	CH	\N
+42	Côte d'Ivoire	CI	\N
+43	Cook Islands	CK	\N
+44	Chile	CL	\N
+45	Cameroon	CM	\N
+46	China	CN	\N
+47	Colombia	CO	\N
+48	Costa Rica	CR	\N
+49	Cuba	CU	\N
+50	Cape Verde	CV	\N
+51	Christmas Island	CX	\N
+52	Cyprus	CY	\N
+53	Czech Republic	CZ	\N
+54	Germany	DE	\N
+55	Djibouti	DJ	\N
+56	Denmark	DK	\N
+57	Dominica	DM	\N
+58	Dominican Republic	DO	\N
+59	Algeria	DZ	\N
+60	Ecuador	EC	\N
+61	Estonia	EE	\N
+62	Egypt	EG	\N
+63	Western Sahara	EH	\N
+64	Eritrea	ER	\N
+65	Spain	ES	\N
+66	Ethiopia	ET	\N
+67	Finland	FI	\N
+68	Fiji	FJ	\N
+69	Falkland Islands [Islas Malvinas]	FK	\N
+70	Micronesia	FM	\N
+71	Faroe Islands	FO	\N
+72	France	FR	\N
+73	Gabon	GA	\N
+74	United Kingdom	GB	\N
+75	Grenada	GD	\N
+76	Georgia	GE	\N
+77	French Guiana	GF	\N
+78	Guernsey	GG	\N
+79	Ghana	GH	\N
+80	Gibraltar	GI	\N
+81	Greenland	GL	\N
+82	Gambia	GM	\N
+83	Guinea	GN	\N
+84	Guadeloupe	GP	\N
+85	Equatorial Guinea	GQ	\N
+86	Greece	GR	\N
+87	South Georgia and the South Sandwich Islands	GS	\N
+88	Guatemala	GT	\N
+89	Guam	GU	\N
+90	Guinea-Bissau	GW	\N
+91	Guyana	GY	\N
+92	Gaza Strip	GZ	\N
+93	Hong Kong	HK	\N
+94	Heard Island and McDonald Islands	HM	\N
+95	Honduras	HN	\N
+96	Croatia	HR	\N
+97	Haiti	HT	\N
+98	Hungary	HU	\N
+99	Indonesia	ID	\N
+100	Ireland	IE	\N
+101	Israel	IL	\N
+102	Isle of Man	IM	\N
+103	India	IN	\N
+104	British Indian Ocean Territory	IO	\N
+105	Iraq	IQ	\N
+106	Iran	IR	\N
+107	Iceland	IS	\N
+108	Italy	IT	\N
+109	Jersey	JE	\N
+110	Jamaica	JM	\N
+111	Jordan	JO	\N
+112	Japan	JP	\N
+113	Kenya	KE	\N
+114	Kyrgyzstan	KG	\N
+115	Cambodia	KH	\N
+116	Kiribati	KI	\N
+117	Comoros	KM	\N
+118	Saint Kitts and Nevis	KN	\N
+119	North Korea	KP	\N
+120	South Korea	KR	\N
+121	Kuwait	KW	\N
+122	Cayman Islands	KY	\N
+123	Kazakhstan	KZ	\N
+124	Laos	LA	\N
+125	Lebanon	LB	\N
+126	Saint Lucia	LC	\N
+127	Liechtenstein	LI	\N
+128	Sri Lanka	LK	\N
+129	Liberia	LR	\N
+130	Lesotho	LS	\N
+131	Lithuania	LT	\N
+132	Luxembourg	LU	\N
+133	Latvia	LV	\N
+134	Libya	LY	\N
+135	Morocco	MA	\N
+136	Monaco	MC	\N
+137	Moldova	MD	\N
+138	Montenegro	ME	\N
+139	Madagascar	MG	\N
+140	Marshall Islands	MH	\N
+141	Macedonia [FYROM]	MK	\N
+142	Mali	ML	\N
+143	Myanmar [Burma]	MM	\N
+144	Mongolia	MN	\N
+145	Macau	MO	\N
+146	Northern Mariana Islands	MP	\N
+147	Martinique	MQ	\N
+148	Mauritania	MR	\N
+149	Montserrat	MS	\N
+150	Malta	MT	\N
+151	Mauritius	MU	\N
+152	Maldives	MV	\N
+153	Malawi	MW	\N
+154	Mexico	MX	\N
+155	Malaysia	MY	\N
+156	Mozambique	MZ	\N
+157	Namibia	NA	\N
+158	New Caledonia	NC	\N
+159	Niger	NE	\N
+160	Norfolk Island	NF	\N
+161	Nigeria	NG	\N
+162	Nicaragua	NI	\N
+163	Netherlands	NL	\N
+164	Norway	NO	\N
+165	Nepal	NP	\N
+166	Nauru	NR	\N
+167	Niue	NU	\N
+168	New Zealand	NZ	\N
+169	Oman	OM	\N
+170	Panama	PA	\N
+171	Peru	PE	\N
+172	French Polynesia	PF	\N
+173	Papua New Guinea	PG	\N
+174	Philippines	PH	\N
+175	Pakistan	PK	\N
+176	Poland	PL	\N
+177	Saint Pierre and Miquelon	PM	\N
+178	Pitcairn Islands	PN	\N
+179	Puerto Rico	PR	\N
+180	Palestinian Territories	PS	\N
+181	Portugal	PT	\N
+182	Palau	PW	\N
+183	Paraguay	PY	\N
+184	Qatar	QA	\N
+185	Réunion	RE	\N
+186	Romania	RO	\N
+187	Serbia	RS	\N
+188	Russia	RU	\N
+189	Rwanda	RW	\N
+190	Saudi Arabia	SA	\N
+191	Solomon Islands	SB	\N
+192	Seychelles	SC	\N
+193	Sudan	SD	\N
+194	Sweden	SE	\N
+195	Singapore	SG	\N
+196	Saint Helena	SH	\N
+197	Slovenia	SI	\N
+198	Svalbard and Jan Mayen	SJ	\N
+199	Slovakia	SK	\N
+200	Sierra Leone	SL	\N
+201	San Marino	SM	\N
+202	Senegal	SN	\N
+203	Somalia	SO	\N
+204	Suriname	SR	\N
+205	São Tomé and Príncipe	ST	\N
+206	El Salvador	SV	\N
+207	Syria	SY	\N
+208	Swaziland	SZ	\N
+209	Turks and Caicos Islands	TC	\N
+210	Chad	TD	\N
+211	French Southern Territories	TF	\N
+212	Togo	TG	\N
+213	Thailand	TH	\N
+214	Tajikistan	TJ	\N
+215	Tokelau	TK	\N
+216	Timor-Leste	TL	\N
+217	Turkmenistan	TM	\N
+218	Tunisia	TN	\N
+219	Tonga	TO	\N
+220	Turkey	TR	\N
+221	Trinidad and Tobago	TT	\N
+222	Tuvalu	TV	\N
+223	Taiwan	TW	\N
+224	Tanzania	TZ	\N
+225	Ukraine	UA	\N
+226	Uganda	UG	\N
+227	U.S. Minor Outlying Islands	UM	\N
+228	United States	US	\N
+229	Uruguay	UY	\N
+230	Uzbekistan	UZ	\N
+231	Vatican City	VA	\N
+232	Saint Vincent and the Grenadines	VC	\N
+233	Venezuela	VE	\N
+234	British Virgin Islands	VG	\N
+235	U.S. Virgin Islands	VI	\N
+236	Vietnam	VN	\N
+237	Vanuatu	VU	\N
+238	Wallis and Futuna	WF	\N
+239	Samoa	WS	\N
+240	Kosovo	XK	\N
+241	Yemen	YE	\N
+242	Mayotte	YT	\N
+243	South Africa	ZA	\N
+244	Zambia	ZM	\N
+245	Zimbabwe	ZW	\N
+\.
+
+
+--
+-- Data for Name: crag; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+--
+
+COPY public.crag (id, name, country_id, description, added_at) FROM stdin;
+1	Arco	108	\N	2023-08-08
+2	Nassereith	13	\N	2023-08-08
+194	Majorque	65	\N	2023-08-08
+4	Berglsteiner See 	13	\N	2023-08-08
+5	Achleiten	13	\N	2023-08-08
+6	Osp	197	\N	2023-08-08
+832	Futagoyama	112	\N	2023-08-08
+8	Grampians	14	\N	2023-08-08
+9	Rifle	228	\N	2023-08-08
+10	Ceüse	72	\N	2023-08-08
+445	Al Castello	108	\N	2023-08-08
+12	Ticino	41	\N	2023-08-08
+13	Little Cottonwood Canyon	228	\N	2023-08-08
+14	Oliana	65	\N	2023-08-08
+15	Santa Linya	65	\N	2023-08-08
+16	Mount Charleston	228	\N	2023-08-08
+17	Hurricave	228	\N	2023-08-08
+18	Red River Gorge	228	\N	2023-08-08
+446	Potrich	108	\N	2023-08-08
+20	American Fork Canyon	228	\N	2023-08-08
+21	Wild Iris	228	\N	2023-08-08
+23	Yosemite	228	\N	2023-08-08
+700	Geisterschmiedwand	13	\N	2023-08-08
+449	La Piatta	108	\N	2023-08-08
+450	Séranon	72	\N	2023-08-08
+202	La Cova de l'Ocell	65	\N	2023-08-08
+1326	Bellosset	72	\N	2023-08-08
+328	Arco 	108	\N	2023-08-08
+30	Siurana	65	\N	2023-08-08
+702	Niederthal	13	\N	2023-08-08
+32	Gorges du Loup	72	\N	2023-08-08
+1083	Posdamcze	176	\N	2023-08-08
+956	Arco/Massone 	108	\N	2023-08-08
+1327	Lehn	41	\N	2023-08-08
+706	Hinkelstein	13	\N	2023-08-08
+37	Juncosa	65	\N	2023-08-08
+838	Baltzola	65	\N	2023-08-08
+839	Chichibu	112	\N	2023-08-08
+709	Salzburger Land	13	\N	2023-08-08
+2064	Gandia	65	\N	2023-08-08
+461	Terradets	65	\N	2023-08-08
+959	Sorkedalen	164	\N	2023-08-08
+1086	Podzamcze	176	\N	2023-08-08
+45	Rumney	228	\N	2023-08-08
+46	The Fins	228	\N	2023-08-08
+47	Squamish	36	\N	2023-08-08
+217	Es Pontas	65	\N	2023-08-08
+587	Rocca di Oratino	108	\N	2023-08-08
+50	Tahoe	228	\N	2023-08-08
+52	Dry Canyon	228	\N	2023-08-08
+53	Margalef	65	\N	2023-08-08
+714	Höllental	13	\N	2023-08-08
+962	Raven Tor	74	\N	2023-08-08
+716	Baatara	125	\N	2023-08-08
+57	The Tunnel	228	\N	2023-08-08
+58	East Clear Creek	228	\N	2023-08-08
+1330	Leonardio	86	\N	2023-08-08
+964	Grotte de Parisella	74	\N	2023-08-08
+1556	Kochel	54	\N	2023-08-08
+848	Joyama	112	\N	2023-08-08
+849	Ogawayama	112	\N	2023-08-08
+1332	La Balme de Yenne	72	\N	2023-08-08
+65	Magic Wood	41	\N	2023-08-08
+66	Frankenjura	54	\N	2023-08-08
+67	Rodellar	65	\N	2023-08-08
+475	Sperlonga	108	\N	2023-08-08
+723	Kesslerloch	41	\N	2023-08-08
+354	Red Rocks	228	\N	2023-08-08
+71	Saint Loup	41	\N	2023-08-08
+1333	Roquevaire	72	\N	2023-08-08
+73	Acephale	36	\N	2023-08-08
+74	Carros	72	\N	2023-08-08
+1334	Perchoir	72	\N	2023-08-08
+76	Perles	65	\N	2023-08-08
+479	Kalymnos	86	\N	2023-08-08
+2625	Cova de l'Ocell	65	\N	2023-08-12
+359	Mont Kinabalu	155	\N	2023-08-08
+80	Flatanger	164	\N	2023-08-08
+81	Clear Creek Canyon	228	\N	2023-08-08
+727	Salzburg	13	\N	2023-08-08
+238	Mount Potosi	228	\N	2023-08-08
+1945	Les Merciers	72	\N	2023-08-08
+85	Billeger	41	\N	2023-08-08
+86	Saint Georges	41	\N	2023-08-08
+1818	L'Abattoir	72	\N	2023-08-08
+1819	La Barbaque	72	\N	2023-08-08
+90	Bat Cave	228	\N	2023-08-08
+243	5G	228	\N	2023-08-08
+365	Sant Miquel del Fai	65	\N	2023-08-08
+245	??	228	\N	2023-08-08
+366	Vadiello	65	\N	2023-08-08
+732	Allgau	54	\N	2023-08-08
+1220	Sulov	199	\N	2023-08-08
+369	Nezer Cave	101	\N	2023-08-08
+609	Ferentillo	108	\N	2023-08-08
+99	Finn Cave	228	\N	2023-08-08
+251	New River Gorge	228	\N	2023-08-08
+1221	Visnove	199	\N	2023-08-08
+253	Cornalba	108	\N	2023-08-08
+255	Echo Valley	36	\N	2023-08-08
+256	Rawyl	41	\N	2023-08-08
+257	Planet'X	36	\N	2023-08-08
+612	Bus de Vela	108	\N	2023-08-08
+374	Blue Mountains	14	\N	2023-08-08
+375	Nowra	14	\N	2023-08-08
+736	Amden	41	\N	2023-08-08
+262	Gimmelwald	41	\N	2023-08-08
+1341	Jansegg	41	\N	2023-08-08
+264	Arrow Canyon	228	\N	2023-08-08
+1342	Le Fournel 	72	\N	2023-08-08
+266	Villanueva del Rosario	65	\N	2023-08-08
+267	Andonno	108	\N	2023-08-08
+616	Le Fournel	72	\N	2023-08-08
+864	Fleron	20	\N	2023-08-08
+1226	Kypatissi	86	\N	2023-08-08
+1693	Gauxberg	72	\N	2023-08-08
+868	Saint Léger du Ventoux	72	\N	2023-08-08
+386	Camaiore	108	\N	2023-08-08
+387	Paline	108	\N	2023-08-08
+503	Vado di Sole	108	\N	2023-08-08
+504	Grotti	108	\N	2023-08-08
+870	Le Perchoir	72	\N	2023-08-08
+392	Passo Della Presolana	108	\N	2023-08-08
+1347	Saint Ange	72	\N	2023-08-08
+1695	Sainte Victoire	72	\N	2023-08-08
+395	Entraygues	72	\N	2023-08-08
+396	Covolo	108	\N	2023-08-08
+627	Grotta Katarina	108	\N	2023-08-08
+136	Women Cave	228	\N	2023-08-08
+137	Robbers Roost	228	\N	2023-08-08
+510	Eaux Claires	72	\N	2023-08-08
+140	Cathedral	228	\N	2023-08-08
+289	The Cavern	228	\N	2023-08-08
+1233	Sopota	197	\N	2023-08-08
+401	Gravere	108	\N	2023-08-08
+403	Gressoney	108	\N	2023-08-08
+513	Saustall	108	\N	2023-08-08
+295	The Promised Land	228	\N	2023-08-08
+148	Pop Tire Cave	228	\N	2023-08-08
+149	Ten Sleep Canyon	228	\N	2023-08-08
+296	Voralpsee	41	\N	2023-08-08
+514	Voralberg	13	\N	2023-08-08
+298	Wolf Point	228	\N	2023-08-08
+406	Tetto di Sarre	108	\N	2023-08-08
+407	Cubo	108	\N	2023-08-08
+302	???	228	\N	2023-08-08
+876	Kronthal	72	\N	2023-08-08
+634	Otzal	13	\N	2023-08-08
+1352	Pic St Loup	72	\N	2023-08-08
+520	Fonzano	108	\N	2023-08-08
+1353	Mollans sur Ouvèze	72	\N	2023-08-08
+414	Frosolone	108	\N	2023-08-08
+522	Campo e Volpera	108	\N	2023-08-08
+1239	Burjakove Peci 	197	\N	2023-08-08
+524	Erto	108	\N	2023-08-08
+313	Tüfleten	41	\N	2023-08-08
+169	Clark Mountain	228	\N	2023-08-08
+418	Madonna della Rota	108	\N	2023-08-08
+993	Anvil	74	\N	2023-08-08
+526	Gemona	108	\N	2023-08-08
+317	Sinks Canyon	228	\N	2023-08-08
+174	Yangshuo	46	\N	2023-08-08
+421	Cimbergo	108	\N	2023-08-08
+1698	Vilhonneur	72	\N	2023-08-08
+423	Sonlerto	41	\N	2023-08-08
+1241	Vrulja	96	\N	2023-08-08
+179	Buddha	41	\N	2023-08-08
+884	Fontainebleau	72	\N	2023-08-08
+643	Castillon	72	\N	2023-08-08
+182	Mt Potosi	228	\N	2023-08-08
+185	St Georges	228	\N	2023-08-08
+429	Valbrona	108	\N	2023-08-08
+187	Texas	228	\N	2023-08-08
+188	Little Si	228	\N	2023-08-08
+430	Mollans sur Ouveze	72	\N	2023-08-08
+190	Smith Rocks	228	\N	2023-08-08
+533	Rovereto	108	\N	2023-08-08
+432	Albenga	108	\N	2023-08-08
+887	Trou Margritte	20	\N	2023-08-08
+888	????	20	\N	2023-08-08
+1701	St Guilhem le Désert	72	\N	2023-08-08
+436	Bosco Verde	108	\N	2023-08-08
+999	Kilnsey	74	\N	2023-08-08
+650	Vette Feltrine	108	\N	2023-08-08
+439	Lumignano	108	\N	2023-08-08
+539	Getu Valley	46	\N	2023-08-08
+441	Sand in Taufers	108	\N	2023-08-08
+651	Val Noana	108	\N	2023-08-08
+1000	Moravsky Kras 	53	\N	2023-08-08
+1001	Malham	74	\N	2023-08-08
+1245	Golobove Pecine 	197	\N	2023-08-08
+1702	Tautavel	72	\N	2023-08-08
+1125	Roznow	176	\N	2023-08-08
+546	Massone	108	\N	2023-08-08
+1005	Lower Pen Trwyn	74	\N	2023-08-08
+1006	Tyll Mawr	74	\N	2023-08-08
+1247	Ter	197	\N	2023-08-08
+1127	Herculane	186	\N	2023-08-08
+2860	Collsuspina	65	\N	2023-08-12
+902	Fournel	72	\N	2023-08-08
+904	Romeyer	72	\N	2023-08-08
+906	Presles	72	\N	2023-08-08
+2640	Torrelodones	65	\N	2023-08-12
+2864	Berga	65	\N	2023-08-12
+1015	Giggleswick	74	\N	2023-08-08
+910	Sant Llorenç del Munt 	65	\N	2023-08-08
+672	Bilico	108	\N	2023-08-08
+911	Mont Charleston	228	\N	2023-08-08
+674	Col de Monte Crice	108	\N	2023-08-08
+675	Schleierwasserfall	13	\N	2023-08-08
+912	Crimée	188	\N	2023-08-08
+567	Sasso Remenno	108	\N	2023-08-08
+913	Lietlahti	188	\N	2023-08-08
+569	Collepardo	108	\N	2023-08-08
+914	Guamka	188	\N	2023-08-08
+3050	Jaen	65	\N	2023-08-12
+680	Zillertal	13	\N	2023-08-08
+1017	Sabart	72	\N	2023-08-08
+682	Berglsteiner See	13	\N	2023-08-08
+683	Plombergstein	13	\N	2023-08-08
+1835	Syratu	72	\N	2023-08-08
+685	Pinswang	13	\N	2023-08-08
+918	Bahchisaraj	225	\N	2023-08-08
+687	Kanonenwand	13	\N	2023-08-08
+1368	Bionnassay	72	\N	2023-08-08
+1837	Double Cache	72	\N	2023-08-08
+1838	Parmelan	72	\N	2023-08-08
+692	Imst	13	\N	2023-08-08
+798	Huatluckn	13	\N	2023-08-08
+1840	Allonzier la Caille	72	\N	2023-08-08
+696	Adlitzgraben	13	\N	2023-08-08
+925	Val Masino	108	\N	2023-08-08
+1717	Thaurac	72	\N	2023-08-08
+1718	Claret	72	\N	2023-08-08
+1030	Cheedale Cornice	74	\N	2023-08-08
+808	Okutama	112	\N	2023-08-08
+932	Corupa	29	\N	2023-08-08
+1593	Vranjaca	96	\N	2023-08-08
+1846	Baderne	72	\N	2023-08-08
+1724	Supermarché	72	\N	2023-08-08
+815	Biccya	112	\N	2023-08-08
+1847	Fixin	72	\N	2023-08-08
+1599	Medveja	96	\N	2023-08-08
+820	Gozen Rock	112	\N	2023-08-08
+1850	La Roche de Rame	72	\N	2023-08-08
+1042	Ben Nevis	74	\N	2023-08-08
+824	Mont Futago	112	\N	2023-08-08
+1043	Glen Nevis	74	\N	2023-08-08
+827	Horaï	112	\N	2023-08-08
+1160	Czklarska Poreba	176	\N	2023-08-08
+1162	Dryanovo	22	\N	2023-08-08
+2879	Sadernes	65	\N	2023-08-12
+1734	Lourmarin	72	\N	2023-08-08
+1165	Karlukovo	22	\N	2023-08-08
+1609	Santana	65	\N	2023-08-08
+1610	Triangle	13	\N	2023-08-08
+1054	Seynes	72	\N	2023-08-08
+1169	Sagres	181	\N	2023-08-08
+1397	Le Plampraz	41	\N	2023-08-08
+1171	Meio Mango	181	\N	2023-08-08
+1398	Charmey	41	\N	2023-08-08
+1736	Précipice de Corbière	72	\N	2023-08-08
+1289	Cuenca	65	\N	2023-08-08
+1739	Russan	72	\N	2023-08-08
+1178	Stoneworks	36	\N	2023-08-08
+2101	Cidtibi	220	\N	2023-08-08
+1294	La Verrière	72	\N	2023-08-08
+1070	Ötztal	13	\N	2023-08-08
+1071	Niderthai	13	\N	2023-08-08
+1297	Verdon	72	\N	2023-08-08
+1073	Mamutowa	176	\N	2023-08-08
+1859	Ailefroide	72	\N	2023-08-08
+2884	Savassona	65	\N	2023-08-12
+1303	Saint Triphon	41	\N	2023-08-08
+1304	Dossen	41	\N	2023-08-08
+1078	San Vito Lo Capo	108	\N	2023-08-08
+1191	Kelowna	36	\N	2023-08-08
+1409	Lindental	41	\N	2023-08-08
+1194	Siurana 	65	\N	2023-08-08
+1195	Lion's head	36	\N	2023-08-08
+1411	Soyhières	41	\N	2023-08-08
+1197	Valle de los Condores	44	\N	2023-08-08
+1310	Val Bavona	41	\N	2023-08-08
+1311	Rockland	243	\N	2023-08-08
+2889	Fussimanya	65	\N	2023-08-12
+1414	Bubiwändli	41	\N	2023-08-08
+1415	Ibergeregg 	41	\N	2023-08-08
+1866	Orgon	72	\N	2023-08-08
+1417	Chli Schijen	41	\N	2023-08-08
+1418	Muotathal	41	\N	2023-08-08
+2109	Palia Kavala	86	\N	2023-08-08
+1420	Telli	41	\N	2023-08-08
+1628	Srbsko	53	\N	2023-08-08
+1422	Posten Sarnen	41	\N	2023-08-08
+1632	Alava	65	\N	2023-08-08
+1433	Ilarduia	65	\N	2023-08-08
+1434	El Chorro	65	\N	2023-08-08
+1641	Alternativa Steva	199	\N	2023-08-08
+1438	Alquezar	65	\N	2023-08-08
+1642	Les Calanques	72	\N	2023-08-08
+1440	St Llorenç de Montgaï	65	\N	2023-08-08
+3084	Fraguel	65	\N	2023-08-12
+1763	Cantobre	72	\N	2023-08-08
+1647	Krkavka	53	\N	2023-08-08
+1766	Brar	6	\N	2023-08-08
+1449	Vallée de l'Elbe	53	\N	2023-08-08
+1885	Lourdes	72	\N	2023-08-08
+1771	Saint Pancrasse	72	\N	2023-08-08
+1454	Gotterwand	13	\N	2023-08-08
+2685	Archidona	65	\N	2023-08-12
+1660	Jachymka	53	\N	2023-08-08
+1893	Saint Antonin Noble Val	72	\N	2023-08-08
+2914	Etxauri	65	\N	2023-08-12
+1781	Saint Sauves	72	\N	2023-08-08
+2919	Aizpun	65	\N	2023-08-12
+2920	Tas Tas	65	\N	2023-08-12
+1475	Beckov	199	\N	2023-08-08
+1477	Camarasa	65	\N	2023-08-08
+1676	Lappnor	67	\N	2023-08-08
+1678	Geyik Bayiri	220	\N	2023-08-08
+2025	Gorges du Tarn	72	\N	2023-08-08
+1798	Virignin	72	\N	2023-08-08
+1912	Mont Faron	72	\N	2023-08-08
+1800	Bielsa	65	\N	2023-08-08
+1491	Roviste	53	\N	2023-08-08
+2522	Sagasta	65	\N	2023-08-12
+1496	Domusnovas	108	\N	2023-08-08
+2034	Fetid Beach	72	\N	2023-08-08
+2036	Gargantua	72	\N	2023-08-08
+2038	Castillon du Gard	72	\N	2023-08-08
+2039	Cévennes	72	\N	2023-08-08
+2941	Santuario	65	\N	2023-08-12
+2049	Buoux	72	\N	2023-08-08
+2534	Egino	65	\N	2023-08-12
+1514	Markezina Greda	96	\N	2023-08-08
+2535	Colmenar	65	\N	2023-08-12
+1516	Acéphale	36	\N	2023-08-08
+3127	Colemar	65	\N	2023-08-12
+2730	Sella	65	\N	2023-08-12
+3133	Alava (Villanueva de Valdegobia)	65	\N	2023-08-12
+1532	Paklenica	96	\N	2023-08-08
+3139	Mugarra	65	\N	2023-08-12
+2740	Roc Galliner	65	\N	2023-08-12
+1540	Hell	164	\N	2023-08-08
+1542	Kanjon Tjesno	17	\N	2023-08-08
+1544	Eibgrat	54	\N	2023-08-08
+3150	Coll de Nargo	65	\N	2023-08-12
+2572	La Hermida	65	\N	2023-08-12
+2575	Montroig	65	\N	2023-08-12
+2579	Montserrat	65	\N	2023-08-12
+2585	Teverga	65	\N	2023-08-12
+2997	Shangfang Town	46	\N	2023-08-12
+2607	Patones	65	\N	2023-08-12
+2793	Montanejos	65	\N	2023-08-12
+3031	La Pedriza	65	\N	2023-08-12
+2828	Tramuntana	65	\N	2023-08-12
+2831	Crevillent	65	\N	2023-08-12
+2841	Moia	65	\N	2023-08-12
+2844	St llorrenç de Montgaï	65	\N	2023-08-12
+2846	Catalogne	65	\N	2023-08-12
+\.
+
+
+--
+-- Data for Name: media; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.media (id, type, url, label) FROM stdin;
+3190	test	test2	test2
+3169	youtube	https://www.youtube.com/watch?v=SfjOnTdrMuc	The Dream Route - Action Directe 9a
+3185	test	test	test
+1	youtube	https://www.youtube.com/watch?v=ZRTNHDd0gL8	Silence | World's Hardest Route 9c | Adam Ondra
+3209	youtube	https://www.youtube.com/watch?v=b6OvrRbGU68	World's Hardest Flash - Adam Ondra Climbs 5.15 (9a+) First Try
+3214	youtube	https://www.youtube.com/watch?v=cUIE_ht27s8	Second Hardest Climb of My Life | Menagerie 9b+ HARD | Adam Ondra
+3217	youtube	https://www.youtube.com/watch?v=ul6CkmmDsjw	Magnus Midtboe and Ali-Hulk Sit+extension
+3220	youtube	https://www.youtube.com/watch?v=hatSw5NMOO8	Sean Bailey - Coup de Grâce (9a/5.14d)
+\.
+
+
+--
+-- Name: ascent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+--
+
+SELECT pg_catalog.setval('public.ascent_id_seq', 3154, true);
+
+
+--
+-- Name: ascent_media_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.ascent_media_id_seq', 4, true);
+
+
+--
+-- Name: climb_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+--
+
+SELECT pg_catalog.setval('public.climb_id_seq', 3179, true);
+
+
+--
+-- Name: climb_media_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.climb_media_id_seq', 5, true);
+
+
+--
+-- Name: climber_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+--
+
+SELECT pg_catalog.setval('public.climber_id_seq', 636, true);
+
+
+--
+-- Name: climber_media_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.climber_media_id_seq', 36, true);
+
+
+--
+-- Name: country_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+--
+
+SELECT pg_catalog.setval('public.country_id_seq', 245, true);
+
+
+--
+-- Name: crag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+--
+
+SELECT pg_catalog.setval('public.crag_id_seq', 3179, true);
+
+
+--
+-- Name: media_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.media_id_seq', 3222, true);
+
+
+--
+-- Name: ascent_media ascent_media_ascent_id_media_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ascent_media
+    ADD CONSTRAINT ascent_media_ascent_id_media_id_key UNIQUE (ascent_id, media_id);
+
+
+--
+-- Name: ascent_media ascent_media_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ascent_media
+    ADD CONSTRAINT ascent_media_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ascent ascent_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.ascent
+    ADD CONSTRAINT ascent_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: climb_media climb_media_climb_id_media_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climb_media
+    ADD CONSTRAINT climb_media_climb_id_media_id_key UNIQUE (climb_id, media_id);
+
+
+--
+-- Name: climb_media climb_media_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climb_media
+    ADD CONSTRAINT climb_media_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: climb climb_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climb
+    ADD CONSTRAINT climb_name_key UNIQUE (name);
+
+
+--
+-- Name: climb climb_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climb
+    ADD CONSTRAINT climb_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: climber_media climber_media_climber_id_media_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climber_media
+    ADD CONSTRAINT climber_media_climber_id_media_id_key UNIQUE (climber_id, media_id);
+
+
+--
+-- Name: climber_media climber_media_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climber_media
+    ADD CONSTRAINT climber_media_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: climber climber_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climber
+    ADD CONSTRAINT climber_name_key UNIQUE (name);
+
+
+--
+-- Name: climber climber_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climber
+    ADD CONSTRAINT climber_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: country country_iso_code_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.country
+    ADD CONSTRAINT country_iso_code_key UNIQUE (iso_code);
+
+
+--
+-- Name: country country_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.country
+    ADD CONSTRAINT country_name_key UNIQUE (name);
+
+
+--
+-- Name: country country_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.country
+    ADD CONSTRAINT country_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: crag crag_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.crag
+    ADD CONSTRAINT crag_name_key UNIQUE (name);
+
+
+--
+-- Name: crag crag_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.crag
+    ADD CONSTRAINT crag_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media media_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.media
+    ADD CONSTRAINT media_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: media media_url_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.media
+    ADD CONSTRAINT media_url_key UNIQUE (url);
+
+
+--
+-- Name: climber_climb_unique; Type: INDEX; Schema: public; Owner: joshzimmerman
+--
+
+CREATE UNIQUE INDEX climber_climb_unique ON public.ascent USING btree (climber_id, climb_id);
+
+
+--
+-- Name: iso_code_unique; Type: INDEX; Schema: public; Owner: joshzimmerman
+--
+
+CREATE UNIQUE INDEX iso_code_unique ON public.country USING btree (iso_code);
+
+
+--
+-- Name: name_unique; Type: INDEX; Schema: public; Owner: joshzimmerman
+--
+
+CREATE UNIQUE INDEX name_unique ON public.country USING btree (name);
+
+
+--
+-- Name: ascent ascent_climb_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.ascent
+    ADD CONSTRAINT ascent_climb_id_fkey FOREIGN KEY (climb_id) REFERENCES public.climb(id);
+
+
+--
+-- Name: ascent ascent_climber_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.ascent
+    ADD CONSTRAINT ascent_climber_id_fkey FOREIGN KEY (climber_id) REFERENCES public.climber(id);
+
+
+--
+-- Name: ascent_media ascent_media_ascent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ascent_media
+    ADD CONSTRAINT ascent_media_ascent_id_fkey FOREIGN KEY (ascent_id) REFERENCES public.ascent(id) ON UPDATE CASCADE;
+
+
+--
+-- Name: ascent_media ascent_media_media_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.ascent_media
+    ADD CONSTRAINT ascent_media_media_id_fkey FOREIGN KEY (media_id) REFERENCES public.media(id) ON UPDATE CASCADE;
+
+
+--
+-- Name: climb climb_crag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climb
+    ADD CONSTRAINT climb_crag_id_fkey FOREIGN KEY (crag_id) REFERENCES public.crag(id) ON DELETE SET NULL;
+
+
+--
+-- Name: climb_media climb_media_climb_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climb_media
+    ADD CONSTRAINT climb_media_climb_id_fkey FOREIGN KEY (climb_id) REFERENCES public.climb(id) ON UPDATE CASCADE;
+
+
+--
+-- Name: climb_media climb_media_media_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climb_media
+    ADD CONSTRAINT climb_media_media_id_fkey FOREIGN KEY (media_id) REFERENCES public.media(id) ON UPDATE CASCADE;
+
+
+--
+-- Name: climber climber_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.climber
+    ADD CONSTRAINT climber_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.country(id);
+
+
+--
+-- Name: climber_media climber_media_climber_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climber_media
+    ADD CONSTRAINT climber_media_climber_id_fkey FOREIGN KEY (climber_id) REFERENCES public.climber(id) ON UPDATE CASCADE;
+
+
+--
+-- Name: climber_media climber_media_media_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.climber_media
+    ADD CONSTRAINT climber_media_media_id_fkey FOREIGN KEY (media_id) REFERENCES public.media(id) ON UPDATE CASCADE;
+
+
+--
+-- Name: crag crag_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+--
+
+ALTER TABLE ONLY public.crag
+    ADD CONSTRAINT crag_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.country(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
