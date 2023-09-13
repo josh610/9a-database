@@ -34,44 +34,25 @@ Requirements:
 
 2.  Connect **9a**:
 
-    - Open the Hasura Console by navigating to `http://localhost:8080/console` in your browser. From the Console, click the Data tab:
+    - Open the Hasura Console by navigating to `http://localhost:8080/console` in your browser. From the Console, click the Data tab.
 
       ![Alt text](https://hasura.io/docs/assets/images/connect-db-console-d08a940e3d5f1f710ba1c83383920b77.png)
 
-    - Create a new database using `postgresql://[username]@host.docker.internal:5432/[dbname]` as the database URL
+    - Create a new database using `postgresql://[username]@host.docker.internal:5432/9a` as the database URL.
 
-      ![Alt text](screenshot.png "Title")
+      ![Alt text](screenshot1.png "Title")
 
-3.  Create the following GraphQL relationships:
+    - Add all tables and relationships by clicking "Track All" for tables and relationships.
 
-    - ascent:
-      - _climb_: ascent/climb_id -> climb/id
-      - _climber_: ascet/climber_id -> climber/id
-      - _ascent_media_: ascent/id -> ascent_media -> ascent_id
-    - climb:
-      - _crag_: climb/crag_id -> crag/id
-      - _ascents_: climb/id -> ascent/climb_id
-      - _climb_media_: climb/id -> climb_media/climb_id
+      ![Alt text](screenshot3.png "Title")
+
+3.  Manually rename the following GraphQL relationships by going to the Relationships tab in each table:
+
     - climber:
-      - _home_country_: climber/country_id -> country/id
-      - _ascents_: climber/id -> ascent/climber_id
-      - _climber_media_: climber/id -> climber_media -> climber_id
-    - country:
-      - _climbers_: country/id -> climber/country_id
-      - _crags_: country/id -> crag/country_id
-    - crag:
-      - _country_: crag/country_id -> country/id
-      - _climbs_: crag/id -> climb/crag_id
+      - country -> home_country
     - media:
-      - _media_ascents_: media/id -> ascent_media/media_id
-      - _media_climbers_: media/id -> climber_media/media_id
-      - _media_climbs_: media/id -> climb_media/media_id
-    - ascent_media:
-      - _ascent_: ascent_media/ascent_id -> ascent/id
-      - _media_: ascent_media/media_id -> media/id
-    - climb_media:
-      - _climb_: climb_media/climb_id -> climb/id
-      - _media_: climb_media/media_id -> media/id
-    - climber_media:
-      - _climber_: climber_media/climber_id -> climber/id
-      - _media_: climber_media/media_id -> media/id
+      - ascent_media -> media_ascents
+      - climb_media -> media_climbers
+      - climber_media -> media_climbs
+    - ascent_media, climb_media, climber_media:
+      - medium -> media
