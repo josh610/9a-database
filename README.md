@@ -16,7 +16,11 @@ Requirements:
 
         createdb -T template0 9a
 
-3.  Load backup:
+3.  Replace 'username' with your username in the backup file by running the following command:
+
+        sed -i '' 's/username/[your username]/g' backups/9a20230828.sql
+
+4.  Load backup:
 
         psql 9a < backups/9a20230828.sql
 

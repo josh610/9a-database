@@ -21,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: ascent; Type: TABLE; Schema: public; Owner: joshzimmerman
+-- Name: ascent; Type: TABLE; Schema: public; Owner: username
 --
 
 CREATE TABLE public.ascent (
@@ -38,10 +38,10 @@ CREATE TABLE public.ascent (
 );
 
 
-ALTER TABLE public.ascent OWNER TO joshzimmerman;
+ALTER TABLE public.ascent OWNER TO username;
 
 --
--- Name: ascent_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+-- Name: ascent_id_seq; Type: SEQUENCE; Schema: public; Owner: username
 --
 
 CREATE SEQUENCE public.ascent_id_seq
@@ -53,10 +53,10 @@ CREATE SEQUENCE public.ascent_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.ascent_id_seq OWNER TO joshzimmerman;
+ALTER TABLE public.ascent_id_seq OWNER TO username;
 
 --
--- Name: ascent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+-- Name: ascent_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: username
 --
 
 ALTER SEQUENCE public.ascent_id_seq OWNED BY public.ascent.id;
@@ -98,7 +98,7 @@ ALTER SEQUENCE public.ascent_media_id_seq OWNED BY public.ascent_media.id;
 
 
 --
--- Name: climb; Type: TABLE; Schema: public; Owner: joshzimmerman
+-- Name: climb; Type: TABLE; Schema: public; Owner: username
 --
 
 CREATE TABLE public.climb (
@@ -111,10 +111,10 @@ CREATE TABLE public.climb (
 );
 
 
-ALTER TABLE public.climb OWNER TO joshzimmerman;
+ALTER TABLE public.climb OWNER TO username;
 
 --
--- Name: climb_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+-- Name: climb_id_seq; Type: SEQUENCE; Schema: public; Owner: username
 --
 
 CREATE SEQUENCE public.climb_id_seq
@@ -126,10 +126,10 @@ CREATE SEQUENCE public.climb_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.climb_id_seq OWNER TO joshzimmerman;
+ALTER TABLE public.climb_id_seq OWNER TO username;
 
 --
--- Name: climb_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+-- Name: climb_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: username
 --
 
 ALTER SEQUENCE public.climb_id_seq OWNED BY public.climb.id;
@@ -171,7 +171,7 @@ ALTER SEQUENCE public.climb_media_id_seq OWNED BY public.climb_media.id;
 
 
 --
--- Name: climber; Type: TABLE; Schema: public; Owner: joshzimmerman
+-- Name: climber; Type: TABLE; Schema: public; Owner: username
 --
 
 CREATE TABLE public.climber (
@@ -186,10 +186,10 @@ CREATE TABLE public.climber (
 );
 
 
-ALTER TABLE public.climber OWNER TO joshzimmerman;
+ALTER TABLE public.climber OWNER TO username;
 
 --
--- Name: climber_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+-- Name: climber_id_seq; Type: SEQUENCE; Schema: public; Owner: username
 --
 
 CREATE SEQUENCE public.climber_id_seq
@@ -201,10 +201,10 @@ CREATE SEQUENCE public.climber_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.climber_id_seq OWNER TO joshzimmerman;
+ALTER TABLE public.climber_id_seq OWNER TO username;
 
 --
--- Name: climber_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+-- Name: climber_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: username
 --
 
 ALTER SEQUENCE public.climber_id_seq OWNED BY public.climber.id;
@@ -246,7 +246,7 @@ ALTER SEQUENCE public.climber_media_id_seq OWNED BY public.climber_media.id;
 
 
 --
--- Name: country; Type: TABLE; Schema: public; Owner: joshzimmerman
+-- Name: country; Type: TABLE; Schema: public; Owner: username
 --
 
 CREATE TABLE public.country (
@@ -257,10 +257,10 @@ CREATE TABLE public.country (
 );
 
 
-ALTER TABLE public.country OWNER TO joshzimmerman;
+ALTER TABLE public.country OWNER TO username;
 
 --
--- Name: country_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+-- Name: country_id_seq; Type: SEQUENCE; Schema: public; Owner: username
 --
 
 CREATE SEQUENCE public.country_id_seq
@@ -272,17 +272,17 @@ CREATE SEQUENCE public.country_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.country_id_seq OWNER TO joshzimmerman;
+ALTER TABLE public.country_id_seq OWNER TO username;
 
 --
--- Name: country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+-- Name: country_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: username
 --
 
 ALTER SEQUENCE public.country_id_seq OWNED BY public.country.id;
 
 
 --
--- Name: crag; Type: TABLE; Schema: public; Owner: joshzimmerman
+-- Name: crag; Type: TABLE; Schema: public; Owner: username
 --
 
 CREATE TABLE public.crag (
@@ -294,10 +294,10 @@ CREATE TABLE public.crag (
 );
 
 
-ALTER TABLE public.crag OWNER TO joshzimmerman;
+ALTER TABLE public.crag OWNER TO username;
 
 --
--- Name: crag_id_seq; Type: SEQUENCE; Schema: public; Owner: joshzimmerman
+-- Name: crag_id_seq; Type: SEQUENCE; Schema: public; Owner: username
 --
 
 CREATE SEQUENCE public.crag_id_seq
@@ -309,10 +309,10 @@ CREATE SEQUENCE public.crag_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.crag_id_seq OWNER TO joshzimmerman;
+ALTER TABLE public.crag_id_seq OWNER TO username;
 
 --
--- Name: crag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: joshzimmerman
+-- Name: crag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: username
 --
 
 ALTER SEQUENCE public.crag_id_seq OWNED BY public.crag.id;
@@ -354,7 +354,7 @@ ALTER SEQUENCE public.media_id_seq OWNED BY public.media.id;
 
 
 --
--- Name: ascent id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+-- Name: ascent id; Type: DEFAULT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.ascent ALTER COLUMN id SET DEFAULT nextval('public.ascent_id_seq'::regclass);
@@ -368,7 +368,7 @@ ALTER TABLE ONLY public.ascent_media ALTER COLUMN id SET DEFAULT nextval('public
 
 
 --
--- Name: climb id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+-- Name: climb id; Type: DEFAULT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climb ALTER COLUMN id SET DEFAULT nextval('public.climb_id_seq'::regclass);
@@ -382,7 +382,7 @@ ALTER TABLE ONLY public.climb_media ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: climber id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+-- Name: climber id; Type: DEFAULT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climber ALTER COLUMN id SET DEFAULT nextval('public.climber_id_seq'::regclass);
@@ -396,14 +396,14 @@ ALTER TABLE ONLY public.climber_media ALTER COLUMN id SET DEFAULT nextval('publi
 
 
 --
--- Name: country id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+-- Name: country id; Type: DEFAULT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.country ALTER COLUMN id SET DEFAULT nextval('public.country_id_seq'::regclass);
 
 
 --
--- Name: crag id; Type: DEFAULT; Schema: public; Owner: joshzimmerman
+-- Name: crag id; Type: DEFAULT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.crag ALTER COLUMN id SET DEFAULT nextval('public.crag_id_seq'::regclass);
@@ -417,7 +417,7 @@ ALTER TABLE ONLY public.media ALTER COLUMN id SET DEFAULT nextval('public.media_
 
 
 --
--- Data for Name: ascent; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+-- Data for Name: ascent; Type: TABLE DATA; Schema: public; Owner: username
 --
 
 COPY public.ascent (id, climber_id, climb_id, grade_proposal, fa, flash, onsight, _date, description, added_at) FROM stdin;
@@ -3194,7 +3194,7 @@ COPY public.ascent_media (id, ascent_id, media_id) FROM stdin;
 
 
 --
--- Data for Name: climb; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+-- Data for Name: climb; Type: TABLE DATA; Schema: public; Owner: username
 --
 
 COPY public.climb (id, name, grade, crag_id, description, added_at) FROM stdin;
@@ -4177,7 +4177,7 @@ COPY public.climb_media (id, climb_id, media_id) FROM stdin;
 
 
 --
--- Data for Name: climber; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+-- Data for Name: climber; Type: TABLE DATA; Schema: public; Owner: username
 --
 
 COPY public.climber (id, name, nickname, country_id, dob, sex, description, added_at) FROM stdin;
@@ -4714,7 +4714,7 @@ COPY public.climber_media (id, climber_id, media_id) FROM stdin;
 
 
 --
--- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+-- Data for Name: country; Type: TABLE DATA; Schema: public; Owner: username
 --
 
 COPY public.country (id, name, iso_code, description) FROM stdin;
@@ -4967,7 +4967,7 @@ COPY public.country (id, name, iso_code, description) FROM stdin;
 
 
 --
--- Data for Name: crag; Type: TABLE DATA; Schema: public; Owner: joshzimmerman
+-- Data for Name: crag; Type: TABLE DATA; Schema: public; Owner: username
 --
 
 COPY public.crag (id, name, country_id, description, added_at) FROM stdin;
@@ -5351,7 +5351,7 @@ COPY public.media (id, type, url, label) FROM stdin;
 
 
 --
--- Name: ascent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+-- Name: ascent_id_seq; Type: SEQUENCE SET; Schema: public; Owner: username
 --
 
 SELECT pg_catalog.setval('public.ascent_id_seq', 3154, true);
@@ -5365,7 +5365,7 @@ SELECT pg_catalog.setval('public.ascent_media_id_seq', 4, true);
 
 
 --
--- Name: climb_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+-- Name: climb_id_seq; Type: SEQUENCE SET; Schema: public; Owner: username
 --
 
 SELECT pg_catalog.setval('public.climb_id_seq', 3179, true);
@@ -5379,7 +5379,7 @@ SELECT pg_catalog.setval('public.climb_media_id_seq', 5, true);
 
 
 --
--- Name: climber_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+-- Name: climber_id_seq; Type: SEQUENCE SET; Schema: public; Owner: username
 --
 
 SELECT pg_catalog.setval('public.climber_id_seq', 636, true);
@@ -5393,14 +5393,14 @@ SELECT pg_catalog.setval('public.climber_media_id_seq', 36, true);
 
 
 --
--- Name: country_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+-- Name: country_id_seq; Type: SEQUENCE SET; Schema: public; Owner: username
 --
 
 SELECT pg_catalog.setval('public.country_id_seq', 245, true);
 
 
 --
--- Name: crag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: joshzimmerman
+-- Name: crag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: username
 --
 
 SELECT pg_catalog.setval('public.crag_id_seq', 3179, true);
@@ -5430,7 +5430,7 @@ ALTER TABLE ONLY public.ascent_media
 
 
 --
--- Name: ascent ascent_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: ascent ascent_pkey; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.ascent
@@ -5454,7 +5454,7 @@ ALTER TABLE ONLY public.climb_media
 
 
 --
--- Name: climb climb_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: climb climb_name_key; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climb
@@ -5462,7 +5462,7 @@ ALTER TABLE ONLY public.climb
 
 
 --
--- Name: climb climb_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: climb climb_pkey; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climb
@@ -5486,7 +5486,7 @@ ALTER TABLE ONLY public.climber_media
 
 
 --
--- Name: climber climber_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: climber climber_name_key; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climber
@@ -5494,7 +5494,7 @@ ALTER TABLE ONLY public.climber
 
 
 --
--- Name: climber climber_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: climber climber_pkey; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climber
@@ -5502,7 +5502,7 @@ ALTER TABLE ONLY public.climber
 
 
 --
--- Name: country country_iso_code_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: country country_iso_code_key; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.country
@@ -5510,7 +5510,7 @@ ALTER TABLE ONLY public.country
 
 
 --
--- Name: country country_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: country country_name_key; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.country
@@ -5518,7 +5518,7 @@ ALTER TABLE ONLY public.country
 
 
 --
--- Name: country country_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: country country_pkey; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.country
@@ -5526,7 +5526,7 @@ ALTER TABLE ONLY public.country
 
 
 --
--- Name: crag crag_name_key; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: crag crag_name_key; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.crag
@@ -5534,7 +5534,7 @@ ALTER TABLE ONLY public.crag
 
 
 --
--- Name: crag crag_pkey; Type: CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: crag crag_pkey; Type: CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.crag
@@ -5558,28 +5558,28 @@ ALTER TABLE ONLY public.media
 
 
 --
--- Name: climber_climb_unique; Type: INDEX; Schema: public; Owner: joshzimmerman
+-- Name: climber_climb_unique; Type: INDEX; Schema: public; Owner: username
 --
 
 CREATE UNIQUE INDEX climber_climb_unique ON public.ascent USING btree (climber_id, climb_id);
 
 
 --
--- Name: iso_code_unique; Type: INDEX; Schema: public; Owner: joshzimmerman
+-- Name: iso_code_unique; Type: INDEX; Schema: public; Owner: username
 --
 
 CREATE UNIQUE INDEX iso_code_unique ON public.country USING btree (iso_code);
 
 
 --
--- Name: name_unique; Type: INDEX; Schema: public; Owner: joshzimmerman
+-- Name: name_unique; Type: INDEX; Schema: public; Owner: username
 --
 
 CREATE UNIQUE INDEX name_unique ON public.country USING btree (name);
 
 
 --
--- Name: ascent ascent_climb_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: ascent ascent_climb_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.ascent
@@ -5587,7 +5587,7 @@ ALTER TABLE ONLY public.ascent
 
 
 --
--- Name: ascent ascent_climber_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: ascent ascent_climber_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.ascent
@@ -5611,7 +5611,7 @@ ALTER TABLE ONLY public.ascent_media
 
 
 --
--- Name: climb climb_crag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: climb climb_crag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climb
@@ -5635,7 +5635,7 @@ ALTER TABLE ONLY public.climb_media
 
 
 --
--- Name: climber climber_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: climber climber_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.climber
@@ -5659,7 +5659,7 @@ ALTER TABLE ONLY public.climber_media
 
 
 --
--- Name: crag crag_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: joshzimmerman
+-- Name: crag crag_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: username
 --
 
 ALTER TABLE ONLY public.crag
